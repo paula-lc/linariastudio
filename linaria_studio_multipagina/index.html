@@ -7,7 +7,7 @@
     <title>Linaria Studio · Ilustración y papelería</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@400;600;700&family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..700,100,1;1,9..144,300..700,100,1&family=Homemade+Apple&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 <script src="script.js" defer></script>
 
@@ -22,6 +22,21 @@
 </head>
 
 <body class="home">
+<!-- Sprite de adornos dibujados a mano -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="lh-sprig" viewBox="0 0 60 120">
+    <path d="M30 118 C28 90 32 60 30 22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+    <path d="M30 92 C20 86 12 78 10 66 C20 68 28 76 30 88 M30 74 C40 68 48 60 50 48 C40 50 32 58 30 70 M30 56 C21 50 15 42 14 32 C22 35 28 42 30 52" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M30 22 C22 18 22 6 30 4 C38 6 38 18 30 22 Z" fill="var(--rose)" stroke="var(--ink)" stroke-width="1.4"/>
+    <path d="M30 22 C34 26 40 26 42 22 C38 18 33 19 30 22 Z" fill="var(--lime)" stroke="var(--ink)" stroke-width="1.2"/>
+  </symbol>
+  <symbol id="lh-star" viewBox="0 0 24 24">
+    <path d="M12 2 C13 9 15 11 22 12 C15 13 13 15 12 22 C11 15 9 13 2 12 C9 11 11 9 12 2 Z" fill="currentColor" stroke="var(--ink)" stroke-width="1.1" stroke-linejoin="round"/>
+  </symbol>
+  <symbol id="lh-heart" viewBox="0 0 24 22">
+    <path d="M12 20 C4 14 1 10 2 6 C3 2 8 1 12 6 C16 1 21 2 22 6 C23 10 20 14 12 20 Z" fill="currentColor" stroke="var(--ink)" stroke-width="1.2" stroke-linejoin="round"/>
+  </symbol>
+</svg>
   <main class="site-shell">
 <div class="announcement">
       <span id="announcement-text">ENVÍO GRATIS EN TODA ESPAÑA</span>
@@ -73,6 +88,10 @@
 
     <!-- ============ HERO ============ -->
     <section class="hero lh-hero" id="inicio">
+      <svg class="lh-deco lh-deco--sprig" style="--dx:2%;--dy:12%;--ds:64px;--dr:-14deg;color:var(--olive)" aria-hidden="true"><use href="#lh-sprig"/></svg>
+      <svg class="lh-deco lh-deco--star" style="--dx:46%;--dy:14%;--ds:22px;color:var(--lime)" aria-hidden="true"><use href="#lh-star"/></svg>
+      <svg class="lh-deco lh-deco--star" style="--dx:94%;--dy:70%;--ds:16px;color:var(--rose)" aria-hidden="true"><use href="#lh-star"/></svg>
+      <svg class="lh-deco lh-deco--heart" style="--dx:8%;--dy:86%;--ds:20px;--dr:-12deg;color:var(--rose)" aria-hidden="true"><use href="#lh-heart"/></svg>
 
       <div class="lh-envelope" data-draw tabindex="0" role="img"
            aria-label="Sobre abierto con postales ilustradas por las dos artistas">
@@ -128,6 +147,15 @@
                 x="330" y="452" transform="rotate(-5 330 452)">para ti</text>
         </svg>
 
+        <!-- Matasellos -->
+        <svg class="lh-postmark" viewBox="0 0 120 70" aria-hidden="true">
+          <circle cx="35" cy="35" r="27" fill="none" stroke="var(--garnet)" stroke-width="1.6"/>
+          <circle cx="35" cy="35" r="21" fill="none" stroke="var(--garnet)" stroke-width="1" stroke-dasharray="2 3"/>
+          <text x="35" y="32" text-anchor="middle">LINARIA</text>
+          <text x="35" y="44" text-anchor="middle">2026</text>
+          <path d="M66 22 C78 18 90 26 102 22 C110 19 114 20 118 22 M66 35 C78 31 90 39 102 35 C110 32 114 33 118 35 M66 48 C78 44 90 52 102 48 C110 45 114 46 118 48" fill="none" stroke="var(--garnet)" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+
         <!-- Mariposa posada -->
         <div class="lh-butterfly">
           <div class="lh-butterfly__land">
@@ -174,7 +202,7 @@
 <!-- ============ BEST SELLERS ============ -->
 <section class="lh-section lh-shop" aria-labelledby="shop-title">
   <header class="lh-head">
-    <p class="lh-eyebrow">Descubre nuestro arte</p>
+    <p class="lh-eyebrow"><svg class="lh-eyebrow__star" aria-hidden="true"><use href="#lh-star"/></svg>Descubre nuestro arte</p>
     <h2 id="shop-title" class="lh-title">Lo más querido</h2>
   </header>
 
@@ -215,14 +243,17 @@
   </div>
 </section>
 
+<div class="lh-stitch" aria-hidden="true"><svg><use href="#lh-sprig"/></svg></div>
 <!-- ============ MAIL CLUB ============ -->
 <section class="lh-section lh-club" aria-labelledby="club-title">
   <div class="lh-club__card">
+    <svg class="lh-deco" style="--dx:92%;--dy:10%;--ds:26px;color:var(--lime)" aria-hidden="true"><use href="#lh-star"/></svg>
+    <svg class="lh-deco" style="--dx:86%;--dy:80%;--ds:18px;color:var(--rose)" aria-hidden="true"><use href="#lh-heart"/></svg>
     <div class="lh-club__stamp" aria-hidden="true">
       <span>Mail<br>Club</span>
     </div>
     <div class="lh-club__copy">
-      <p class="lh-eyebrow lh-eyebrow--light">Una cartita en tu buzón</p>
+      <p class="lh-eyebrow lh-eyebrow--light"><svg class="lh-eyebrow__star" aria-hidden="true"><use href="#lh-star"/></svg>Una cartita en tu buzón</p>
       <h2 id="club-title" class="lh-title lh-title--light">Algo bonito que esperar cada mes</h2>
       <p>Ilustraciones, papelería y pequeñas sorpresas para coleccionar. Una dosis de creatividad y desconexión, por correo.</p>
       <a class="lh-hero__cta lh-hero__cta--light" href="mail-club.html">Descubrir el Mail Club</a>
@@ -230,10 +261,11 @@
   </div>
 </section>
 
+<div class="lh-stitch" aria-hidden="true"><svg><use href="#lh-sprig"/></svg></div>
 <!-- ============ SERVICIOS ============ -->
 <section class="lh-section" aria-labelledby="serv-title">
   <header class="lh-head">
-    <p class="lh-eyebrow">¿Hacemos algo juntas?</p>
+    <p class="lh-eyebrow"><svg class="lh-eyebrow__star" aria-hidden="true"><use href="#lh-star"/></svg>¿Hacemos algo juntas?</p>
     <h2 id="serv-title" class="lh-title">También podemos ayudarte con…</h2>
   </header>
   <ul class="lh-services">
@@ -244,11 +276,16 @@
   </ul>
 </section>
 
+<div class="lh-stitch" aria-hidden="true"><svg><use href="#lh-sprig"/></svg></div>
 <!-- ============ SOBRE NOSOTRAS ============ -->
 <section class="lh-section lh-about" aria-labelledby="about-title">
-  <div class="lh-about__seal" aria-hidden="true">hecho<br>con amor</div>
+  <div class="lh-about__art" aria-hidden="true">
+    <svg class="lh-about__sprig lh-about__sprig--l"><use href="#lh-sprig"/></svg>
+    <div class="lh-about__seal">hecho<br>con amor</div>
+    <svg class="lh-about__sprig lh-about__sprig--r"><use href="#lh-sprig"/></svg>
+  </div>
   <div>
-    <p class="lh-eyebrow">Hola, ¡qué alegría tenerte aquí!</p>
+    <p class="lh-eyebrow"><svg class="lh-eyebrow__star" aria-hidden="true"><use href="#lh-star"/></svg>Hola, ¡qué alegría tenerte aquí!</p>
     <h2 id="about-title" class="lh-title">Un espacio para compartir creatividad</h2>
     <p class="lh-about__text">Somos dos artistas con muchas ideas, ganas de experimentar y amor por las cosas bonitas. Aquí reunimos nuestras ilustraciones, proyectos y pequeños tesoros.</p>
     <a class="lh-link" href="contacto.html">Hablemos <span aria-hidden="true">→</span></a>
@@ -263,5 +300,6 @@
   <small>© 2026 Linaria Studio · Hecho a mano en España</small>
 </footer>
 </main>
+<canvas class="lh-trail" aria-hidden="true"></canvas>
 </body>
 </html>

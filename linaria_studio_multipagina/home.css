@@ -11,12 +11,22 @@
   --cream: #f7f3e8;
   --paper: #fffdf6;
   --ink: #1d1d1b;            /* trazo de plumilla del sobre */
-  --serif: "Playfair Display", Georgia, serif;
-  --sans: "DM Sans", system-ui, sans-serif;
-  --hand: "cali", "Playfair Display", cursive;
-  background: var(--cream);
+  /* Tipografía de carta escrita a mano:
+     Fraunces (serif blanda y "wonky") para titulares y texto,
+     Homemade Apple para notas manuscritas, Courier Prime para sellos/etiquetas */
+  --serif: "Fraunces", Georgia, serif;
+  --sans: "Fraunces", Georgia, serif;
+  --hand: "Homemade Apple", "cali", cursive;
+  --type: "Courier Prime", "Courier New", monospace;
+  --ease: cubic-bezier(.22, 1, .36, 1);
+  --ease-io: cubic-bezier(.65, 0, .35, 1);
+  font-variation-settings: "SOFT" 100, "WONK" 1;
+  background-color: var(--cream);
+  /* grano de papel */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .38 0 0 0 0 .12 0 0 0 0 .24 0 0 0 .07 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
-.home .site-shell { background: var(--cream); }
+.home .site-shell { background: transparent; }
+.home * { font-variation-settings: inherit; }
 
 /* ---------- Barra de avisos ---------- */
 .home .announcement {
@@ -25,7 +35,7 @@
   min-height: 34px;
   padding: 7px 12px;
 }
-.home #announcement-text { font-size: 12px; letter-spacing: .12em; }
+.home #announcement-text { font-family: var(--type); font-weight: 700; font-size: 12px; letter-spacing: .14em; }
 
 /* ---------- Cabecera ---------- */
 .home .site-header {
@@ -75,14 +85,22 @@
   background-size: 0 2px;
   background-position: 0 100%;
   background-repeat: no-repeat;
-  transition: background-size .3s steps(3, end);
+  transition: background-size .3s var(--ease);
 }
 .home .main-nav a:hover,
 .home .main-nav a.active,
 .home .nav-dropdown-toggle:hover { background-size: 100% 2px; color: var(--garnet); }
 
-.home .dropdown-menu { background: var(--paper); border: 1.5px solid var(--ink); border-radius: 4px; }
-.home .dropdown-menu a { background-image: none; padding: 10px 16px; }
+.home .lh-scallop { z-index: 0; }
+.home .header-top { position: relative; z-index: 2; }
+.home .nav-dropdown { position: relative; z-index: 5; }
+.home .dropdown-menu {
+  z-index: 40;
+  background: var(--paper); border: 1.5px solid var(--ink); border-radius: 4px;
+  box-shadow: 4px 4px 0 var(--rose);
+  padding: 8px 0;
+}
+.home .dropdown-menu a { background-image: none; padding: 10px 20px; white-space: nowrap; }
 .home .dropdown-menu a:hover { background: var(--cream); }
 
 .home .flora-cart-trigger { grid-area: cart; justify-self: end; color: var(--garnet); }
@@ -116,8 +134,8 @@
 .home .lh-scallop__fill { fill: var(--paper); }
 .home .lh-scallop__line { fill: none; stroke: var(--olive); stroke-width: 1.4; stroke-linecap: round; }
 .home .lh-scallop__dot  { fill: var(--lime); }
-.lh-js .home .lh-scallop__dot { opacity: 0; transition: opacity .2s steps(2, end) calc(.6s + var(--i) * 18ms); }
-.lh-js .home .lh-scallop.is-drawn .lh-scallop__dot { opacity: 1; }
+.lh-js .home .lh-scallop__dot { opacity: 0; transition: opacity .4s ease calc(.6s + var(--i) * 25ms), transform .5s var(--ease) calc(.6s + var(--i) * 25ms); transform: translateY(-4px); }
+.lh-js .home .lh-scallop.is-drawn .lh-scallop__dot { opacity: 1; transform: none; }
 
 /* ---------- Efecto «se está dibujando» ---------- */
 /* Cada trazo lleva pathLength="1", así no hace falta medir en JS */
@@ -129,21 +147,19 @@
 .lh-js .home [data-draw].is-drawn .draw { stroke-dashoffset: 0; }
 
 /* Rellenos que aparecen cuando el contorno ya está trazado */
-.lh-js .home [data-draw] .ink-fill { opacity: 0; transition: opacity .35s steps(2, end) var(--fill-delay, 1s); }
+.lh-js .home [data-draw] .ink-fill { opacity: 0; transition: opacity .6s ease var(--fill-delay, 1s); }
 .lh-js .home [data-draw].is-drawn .ink-fill { opacity: 1; }
 
 /* ---------- Stop-motion utilitario ---------- */
 /* Personalizable por elemento: --sm-dur, --sm-delay (negativo = desincroniza), --sm-amp */
 .anim-stopmotion {
-  animation: lh-boil var(--sm-dur, 4.8s) steps(2, end) var(--sm-delay, 0s) infinite;
+  animation: lh-boil var(--sm-dur, 4.8s) ease-in-out var(--sm-delay, 0s) infinite alternate;
   transform-origin: var(--sm-origin, 50% 70%);
   will-change: transform;
 }
 @keyframes lh-boil {
-  0%, 100% { transform: translate(0, 0)      rotate(calc(-0.8deg * var(--sm-amp, 1))); }
-  25%      { transform: translate(1px, -1px) rotate(calc( 1.4deg * var(--sm-amp, 1))); }
-  50%      { transform: translate(-1px, 1px) rotate(calc(-1.8deg * var(--sm-amp, 1))); }
-  75%      { transform: translate(2px, 0)    rotate(calc( 0.6deg * var(--sm-amp, 1))); }
+  from { transform: translateY(0)    rotate(calc(-0.6deg * var(--sm-amp, 1))); }
+  to   { transform: translateY(-3px) rotate(calc( 0.8deg * var(--sm-amp, 1))); }
 }
 
 /* ---------- HERO ---------- */
@@ -186,15 +202,16 @@
 .home .stroke--thin { stroke-width: 1.3; opacity: .55; }
 .home .paper-fill { fill: var(--paper); }
 .home .inside-fill { fill: #efe8d6; }
-.home .lh-envelope__note { font-family: var(--hand); font-size: 30px; fill: var(--garnet); }
+.home .lh-envelope__note { font-family: var(--hand); font-size: 22px; fill: var(--garnet); }
 
 /* Postales: 3 capas -> colocación+hover / entrada / vaivén stop-motion */
 .home .lh-card {
   position: absolute;
   z-index: 2;
+  transition-duration: .6s !important;
   left: var(--x); top: var(--y); width: var(--w);
   transform: rotate(var(--r)) translateY(var(--peek, 0px));
-  transition: transform .42s steps(3, end);
+  transition: transform .42s var(--ease);
 }
 .home .lh-card__paper {
   display: block;
@@ -208,11 +225,12 @@
 
 .lh-js .home .lh-card__enter { opacity: 0; transform: translateY(90px); }
 .lh-js .home .lh-envelope.is-drawn .lh-card__enter {
-  animation: lh-rise .72s steps(4, end) var(--cd, 1.2s) both;
+  animation: lh-rise 1s var(--ease) var(--cd, 1.2s) both;
 }
 @keyframes lh-rise {
   from { opacity: 0; transform: translateY(90px); }
-  30%  { opacity: 1; }
+  25%  { opacity: 1; }
+  70%  { transform: translateY(-8px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
@@ -233,11 +251,13 @@
 }
 .lh-js .home .lh-butterfly__land { opacity: 0; transform: translate(60px, -80px) rotate(30deg); }
 .lh-js .home .lh-envelope.is-drawn .lh-butterfly__land {
-  animation: lh-land 1s steps(6, end) 2.1s both;
+  animation: lh-land 1.6s var(--ease-io) 2.1s both;
 }
 @keyframes lh-land {
-  from { opacity: 0; transform: translate(60px, -80px) rotate(30deg); }
+  from { opacity: 0; transform: translate(80px, -110px) rotate(30deg); }
   20%  { opacity: 1; }
+  45%  { transform: translate(30px, -40px) rotate(-6deg); }
+  70%  { transform: translate(-6px, 6px) rotate(8deg); }
   to   { opacity: 1; transform: none; }
 }
 .home .lh-butterfly svg { display: block; width: 100%; height: auto; overflow: visible; }
@@ -249,9 +269,9 @@
 .home .wing .spot { fill: var(--lime); stroke: none; }
 
 /* Aleteo ocasional en reposo, continuo al pasar el ratón */
-.home .wing { animation: lh-flap-idle 6.5s steps(1, end) 3.4s infinite; }
+.home .wing { animation: lh-flap-idle 6.5s ease-in-out 3.8s infinite; }
 .home .lh-envelope:hover .wing,
-.home .lh-envelope.is-peek .wing { animation: lh-flap .48s steps(2, end) infinite; }
+.home .lh-envelope.is-peek .wing { animation: lh-flap .32s ease-in-out infinite; }
 @keyframes lh-flap      { 0%, 100% { transform: scaleX(1); } 50% { transform: scaleX(.3); } }
 @keyframes lh-flap-idle { 0%, 88%, 100% { transform: scaleX(1); } 91%, 97% { transform: scaleX(.35); } 94% { transform: scaleX(.8); } }
 
@@ -259,7 +279,7 @@
 .home .lh-hero__copy { max-width: 32rem; }
 .home .lh-hero__title {
   font-family: var(--serif);
-  font-weight: 600;
+  font-weight: 500;
   font-size: clamp(2.6rem, 5.4vw, 4.75rem);
   line-height: 1.02;
   letter-spacing: -.015em;
@@ -288,7 +308,7 @@
   border-radius: 999px;
   box-shadow: 3px 3px 0 var(--rose);
   text-decoration: none;
-  transition: transform .3s steps(3, end), box-shadow .3s steps(3, end);
+  transition: transform .3s var(--ease), box-shadow .3s var(--ease);
 }
 .home .lh-hero__cta:hover { transform: translate(-2px, -2px) rotate(-1deg); box-shadow: 5px 5px 0 var(--rose); }
 
@@ -315,9 +335,10 @@
 }
 .home .lh-head { text-align: center; margin-bottom: clamp(40px, 5vw, 64px); }
 .home .lh-eyebrow {
-  font-family: var(--sans);
-  font-size: .78rem; font-weight: 600;
-  letter-spacing: .16em; text-transform: uppercase;
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: var(--type);
+  font-size: .82rem; font-weight: 700;
+  letter-spacing: .14em; text-transform: uppercase;
   color: var(--olive);
   margin: 0 0 12px;
 }
@@ -340,7 +361,7 @@
   padding-bottom: 4px;
   background: linear-gradient(var(--rose), var(--rose)) 0 100% / 100% 2px no-repeat;
 }
-.home .lh-link span { transition: transform .3s steps(3, end); }
+.home .lh-link span { transition: transform .3s var(--ease); }
 .home .lh-link:hover span { transform: translateX(6px); }
 
 /* Tienda */
@@ -354,7 +375,7 @@
   font-family: var(--serif); font-weight: 600; font-size: 1.5rem;
   color: var(--garnet); margin: 0;
 }
-.home .lh-shop__artist span { font-family: var(--hand); font-weight: 400; color: var(--rose); font-size: 2.4rem; margin-right: 6px; }
+.home .lh-shop__artist span { font-family: var(--hand); font-weight: 400; color: var(--rose); font-size: 1.1rem; margin-right: 8px; }
 .home .lh-shop__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; width: 100%; }
 
 .home .lh-product { display: flex; flex-direction: column; gap: 4px; text-decoration: none; color: var(--garnet); }
@@ -366,7 +387,7 @@
   border: 8px solid var(--paper); border-radius: 3px;
   box-shadow: 0 0 0 1.5px var(--ink), 6px 8px 0 1.5px rgba(98, 30, 62, .12);
   transform: rotate(-1.2deg);
-  transition: transform .36s steps(3, end);
+  transition: transform .36s var(--ease);
 }
 .home .lh-shop__grid .lh-product:nth-child(2) .lh-product__art { transform: rotate(1.4deg); }
 .home .lh-product:hover .lh-product__art,
@@ -376,7 +397,7 @@
 .home .lh-art--lime   { background: #eef0c4; color: #8a8d2a; }
 .home .lh-art--garnet { background: #ead3db; color: var(--garnet); }
 .home .lh-product__name  { font-family: var(--sans); font-weight: 600; font-size: 1rem; }
-.home .lh-product__price { font-family: var(--sans); font-size: .9rem; color: var(--olive); font-variant-numeric: tabular-nums; }
+.home .lh-product__price { font-family: var(--type); font-size: .9rem; color: var(--olive); font-variant-numeric: tabular-nums; }
 
 /* Mail Club */
 .home .lh-club__card {
@@ -395,7 +416,7 @@
   display: grid; place-items: center;
   width: clamp(140px, 16vw, 200px); aspect-ratio: 4 / 5;
   background: var(--paper); color: var(--garnet);
-  font-family: var(--hand); font-size: clamp(2.6rem, 4vw, 3.4rem); line-height: 1; text-align: center;
+  font-family: var(--hand); font-size: clamp(1.2rem, 1.8vw, 1.5rem); line-height: 1.5; line-height: 1; text-align: center;
   transform: rotate(-6deg);
   /* borde dentado de sello */
   padding: 14px;
@@ -424,10 +445,10 @@
   display: flex; flex-direction: column; gap: 8px; height: 100%;
   padding: 32px 24px 40px;
   text-decoration: none; color: var(--garnet);
-  transition: background-color .3s steps(3, end);
+  transition: background-color .3s var(--ease);
 }
 .home .lh-services a:hover { background: var(--paper); }
-.home .lh-services__n { font-family: var(--hand); font-size: 2.6rem; color: var(--rose); line-height: 1; }
+.home .lh-services__n { font-family: var(--hand); font-size: 1.3rem; color: var(--rose); line-height: 1; }
 .home .lh-services b { font-family: var(--serif); font-weight: 600; font-size: 1.3rem; }
 .home .lh-services small { font-family: var(--sans); font-size: .92rem; line-height: 1.5; color: var(--olive); }
 
@@ -445,7 +466,7 @@
   border: 1.5px solid var(--ink);
   outline: 1.5px dashed var(--olive); outline-offset: -12px;
   background: var(--lime);
-  font-family: var(--hand); font-size: 2.8rem; line-height: .9; text-align: center; color: var(--garnet);
+  font-family: var(--hand); font-size: 1.15rem; line-height: 1.6; text-align: center; color: var(--garnet);
   transform: rotate(-10deg);
 }
 
@@ -456,15 +477,103 @@
   background: var(--olive); color: var(--cream);
   text-align: center;
 }
-.home .lh-footer__brand { font-family: var(--serif); font-weight: 600; font-size: 1.6rem; color: var(--paper); text-decoration: none; }
+.home .lh-footer__brand { font-family: var(--hand); font-size: 1.4rem; color: var(--paper); text-decoration: none; padding-top: 8px; }
 .home .lh-footer__links { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 28px; }
 .home .lh-footer__links a { font-family: var(--sans); font-size: .95rem; color: var(--cream); text-decoration: none; }
 .home .lh-footer__links a:hover { text-decoration: underline; text-underline-offset: 4px; }
 .home .lh-footer small { font-family: var(--sans); font-size: .8rem; opacity: .75; }
 
 /* Revelado suave al hacer scroll */
-.lh-js .home .lh-reveal { opacity: 0; transform: translateY(16px); transition: opacity .5s steps(4, end), transform .5s steps(4, end); }
+.lh-js .home .lh-reveal { opacity: 0; transform: translateY(16px); transition: opacity .5s var(--ease), transform .5s var(--ease); }
 .lh-js .home .lh-reveal.is-drawn { opacity: 1; transform: none; }
+
+
+/* ==========================================================
+   ADORNOS
+   ========================================================== */
+.home .lh-hero { position: relative; }
+.home .lh-deco {
+  position: absolute; left: var(--dx); top: var(--dy);
+  width: var(--ds); height: calc(var(--ds) * var(--dh, 1));
+  transform: rotate(var(--dr, 0deg));
+  pointer-events: none; overflow: visible;
+  animation: lh-twinkle 5s ease-in-out infinite alternate;
+}
+.home .lh-deco--sprig { --dh: 2; }
+.home .lh-deco:nth-of-type(2n) { animation-delay: -2s; animation-duration: 6.5s; }
+@keyframes lh-twinkle {
+  from { transform: rotate(var(--dr, 0deg)) scale(.9); }
+  to   { transform: rotate(calc(var(--dr, 0deg) + 10deg)) scale(1.06); }
+}
+.home .lh-eyebrow__star { width: 14px; height: 14px; color: var(--lime); flex: none; }
+.home .lh-head .lh-eyebrow::after {
+  content: ""; width: 14px; height: 14px; flex: none;
+  background: var(--rose);
+  clip-path: polygon(50% 0, 60% 40%, 100% 50%, 60% 60%, 50% 100%, 40% 60%, 0 50%, 40% 40%);
+}
+
+/* Washi tape en las postales */
+.home .lh-card__paper { position: relative; }
+.home .lh-card__paper::before {
+  content: ""; position: absolute; z-index: 2;
+  top: -12px; left: 50%; width: 46%; height: 20px;
+  transform: translateX(-50%) rotate(-4deg);
+  background: repeating-linear-gradient(45deg, rgba(198, 201, 84, .75) 0 6px, rgba(198, 201, 84, .55) 6px 12px);
+  clip-path: polygon(3% 0, 97% 4%, 100% 50%, 97% 100%, 2% 96%, 0 50%);
+}
+.home .lh-card--b .lh-card__paper::before { background: repeating-linear-gradient(45deg, rgba(217, 130, 141, .75) 0 6px, rgba(217, 130, 141, .5) 6px 12px); transform: translateX(-50%) rotate(5deg); }
+.home .lh-product__art { position: relative; }
+.home .lh-product__art::after {
+  content: ""; position: absolute; top: -16px; right: 14%; width: 34%; height: 18px;
+  transform: rotate(8deg);
+  background: rgba(217, 130, 141, .55);
+  clip-path: polygon(3% 0, 97% 4%, 100% 50%, 97% 100%, 2% 96%, 0 50%);
+}
+.home .lh-shop__grid .lh-product:nth-child(2) .lh-product__art::after { left: 12%; right: auto; transform: rotate(-6deg); background: rgba(198, 201, 84, .7); }
+
+/* Matasellos */
+.home .lh-envelope > .lh-postmark {
+  position: absolute; z-index: 4; inset: auto;
+  left: 18%; top: 74%; width: 30%; height: auto;
+  transform: rotate(-12deg);
+  opacity: .8; mix-blend-mode: multiply; overflow: visible;
+}
+.home .lh-postmark text { font-family: var(--type); font-size: 8px; font-weight: 700; fill: var(--garnet); letter-spacing: .1em; }
+.lh-js .home .lh-envelope > .lh-postmark { opacity: 0; transform: rotate(-12deg) scale(1.4); transition: opacity .3s ease 2.8s, transform .5s var(--ease) 2.8s; }
+.lh-js .home .lh-envelope.is-drawn > .lh-postmark { opacity: .8; transform: rotate(-12deg) scale(1); }
+
+/* Costura entre secciones */
+.home .lh-stitch {
+  display: flex; align-items: center; gap: 16px;
+  max-width: 1144px; margin: 0 auto; padding: 0 clamp(20px, 4vw, 48px);
+  color: var(--olive);
+}
+.home .lh-stitch::before, .home .lh-stitch::after {
+  content: ""; flex: 1; height: 0;
+  border-top: 2px dashed rgba(102, 116, 54, .45);
+}
+.home .lh-stitch svg { width: 22px; height: 44px; transform: rotate(90deg); }
+
+/* Sobre de correo aéreo en el Mail Club */
+.home .lh-club__card {
+  border: 0;
+  outline: 1.5px solid var(--ink);
+  background:
+    linear-gradient(var(--garnet), var(--garnet)) padding-box,
+    repeating-linear-gradient(-45deg, var(--rose) 0 14px, var(--paper) 14px 22px, var(--lime) 22px 36px, var(--paper) 36px 44px) border-box;
+  border: 12px solid transparent;
+}
+.home .lh-club__card .lh-deco { animation-duration: 4s; }
+
+/* Ramitas junto al sello */
+.home .lh-about__art { position: relative; display: grid; place-items: center; padding: 0 40px; }
+.home .lh-about__sprig { position: absolute; bottom: -8px; width: 44px; height: 88px; color: var(--olive); }
+.home .lh-about__sprig--l { left: 0; transform: rotate(-24deg); }
+.home .lh-about__sprig--r { right: 0; transform: rotate(24deg) scaleX(-1); }
+
+/* Rastro del ratón */
+.home .lh-trail { position: fixed; inset: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 9999; }
+.home .flora-cursor-particle, .home .flora-cursor-flower { display: none !important; }
 
 /* ---------- Responsive ---------- */
 @media (max-width: 960px) {
@@ -512,6 +621,8 @@
   .lh-js .home .lh-scallop__dot,
   .lh-js .home .lh-card__enter,
   .lh-js .home .lh-butterfly__land,
-  .lh-js .home .lh-reveal { opacity: 1; transform: none; }
+  .lh-js .home .lh-reveal,
+  .lh-js .home .lh-envelope > .lh-postmark { opacity: 1; transform: none; }
+  .home .lh-trail { display: none; }
   .lh-js .home .lh-brand__trace { opacity: 0; }
 }
