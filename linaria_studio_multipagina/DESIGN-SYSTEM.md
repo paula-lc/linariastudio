@@ -73,8 +73,8 @@ Escala propuesta (sustituye los 49 tamaños actuales):
 | Token | Valor | Uso |
 |---|---|---|
 | `--ease` | `cubic-bezier(.22, 1, .36, 1)` | todo hover y revelado |
-| `--ease-io` | `cubic-bezier(.65, 0, .35, 1)` | vuelos (mariposa, solapa) |
-| `--ease-pop` *(nuevo)* | `cubic-bezier(.2, 1.25, .35, 1)` | rebotes: sobre explosivo, pálpito |
+| `--ease-io` | `cubic-bezier(.5, .05, .3, 1)` | vuelos, solapa, carta, trazos |
+| `--ease-pop` | `cubic-bezier(.2, 1.25, .35, 1)` | rebotes: sobre explosivo, pálpito |
 | Duraciones | hover `.5–.6s` · revelado `.9–1.1s` · escalonado `110ms` por elemento |
 
 Prohibido `steps()` (se percibe como lag). Todo respeta `prefers-reduced-motion`.
