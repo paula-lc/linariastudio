@@ -108,7 +108,7 @@
     };
     size(); addEventListener("resize", size);
 
-    const COLORS = ["#d9828d", "#c6c954", "#667436", "#621e3e"];
+    const COLORS = ["#d9828d", "#ffec8e", "#c6c954", "#667436", "#621e3e"];
     const HOT = "a, button, .lh-envelope, .lh-product, [role='button']";
     const points = [];      // estela de tinta
     const bits = [];        // pétalos y estrellitas
@@ -129,7 +129,7 @@
         vy: (Math.random() - .2) * (boost ? 2 : .8) + .3,
         r: (boost ? 4 : 2.4) + Math.random() * (boost ? 4 : 2),
         rot: Math.random() * 6.28, vr: (Math.random() - .5) * .12,
-        c: COLORS[(Math.random() * (boost ? 3 : 4)) | 0],
+        c: COLORS[(Math.random() * (boost ? 3 : 5)) | 0],
         life: 1, decay: .012 + Math.random() * .012, star
       });
     };
