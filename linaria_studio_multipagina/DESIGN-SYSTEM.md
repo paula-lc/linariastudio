@@ -4,52 +4,28 @@ Alcance: portada (`index.html`, `home.css`, `home.js`). El resto de páginas usa
 
 ---
 
-## 1. Auditoría
+## 1. Estado
 
-**Componentes revisados:** 12 · **Problemas:** 9 · **Nota:** 55/100
+**Archivos:** `tokens.css` (fuente única de valores, cargado en todas las páginas) → `styles.css` → `cart.css` → `home.css` (solo portada).
 
-La identidad visual es coherente; el código no. `home.css` (1.132 líneas) ha crecido añadiendo parches al final, de modo que muchas reglas se definen 3-6 veces y la última gana.
-
-### Cobertura de tokens
-
-| Categoría | Tokens definidos | Valores sueltos encontrados |
+| Métrica | Antes | Ahora |
 |---|---|---|
-| Color | 5 de marca + 2 neutros + 5 tintes | 31 `rgba()` con valores a mano, 4 hex fuera de `:root` |
-| Tipografía | 4 familias | 49 tamaños distintos (`font-size`) para ~8 roles reales |
-| Espaciado | ninguno | todo con `px`/`clamp()` sueltos |
-| Radio | ninguno | 8 valores distintos (0, 2, 3, 4, 8, 50%, 999px) |
-| Movimiento | `--ease`, `--ease-io` | 9 `cubic-bezier()` escritos a mano, 12 de ellos repiten `--ease` |
-| Sombra | ninguno | ~15 sombras distintas |
+| Líneas de `home.css` | 1.133 | 819 |
+| `!important` en `home.css` | 41 | 1 (el de movimiento reducido) |
+| Tamaños de letra distintos | 49 | 29 |
+| `cubic-bezier()` escritos a mano | 21 | 0 (todos son tokens) |
+| Hex sueltos en `styles.css` + `cart.css` + `home.css` | 60+ | 0 |
+| Páginas con la paleta y tipografía nuevas | 1 | 8 |
 
-### Consistencia
+Reglas:
+- **Ningún color, curva ni fuente fuera de `tokens.css`.** Los tintes se sacan con `color-mix()` de la paleta.
+- **Una regla por componente** en `home.css`, agrupadas por secciones numeradas.
+- Las variables antiguas de `styles.css` (`--sage`, `--berry`, `--pink`…) son solo alias de los tokens.
 
-| Problema | Dónde | Recomendación |
-|---|---|---|
-| Reglas duplicadas que se pisan | `.lh-hero__title-hand` ×4, `.lh-services small` ×6, `.lh-envelope__note` ×3 | Una sola regla por componente |
-| 41 `!important` | carrito, pálpito, tipografía | Subir especificidad con `.home` en vez de `!important` |
-| Código muerto | estilos de `.lh-hero__cta`, `.lh-club__card`, `.lh-stitch` | Borrar: ya no existen en el HTML |
-| `--sans` y `--type` son la misma fuente (Barlow) | `:root` | Quedarse con uno: `--label` |
-| Nombres mezclados | `lh-` (portada) vs `flora-` (carrito) vs sin prefijo (`styles.css`) | `lh-` para todo lo nuevo |
-
-### Completitud de componentes
-
-| Componente | Estados | Variantes | Accesibilidad | Nota |
-|---|---|---|---|---|
-| Botón sello | hover, active ✅ · focus ⚠️ (solo el global) | default, light ✅ | ✅ | 8/10 |
-| Sobre del inicio | dibujo, apertura, hover por postal, pálpito ✅ | — | `role="img"` ✅, sin teclado ⚠️ | 7/10 |
-| Sobre explosivo | entrada, flotar, hover, pálpito ✅ | — | ✅ | 8/10 |
-| Mariposa | vuelo, aleteo, hover, clic ✅ | — | decorativa, sin teclado ⚠️ | 7/10 |
-| Tarjeta de producto | hover, focus ✅ | 4 colores ✅ | ✅ | 9/10 |
-| Onda punteada | — | top, bottom, cap ✅ | `aria-hidden` ✅ | 9/10 |
-| Carrito (sello) | hover ✅ · focus ⚠️ | — | `aria-label` ✅ | 7/10 |
-| Cinta de texto | pausa al hover ✅ | — | `aria-hidden` ✅ | 9/10 |
-| Rastro del ratón | normal, potenciado ✅ | — | se apaga en táctil y movimiento reducido ✅ | 10/10 |
-
-### Acciones prioritarias
-
-1. **Reescribir `home.css` limpio** a partir de los tokens de abajo: quitar duplicados, `!important` y código muerto. Mismo resultado visual, aprox. la mitad de líneas.
-2. **Llevar los tokens a `styles.css`** para que Tienda, Mail Club, Contacto, etc. usen la misma paleta y tipografía (ahora usan `#ce7581`, `#d69447`…).
-3. **Teclado:** que el sobre y la mariposa respondan a `Enter`, y un foco visible tipo sello en botones y carrito.
+Pendiente:
+1. Teclado: que el sobre y la mariposa respondan a `Enter` y foco visible tipo sello.
+2. Reescribir `styles.css` (sigue siendo la hoja antigua con alias) cuando se rediseñen las páginas interiores.
+3. Sustituir los símbolos de producto por fotos reales.
 
 ---
 
@@ -103,7 +79,7 @@ Escala propuesta (sustituye los 49 tamaños actuales):
 
 Prohibido `steps()` (se percibe como lag). Todo respeta `prefers-reduced-motion`.
 
-### Forma y elevación (propuesta)
+### Forma y elevación
 
 | Token | Valor |
 |---|---|
