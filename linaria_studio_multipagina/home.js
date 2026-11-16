@@ -82,6 +82,18 @@
     });
   }
 
+  /* 1f. Clic en un sobre: lo de dentro da un pequeño pálpito */
+  document.querySelectorAll(".lh-envelope, .lh-burst").forEach((box) => {
+    let t;
+    box.addEventListener("click", (e) => {
+      if (e.target.closest(".lh-butterfly")) return;
+      box.classList.remove("is-throb");
+      void box.offsetWidth;                 // reinicia la animación
+      box.classList.add("is-throb");
+      clearTimeout(t); t = setTimeout(() => box.classList.remove("is-throb"), 1300);
+    });
+  });
+
   /* 2. Dibujar / revelar al entrar en pantalla */
   const targets = document.querySelectorAll("[data-draw], .lh-reveal");
   if ("IntersectionObserver" in window) {
