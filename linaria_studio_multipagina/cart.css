@@ -1,11 +1,12 @@
 /* Carrito Flora Studio. Usa los colores de la web y conserva la personalización existente. */
 :root {
-  --flora-sage: var(--sage, #8eaa4d);
-  --flora-sage-dark: var(--sage-dark, #526b2d);
-  --flora-cream: var(--cream, #fffdf5);
-  --flora-pink: #f8e4df;
-  --flora-ink: var(--ink, #34452a);
-  --flora-muted: var(--muted, #777b68);
+  /* Alias a tokens.css */
+  --flora-sage: var(--olive);
+  --flora-sage-dark: var(--olive);
+  --flora-cream: var(--paper);
+  --flora-pink: var(--rose-soft);
+  --flora-ink: var(--garnet);
+  --flora-muted: color-mix(in srgb, var(--garnet) 75%, var(--paper));
 }
 
 
@@ -22,19 +23,19 @@
   z-index: 20;
   align-items: center;
   gap: 7px;
-  border: 1px solid #cbd5ad;
+  border: 1px solid var(--sage-mid);
   border-radius: 30px;
   padding: 8px 12px;
   background: var(--flora-cream);
   color: var(--flora-sage-dark);
-  font: 600 11px "DM Sans", sans-serif;
+  font: 600 11px var(--sans);
   letter-spacing: .04em;
   cursor: pointer;
   transition: background .2s ease, transform .2s ease;
 }
 
 .flora-cart-trigger:hover {
-  background: #f6f3e7;
+  background: var(--cream);
   transform: translateY(-1px);
 }
 
@@ -47,7 +48,7 @@
   padding: 0 5px;
   border-radius: 50%;
   background: var(--flora-sage);
-  color: #fff;
+  color: var(--paper);
   font-size: 10px;
 }
 
@@ -58,7 +59,7 @@
   z-index: 10050;
   display: flex;
   justify-content: flex-end;
-  background: rgba(36, 45, 28, .38);
+  background: color-mix(in srgb, var(--ink) 38%, transparent);
   animation: floraBackdropIn .18s ease both;
 }
 
@@ -71,7 +72,7 @@
   overflow-y: auto;
   background: var(--flora-cream);
   color: var(--flora-ink);
-  box-shadow: -10px 0 35px rgba(34, 45, 24, .12);
+  box-shadow: -10px 0 35px color-mix(in srgb, var(--garnet) 12%, transparent);
   animation: floraDrawerIn .24s ease both;
   outline: none;
 }
@@ -82,11 +83,11 @@
   justify-content: space-between;
   gap: 15px;
   padding-bottom: 18px;
-  border-bottom: 1px solid #e5e7d7;
+  border-bottom: 1px solid var(--sage-soft);
 }
 .flora-cart-heading-copy h2 {
   margin: 2px 0 0;
-  font: 600 27px "Playfair Display", Georgia, serif;
+  font: 600 27px var(--serif);
 }
 .flora-cart-eyebrow {
   margin: 0;
@@ -97,7 +98,7 @@
 .flora-cart-close {
   width: 36px;
   height: 36px;
-  border: 1px solid #dce2c8;
+  border: 1px solid var(--sage-soft);
   border-radius: 50%;
   background: transparent;
   color: var(--flora-sage-dark);
@@ -118,22 +119,22 @@
   gap: 12px;
   align-items: start;
   padding: 17px 0;
-  border-bottom: 1px dashed #dfe4d0;
+  border-bottom: 1px dashed var(--sage-soft);
 }
 .flora-cart-item-visual {
   display: grid;
   place-items: center;
   width: 64px;
   aspect-ratio: 1;
-  background: #e9eddb;
-  border: 4px solid #fff;
-  outline: 1px solid #dfe4d0;
+  background: var(--sage-soft);
+  border: 4px solid var(--paper);
+  outline: 1px solid var(--sage-soft);
   color: var(--flora-sage-dark);
-  font: 31px "Playfair Display", serif;
+  font: 31px var(--serif);
 }
 .flora-cart-item-details h3 {
   margin: 0 0 3px;
-  font: 600 15px "Playfair Display", Georgia, serif;
+  font: 600 15px var(--serif);
 }
 .flora-cart-seller, .flora-cart-price {
   margin: 0 0 4px;
@@ -150,7 +151,7 @@
 .flora-quantity-button {
   width: 24px;
   height: 24px;
-  border: 1px solid #d6dfc1;
+  border: 1px solid var(--sage-mid);
   border-radius: 50%;
   background: white;
   color: var(--flora-sage-dark);
@@ -162,13 +163,13 @@
   margin-left: 4px;
   border: 0;
   background: transparent;
-  color: #a66d6b;
+  color: var(--garnet);
   text-decoration: underline;
-  font: 10px "DM Sans", sans-serif;
+  font: 10px var(--sans);
   cursor: pointer;
 }
 
-.flora-cart-footer { padding-top: 15px; border-top: 1px solid #e5e7d7; }
+.flora-cart-footer { padding-top: 15px; border-top: 1px solid var(--sage-soft); }
 .flora-cart-total-row {
   display: flex;
   justify-content: space-between;
@@ -187,7 +188,7 @@
 .flora-cart-message {
   min-height: 18px;
   margin: 5px 0 8px;
-  color: #9a665f;
+  color: var(--garnet);
   font-size: 11px;
 }
 .flora-checkout-button {
@@ -197,7 +198,7 @@
   border-radius: 28px;
   background: var(--flora-sage);
   color: white;
-  font: 600 11px "DM Sans", sans-serif;
+  font: 600 11px var(--sans);
   letter-spacing: .1em;
   text-transform: uppercase;
   cursor: pointer;
@@ -214,13 +215,13 @@
   aspect-ratio: 1;
   object-fit: cover;
   border: 7px solid white;
-  outline: 1px solid #e5e5d3;
+  outline: 1px solid var(--sage-soft);
 }
-.flora-product-placeholder { font: 65px "Playfair Display", serif; }
-.flora-art-0 { background: #f4d4d0; color: #b65e62; }
-.flora-art-1 { background: #dfe8c1; color: #708d42; }
-.flora-art-2 { background: #f2e3ac; color: #a37e31; }
-.flora-art-3 { background: #c9dfd9; color: #557f77; }
+.flora-product-placeholder { font: 65px var(--serif); }
+.flora-art-0 { background: var(--rose-soft); color: var(--garnet); }
+.flora-art-1 { background: var(--sage-soft); color: var(--olive); }
+.flora-art-2 { background: var(--butter); color: var(--olive); }
+.flora-art-3 { background: var(--garnet-soft); color: var(--garnet); }
 .flora-product-seller { margin: 13px 0 0; color: var(--flora-sage-dark); font-size: 9px; letter-spacing: .1em; text-transform: uppercase; }
 .flora-product-card h3 { margin: 4px 0; }
 .flora-product-description { flex: 1; margin: 2px 0 5px; color: var(--flora-muted); font-size: 11px; }

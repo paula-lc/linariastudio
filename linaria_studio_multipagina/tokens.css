@@ -1,0 +1,58 @@
+/* ==========================================================
+   LINARIA STUDIO · TOKENS DE DISEÑO
+   Única fuente de verdad para color, tipografía, movimiento y forma.
+   Se carga en TODAS las páginas antes de styles.css.
+   Documentación: DESIGN-SYSTEM.md
+   ========================================================== */
+
+:root {
+  /* ---------- Paleta de marca (no añadir colores fuera de aquí) ---------- */
+  --butter: #ffec8e;
+  --lime:   #c6c954;
+  --olive:  #667436;
+  --rose:   #d9828d;
+  --garnet: #621e3e;
+
+  /* ---------- Neutros ---------- */
+  --paper: #fffdf6;   /* tarjetas, sobres */
+  --cream: #f7f3e8;   /* fondo general */
+  --ink:   #1d1d1b;   /* trazo de plumilla */
+
+  /* ---------- Tintes: siempre mezclas de la paleta con papel ---------- */
+  --sage-soft:   color-mix(in srgb, var(--lime) 28%, var(--paper));
+  --sage-mid:    color-mix(in srgb, var(--lime) 70%, var(--paper));
+  --rose-soft:   color-mix(in srgb, var(--rose) 40%, var(--paper));
+  --butter-soft: color-mix(in srgb, var(--butter) 55%, var(--paper));
+  --garnet-soft: color-mix(in srgb, var(--garnet) 18%, var(--paper));
+
+  /* ---------- Tipografía ---------- */
+  --serif: "Instrument Serif", "Bodoni Moda", Georgia, serif;   /* títulos y texto */
+  --hand:  "Monsieur La Doulaise", "cali", cursive;              /* frases manuscritas */
+  --sans:  "Barlow", system-ui, sans-serif;                      /* etiquetas, botones, menú */
+
+  --fs-display: clamp(2.8rem, 6vw, 5.4rem);
+  --fs-h2:      clamp(2.2rem, 4.2vw, 3.6rem);
+  --fs-lead:    clamp(1.25rem, 1.6vw, 1.45rem);
+  --fs-body:    1.1rem;
+  --fs-label:   .78rem;
+  --fs-small:   .72rem;
+  --track-label: .2em;
+
+  /* ---------- Movimiento ---------- */
+  --ease:     cubic-bezier(.22, 1, .36, 1);    /* hover, revelado */
+  --ease-io:  cubic-bezier(.5, .05, .3, 1);    /* vuelos, solapas, plegados, trazos */
+  --ease-pop: cubic-bezier(.2, 1.25, .35, 1);  /* rebotes: sobre explosivo, pálpito */
+  --dur-hover:  .6s;
+  --dur-reveal: 1s;
+  --stagger:    110ms;
+
+  /* ---------- Forma y elevación ---------- */
+  --line: 1.5px solid var(--ink);
+  --radius-paper: 3px;
+  --shadow-paper: 0 6px 12px color-mix(in srgb, var(--garnet) 14%, transparent);
+  --shadow-lift:  0 16px 24px color-mix(in srgb, var(--garnet) 20%, transparent);
+  --shadow-drop:  0 10px 14px color-mix(in srgb, var(--garnet) 13%, transparent);
+
+  /* Cinta washi recortada a mano */
+  --washi-clip: polygon(3% 0, 97% 4%, 100% 50%, 97% 100%, 2% 96%, 0 50%);
+}
