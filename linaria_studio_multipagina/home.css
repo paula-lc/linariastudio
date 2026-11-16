@@ -21,19 +21,21 @@
   /* Tipografía de carta escrita a mano:
      Fraunces (serif blanda y "wonky") para titulares y texto,
      Homemade Apple para notas manuscritas, Courier Prime para sellos/etiquetas */
-  --serif: "Fraunces", Georgia, serif;
-  --sans: "Fraunces", Georgia, serif;
-  --hand: "Homemade Apple", "cali", cursive;
-  --type: "Courier Prime", "Courier New", monospace;
+  /* Par editorial (inspirado en Editorial Society Font Duo):
+     Instrument Serif (títulos y texto), Pinyon Script (caligrafía),
+     Barlow en mayúsculas espaciadas (etiquetas, botones, navegación) */
+  --serif: "Instrument Serif", "Bodoni Moda", Georgia, serif;
+  --sans: "Barlow", system-ui, sans-serif;
+  --hand: "Pinyon Script", "cali", cursive;
+  --type: "Barlow", system-ui, sans-serif;
   --ease: cubic-bezier(.22, 1, .36, 1);
   --ease-io: cubic-bezier(.65, 0, .35, 1);
-  font-variation-settings: "SOFT" 100, "WONK" 1;
   background-color: var(--cream);
   /* grano de papel */
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .38 0 0 0 0 .12 0 0 0 0 .24 0 0 0 .07 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 .home .site-shell { background: transparent; }
-.home * { font-variation-settings: inherit; }
+
 
 /* ---------- Barra de avisos ---------- */
 .home .announcement {
@@ -994,3 +996,47 @@
   .lh-js .home .lh-letter { transform: translateY(-58%) rotate(-3deg) !important; }
 }
 .home .lh-split__panel p, .home .lh-services small, .home .lh-about__text { font-family: var(--serif); }
+
+/* ==========================================================
+   PAR TIPOGRÁFICO EDITORIAL
+   ========================================================== */
+.home .lh-hero__title, .home .lh-title, .home .lh-shop__artist,
+.home .lh-services b, .home .lh-product__name, .home .lh-footer__brand-x { font-weight: 400; }
+.home .lh-hero__title { font-size: clamp(2.8rem, 6vw, 5.4rem); line-height: .95; letter-spacing: -.005em; }
+.home .lh-hero__title-serif { text-transform: uppercase; letter-spacing: .01em; }
+.home .lh-hero__title-hand {
+  font-size: .78em; line-height: 1.2; margin-top: -.05em; margin-left: .8em;
+  transform: rotate(-4deg); color: var(--olive);
+  background: linear-gradient(transparent 70%, var(--butter) 70% 92%, transparent 92%);
+}
+.home .lh-title { font-size: clamp(2.2rem, 4.2vw, 3.6rem); line-height: 1; letter-spacing: 0; }
+.home .lh-eyebrow { font-weight: 600; letter-spacing: .28em; font-size: .74rem; }
+.home .main-nav a, .home .nav-dropdown-toggle {
+  font-family: var(--sans); font-weight: 500; font-size: .78rem;
+  letter-spacing: .2em; text-transform: uppercase;
+}
+.home .dropdown-menu a { letter-spacing: .12em; }
+.home .lh-stamp-btn span {
+  font-family: var(--sans); font-weight: 600; font-size: .78rem;
+  letter-spacing: .22em; text-transform: uppercase;
+  padding: 15px 30px 15px 32px;
+}
+.home .lh-hero__lead, .home .lh-split__panel p, .home .lh-about__text, .home .lh-services small, .home .lh-letter__paper {
+  font-family: var(--serif); font-size: 1.15rem; line-height: 1.5;
+}
+.home .lh-services small { font-size: 1rem; }
+.home .lh-letter__paper { font-size: clamp(.72rem, 1vw, .92rem); line-height: 20px; }
+.home .lh-hero__lead { font-size: clamp(1.15rem, 1.45vw, 1.3rem); }
+.home .lh-product__name { font-size: 1.35rem; }
+.home .lh-product__price, .home .lh-services b, .home .lh-shop__artist { letter-spacing: .2em; font-weight: 600; }
+.home .lh-shop__artist span, .home .lh-services__n { font-size: 1.5rem !important; letter-spacing: 0; text-transform: none; font-weight: 400; }
+.home .lh-link { font-family: var(--sans); font-weight: 600; font-size: .78rem; letter-spacing: .2em; text-transform: uppercase; }
+.home .lh-services__more { font-family: var(--sans); font-size: .72rem; letter-spacing: .18em; text-transform: uppercase; }
+.home .lh-envelope__note { font-size: 34px; }
+.home .lh-about__seal { font-size: 1.9rem; line-height: 1; }
+.home .lh-split .lh-club__stamp { font-size: 1.7rem; line-height: 1; }
+.home .lh-footer__brand { font-size: 2.2rem; }
+.home .lh-ribbon span { font-family: var(--sans); font-weight: 600; letter-spacing: .32em; }
+.home .lh-hero__lead { font-size: clamp(1.25rem, 1.6vw, 1.45rem); line-height: 1.45; }
+.home .lh-split__panel p, .home .lh-about__text { font-size: 1.3rem; }
+.home .lh-services small { font-size: 1.1rem; }
