@@ -22,11 +22,11 @@
      Fraunces (serif blanda y "wonky") para titulares y texto,
      Homemade Apple para notas manuscritas, Courier Prime para sellos/etiquetas */
   /* Par editorial (inspirado en Editorial Society Font Duo):
-     Instrument Serif (títulos y texto), Pinyon Script (caligrafía),
+     Instrument Serif (títulos y texto), Monsieur La Doulaise (caligrafía),
      Barlow en mayúsculas espaciadas (etiquetas, botones, navegación) */
   --serif: "Instrument Serif", "Bodoni Moda", Georgia, serif;
   --sans: "Barlow", system-ui, sans-serif;
-  --hand: "Pinyon Script", "cali", cursive;
+  --hand: "Monsieur La Doulaise", "cali", cursive;
   --type: "Barlow", system-ui, sans-serif;
   --ease: cubic-bezier(.22, 1, .36, 1);
   --ease-io: cubic-bezier(.65, 0, .35, 1);
@@ -1122,3 +1122,12 @@
 .home .lh-split { margin-top: 0; }
 .home .lh-split__media { background: var(--rose-soft); }
 .home .lh-split .lh-club__stamp { --t: radial-gradient(circle at 50% 50%, var(--rose-soft) 4px, #0000 4.5px); }
+/* Monsieur La Doulaise tiene ojo muy pequeño: se compensa el tamaño */
+.home .lh-hero__title-hand { font-size: 1.05em; line-height: 1; margin-top: -.15em; }
+.home .lh-envelope__note { font-size: 44px; }
+.home .lh-shop__artist span, .home .lh-services__n { font-size: 2.1rem !important; }
+.home .lh-about__seal { font-size: 2.5rem; }
+.home .lh-split .lh-club__stamp { font-size: 2.3rem; }
+.home .lh-footer__brand { font-size: 3rem; }
+.home .lh-letter__hi, .home .lh-letter__sign { font-size: 1.6em; line-height: 1; }
+.home .lh-hero__title-hand { white-space: nowrap; font-size: .92em; line-height: 1.1; }
