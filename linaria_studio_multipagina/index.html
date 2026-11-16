@@ -93,35 +93,30 @@
       <svg class="lh-deco lh-deco--star" style="--dx:94%;--dy:70%;--ds:16px;color:var(--rose)" aria-hidden="true"><use href="#lh-star"/></svg>
       <svg class="lh-deco lh-deco--heart" style="--dx:8%;--dy:86%;--ds:20px;--dr:-12deg;color:var(--rose)" aria-hidden="true"><use href="#lh-heart"/></svg>
 
-      <div class="lh-envelope" data-draw tabindex="0" role="img"
-           aria-label="Sobre abierto con postales ilustradas por las dos artistas">
+      <div class="lh-envelope" data-draw role="img"
+           aria-label="Sobre que se abre y deja ver postales ilustradas por las dos artistas">
 
         <!-- Capa trasera: interior + solapa abierta -->
         <svg class="lh-envelope__back" viewBox="0 0 560 520" aria-hidden="true">
           <path class="inside-fill ink-fill" style="--fill-delay:.6s" d="M70 250 L470 215 L500 470 L95 500 Z"/>
-          <path class="paper-fill ink-fill" style="--fill-delay:.6s" d="M70 250 L262 108 L470 215 Z"/>
-          <path class="stroke draw" pathLength="1" style="--dur:.9s"
-                d="M70 250 C140 200 200 152 262 108 C330 142 400 180 470 215"/>
-          <path class="stroke stroke--thin draw" pathLength="1" style="--dur:.7s;--delay:.5s"
-                d="M74 247 C140 202 198 158 259 114"/>
         </svg>
 
         <!-- Postales (asoman del sobre) -->
-        <div class="lh-card lh-card--a" style="--x:17%;--y:31%;--w:38%;--r:-8deg;--ar:4/3;--cd:1.25s">
+        <div tabindex="-1" class="lh-card lh-card--a" style="--x:17%;--y:31%;--w:38%;--r:-8deg;--ar:4/3;--cd:2.05s">
           <div class="lh-card__enter">
             <figure class="lh-card__paper anim-stopmotion" style="--sm-delay:-1.3s;margin:0">
               <img src="images/hero-3.png" alt="" loading="eager">
             </figure>
           </div>
         </div>
-        <div class="lh-card lh-card--b" style="--x:35%;--y:21%;--w:29%;--r:3deg;--ar:3/4;--cd:1.45s">
+        <div tabindex="-1" class="lh-card lh-card--b" style="--x:35%;--y:21%;--w:29%;--r:3deg;--ar:3/4;--cd:2.25s">
           <div class="lh-card__enter">
             <figure class="lh-card__paper anim-stopmotion" style="--sm-delay:-3.1s;--sm-dur:5.6s;margin:0">
               <img src="images/hero-1.PNG" alt="" loading="eager">
             </figure>
           </div>
         </div>
-        <div class="lh-card lh-card--c" style="--x:57%;--y:29%;--w:30%;--r:11deg;--ar:1/1;--cd:1.6s">
+        <div tabindex="-1" class="lh-card lh-card--c" style="--x:57%;--y:29%;--w:30%;--r:11deg;--ar:1/1;--cd:2.45s">
           <div class="lh-card__enter">
             <figure class="lh-card__paper anim-stopmotion" style="--sm-delay:-.4s;--sm-dur:4.2s;margin:0">
               <img src="images/hero-4.png" alt="" loading="eager">
@@ -145,6 +140,16 @@
                 d="M77 268 C210 259 336 247 467 235"/>
           <text class="lh-envelope__note ink-fill" style="--fill-delay:2.6s"
                 x="330" y="452" transform="rotate(-5 330 452)">para ti</text>
+        </svg>
+
+        <!-- Solapa: empieza cerrada y se abre al cargar -->
+        <svg class="lh-envelope__flap" viewBox="0 0 560 520" aria-hidden="true">
+          <g class="lh-flap">
+            <path class="paper-fill" d="M72 272 C150 318 220 358 284 384 C350 346 410 292 472 238 C338 250 205 262 72 272 Z"/>
+            <path class="stroke" d="M72 272 C150 318 220 358 284 384 C350 346 410 292 472 238"/>
+            <path class="stroke stroke--thin" d="M90 278 C160 318 222 352 284 374 C346 340 404 292 456 248"/>
+            <circle class="lh-flap__seal" cx="284" cy="360" r="16"/>
+          </g>
         </svg>
 
         <!-- Matasellos -->
@@ -199,8 +204,17 @@
 
     </section>
 
+
+    <div class="lh-ribbon" aria-hidden="true">
+      <div class="lh-ribbon__track">
+        <span>hecho a mano</span><i>✿</i><span>dos artistas, un mismo mundo</span><i>✿</i><span>cartas ilustradas</span><i>✿</i><span>papelería con alma</span><i>✿</i>
+        <span>hecho a mano</span><i>✿</i><span>dos artistas, un mismo mundo</span><i>✿</i><span>cartas ilustradas</span><i>✿</i><span>papelería con alma</span><i>✿</i>
+      </div>
+    </div>
 <!-- ============ BEST SELLERS ============ -->
 <section class="lh-section lh-shop" aria-labelledby="shop-title">
+  <svg class="lh-loop lh-loop--l" viewBox="0 0 160 260" aria-hidden="true"><path d="M-20 40 C60 10 130 40 120 100 C110 160 30 150 40 100 C50 50 140 80 120 160 C105 220 40 230 -20 250"/></svg>
+  <svg class="lh-loop lh-loop--r" viewBox="0 0 160 260" aria-hidden="true"><path d="M180 20 C100 40 50 90 80 140 C110 190 150 150 120 120 C90 90 30 140 60 200 C80 240 140 250 180 240"/></svg>
   <header class="lh-head">
     <p class="lh-eyebrow"><svg class="lh-eyebrow__star" aria-hidden="true"><use href="#lh-star"/></svg>Descubre nuestro arte</p>
     <h2 id="shop-title" class="lh-title">Lo más querido</h2>
@@ -243,42 +257,47 @@
   </div>
 </section>
 
-<div class="lh-stitch" aria-hidden="true"><svg><use href="#lh-sprig"/></svg></div>
 <!-- ============ MAIL CLUB ============ -->
-<section class="lh-section lh-club" aria-labelledby="club-title">
-  <div class="lh-club__card">
-    <svg class="lh-deco" style="--dx:92%;--dy:10%;--ds:26px;color:var(--lime)" aria-hidden="true"><use href="#lh-star"/></svg>
-    <svg class="lh-deco" style="--dx:86%;--dy:80%;--ds:18px;color:var(--rose)" aria-hidden="true"><use href="#lh-heart"/></svg>
-    <div class="lh-club__stamp" aria-hidden="true">
-      <span>Mail<br>Club</span>
-    </div>
-    <div class="lh-club__copy">
-      <p class="lh-eyebrow lh-eyebrow--light"><svg class="lh-eyebrow__star" aria-hidden="true"><use href="#lh-star"/></svg>Una cartita en tu buzón</p>
-      <h2 id="club-title" class="lh-title lh-title--light">Algo bonito que esperar cada mes</h2>
-      <p>Ilustraciones, papelería y pequeñas sorpresas para coleccionar. Una dosis de creatividad y desconexión, por correo.</p>
-      <a class="lh-hero__cta lh-hero__cta--light" href="mail-club.html">Descubrir el Mail Club</a>
-    </div>
+<section class="lh-split lh-club" aria-labelledby="club-title">
+  <svg class="lh-wave lh-wave--top" aria-hidden="true"></svg>
+  <div class="lh-split__media">
+    <figure class="lh-frame">
+      <img src="images/hero-2.png" alt="Ilustración del Mail Club" loading="lazy">
+    </figure>
+    <div class="lh-club__stamp" aria-hidden="true"><span>Mail<br>Club</span></div>
+  </div>
+  <div class="lh-split__panel">
+    <svg class="lh-split__sprigs" viewBox="0 0 180 90" aria-hidden="true">
+      <use href="#lh-sprig" x="0" y="0" width="45" height="90" transform="rotate(-14 22 90)"/>
+      <use href="#lh-sprig" x="68" y="-6" width="45" height="96"/>
+      <use href="#lh-sprig" x="135" y="0" width="45" height="90" transform="rotate(14 158 90)"/>
+    </svg>
+    <p class="lh-eyebrow lh-eyebrow--light"><svg class="lh-eyebrow__star" aria-hidden="true"><use href="#lh-star"/></svg>Una cartita en tu buzón</p>
+    <h2 id="club-title" class="lh-title lh-title--light">Algo bonito que esperar cada mes</h2>
+    <p>Ilustraciones, papelería y pequeñas sorpresas para coleccionar. Una dosis de creatividad y desconexión, por correo.</p>
+    <a class="lh-hero__cta lh-hero__cta--light" href="mail-club.html">Descubrir el Mail Club</a>
   </div>
 </section>
 
-<div class="lh-stitch" aria-hidden="true"><svg><use href="#lh-sprig"/></svg></div>
 <!-- ============ SERVICIOS ============ -->
-<section class="lh-section" aria-labelledby="serv-title">
+<section class="lh-section lh-serv" aria-labelledby="serv-title">
+  <svg class="lh-wave lh-wave--top" aria-hidden="true"></svg>
   <header class="lh-head">
     <p class="lh-eyebrow"><svg class="lh-eyebrow__star" aria-hidden="true"><use href="#lh-star"/></svg>¿Hacemos algo juntas?</p>
     <h2 id="serv-title" class="lh-title">También podemos ayudarte con…</h2>
   </header>
   <ul class="lh-services">
-    <li><a href="editorial.html"><span class="lh-services__n">01</span><b>Editorial</b><small>Portadas, interiores y publicaciones</small></a></li>
-    <li><a href="eventos.html"><span class="lh-services__n">02</span><b>Eventos creativos</b><small>Talleres y experiencias artísticas</small></a></li>
-    <li><a href="contacto.html"><span class="lh-services__n">03</span><b>Ilustración</b><small>Encargos y proyectos personalizados</small></a></li>
-    <li><a href="contacto.html"><span class="lh-services__n">04</span><b>Colaboraciones</b><small>Cuéntanos tu idea</small></a></li>
+    <li><a href="editorial.html"><svg class="lh-services__icon" viewBox="0 0 64 64" aria-hidden="true"><path d="M14 50 L44 14 L52 22 L22 56 Z M14 50 L10 60 L22 56 M40 18 L48 26"/><path d="M8 62 C20 58 30 66 44 60"/></svg><b>Editorial</b><small>Portadas, interiores y publicaciones</small><span class="lh-services__more">Ver más <span aria-hidden="true">→</span></span></a></li>
+    <li><a href="eventos.html"><svg class="lh-services__icon" viewBox="0 0 64 64" aria-hidden="true"><path d="M40 10 C52 14 56 24 50 30 L32 48 L22 40 L40 22 C44 18 42 14 40 10 Z"/><path d="M22 40 C14 42 10 50 12 58 C20 58 28 54 32 48"/><circle cx="50" cy="52" r="3"/><circle cx="56" cy="42" r="2"/></svg><b>Eventos creativos</b><small>Talleres y experiencias artísticas</small><span class="lh-services__more">Ver más <span aria-hidden="true">→</span></span></a></li>
+    <li><a href="contacto.html"><svg class="lh-services__icon" viewBox="0 0 64 64" aria-hidden="true"><path d="M32 54 C14 42 8 32 12 22 C16 12 28 12 32 22 C36 12 48 12 52 22 C56 32 50 42 32 54 Z"/><path d="M24 24 C22 28 22 32 24 36"/></svg><b>Ilustración</b><small>Encargos y proyectos personalizados</small><span class="lh-services__more">Pedir encargo <span aria-hidden="true">→</span></span></a></li>
+    <li><a href="contacto.html"><svg class="lh-services__icon" viewBox="0 0 64 64" aria-hidden="true"><path d="M8 20 L56 20 L56 52 L8 52 Z"/><path d="M8 20 L32 38 L56 20"/><path d="M8 52 L26 34 M56 52 L38 34"/><path d="M44 8 C48 4 54 6 52 12 C50 16 44 16 44 12" /></svg><b>Colaboraciones</b><small>Cuéntanos tu idea</small><span class="lh-services__more">Escribirnos <span aria-hidden="true">→</span></span></a></li>
   </ul>
 </section>
 
-<div class="lh-stitch" aria-hidden="true"><svg><use href="#lh-sprig"/></svg></div>
 <!-- ============ SOBRE NOSOTRAS ============ -->
-<section class="lh-section lh-about" aria-labelledby="about-title">
+<section class="lh-section lh-about-band" aria-labelledby="about-title">
+  <svg class="lh-wave lh-wave--top" aria-hidden="true"></svg>
+  <div class="lh-about">
   <div class="lh-about__art" aria-hidden="true">
     <svg class="lh-about__sprig lh-about__sprig--l"><use href="#lh-sprig"/></svg>
     <div class="lh-about__seal">hecho<br>con amor</div>
@@ -290,9 +309,11 @@
     <p class="lh-about__text">Somos dos artistas con muchas ideas, ganas de experimentar y amor por las cosas bonitas. Aquí reunimos nuestras ilustraciones, proyectos y pequeños tesoros.</p>
     <a class="lh-link" href="contacto.html">Hablemos <span aria-hidden="true">→</span></a>
   </div>
+  </div>
 </section>
 
 <footer class="lh-footer">
+  <svg class="lh-wave lh-wave--top" aria-hidden="true"></svg>
   <a class="lh-footer__brand" href="index.html">Linaria Studio</a>
   <nav class="lh-footer__links" aria-label="Pie de página">
     <a href="tienda-isabel.html">Tienda</a><a href="mail-club.html">Mail Club</a><a href="eventos.html">Eventos</a><a href="editorial.html">Editorial</a><a href="contacto.html">Contacto</a>

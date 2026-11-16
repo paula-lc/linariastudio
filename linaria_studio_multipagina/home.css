@@ -10,7 +10,10 @@
   --garnet: #621e3e;
   --cream: #f7f3e8;
   --paper: #fffdf6;
-  --ink: #1d1d1b;            /* trazo de plumilla del sobre */
+  --ink: #1d1d1b;
+  --olive-dark: #4e5a27;
+  --sage-soft: #e6e9c6;
+  --sage-mid: #c9d08f;            /* trazo de plumilla del sobre */
   /* Tipografía de carta escrita a mano:
      Fraunces (serif blanda y "wonky") para titulares y texto,
      Homemade Apple para notas manuscritas, Courier Prime para sellos/etiquetas */
@@ -188,7 +191,7 @@
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
 }
-.home .lh-envelope > svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.home .lh-envelope > svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
 .home .lh-envelope__back  { z-index: 1; }
 .home .lh-envelope__front { z-index: 3; filter: drop-shadow(0 10px 14px rgba(98, 30, 62, .12)); }
 
@@ -234,14 +237,39 @@
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* Hover / foco / toque: las postales asoman un poco más */
-.home .lh-envelope:hover .lh-card,
-.home .lh-envelope:focus-visible .lh-card,
-.home .lh-envelope.is-peek .lh-card { --peek: -26px; }
-.home .lh-envelope:hover .lh-card--b,
-.home .lh-envelope:focus-visible .lh-card--b,
-.home .lh-envelope.is-peek .lh-card--b { --peek: -38px; }
+/* Hover / toque en cada postal: sale un poco más del sobre */
+.home .lh-card { cursor: pointer; }
+.home .lh-card:hover,
+.home .lh-card:focus-visible,
+.home .lh-card.is-up { --peek: -64px; z-index: 2; }
+.home .lh-card:hover .lh-card__paper,
+.home .lh-card.is-up .lh-card__paper { box-shadow: 0 16px 24px rgba(98, 30, 62, .2); }
+.home .lh-card:focus-visible { outline: none; }
 .home .lh-envelope:focus-visible { outline: 2px dashed var(--olive); outline-offset: 12px; }
+
+/* Solapa: cerrada encima del bolsillo, gira hacia arriba y queda detrás de las postales */
+.home .lh-envelope__flap { z-index: 5; }
+.home .lh-flap { transform-box: view-box; transform-origin: 272px 255px; }
+.home .lh-flap__seal { fill: var(--olive); stroke: var(--ink); stroke-width: 1.4; }
+.lh-js .home .lh-envelope__flap { opacity: 0; transition: opacity .4s ease .9s; }
+.lh-js .home .lh-envelope.is-drawn .lh-envelope__flap {
+  opacity: 1;
+  animation: lh-flap-layer 1.1s linear 1.3s both;
+}
+.lh-js .home .lh-envelope.is-drawn .lh-flap { animation: lh-flap-open 1.1s cubic-bezier(.55, .05, .3, 1) 1.3s both; }
+.lh-js .home .lh-envelope.is-drawn .lh-flap__seal { animation: lh-seal-pop .5s var(--ease) 1.3s both reverse; }
+@keyframes lh-flap-open {
+  from { transform: scaleY(1); }
+  to   { transform: scaleY(-1); }
+}
+@keyframes lh-flap-layer {          /* pasa detrás de las postales al cruzar la mitad */
+  0%, 49% { z-index: 5; }
+  50%, 100% { z-index: 1; }
+}
+@keyframes lh-seal-pop { from { opacity: 0; transform: scale(.4); } to { opacity: 1; transform: none; } }
+.home .lh-flap__seal { transform-box: fill-box; transform-origin: center; }
+.lh-js .home .lh-envelope.is-drawn .lh-flap__seal { animation: lh-seal-off .3s ease 1.3s both; }
+@keyframes lh-seal-off { to { opacity: 0; transform: scale(.6); } }
 
 /* Mariposa */
 .home .lh-butterfly {
@@ -251,7 +279,7 @@
 }
 .lh-js .home .lh-butterfly__land { opacity: 0; transform: translate(60px, -80px) rotate(30deg); }
 .lh-js .home .lh-envelope.is-drawn .lh-butterfly__land {
-  animation: lh-land 1.6s var(--ease-io) 2.1s both;
+  animation: lh-land 1.6s var(--ease-io) 2.9s both;
 }
 @keyframes lh-land {
   from { opacity: 0; transform: translate(80px, -110px) rotate(30deg); }
@@ -270,8 +298,7 @@
 
 /* Aleteo ocasional en reposo, continuo al pasar el ratón */
 .home .wing { animation: lh-flap-idle 6.5s ease-in-out 3.8s infinite; }
-.home .lh-envelope:hover .wing,
-.home .lh-envelope.is-peek .wing { animation: lh-flap .32s ease-in-out infinite; }
+.home .lh-envelope:hover .wing { animation: lh-flap .32s ease-in-out infinite; }
 @keyframes lh-flap      { 0%, 100% { transform: scaleX(1); } 50% { transform: scaleX(.3); } }
 @keyframes lh-flap-idle { 0%, 88%, 100% { transform: scaleX(1); } 91%, 97% { transform: scaleX(.35); } 94% { transform: scaleX(.8); } }
 
@@ -329,9 +356,9 @@
    Escala de espaciado: 8 · 16 · 24 · 32 · 48 · 64 · 96
    ========================================================== */
 .home .lh-section {
-  max-width: 1240px;
-  margin: 0 auto;
-  padding: clamp(56px, 7vw, 96px) clamp(20px, 4vw, 48px);
+  position: relative;
+  padding-block: clamp(64px, 8vw, 104px);
+  padding-inline: max(20px, calc((100% - 1144px) / 2));
 }
 .home .lh-head { text-align: center; margin-bottom: clamp(40px, 5vw, 64px); }
 .home .lh-eyebrow {
@@ -398,41 +425,6 @@
 .home .lh-art--garnet { background: #ead3db; color: var(--garnet); }
 .home .lh-product__name  { font-family: var(--sans); font-weight: 600; font-size: 1rem; }
 .home .lh-product__price { font-family: var(--type); font-size: .9rem; color: var(--olive); font-variant-numeric: tabular-nums; }
-
-/* Mail Club */
-.home .lh-club__card {
-  position: relative;
-  display: grid; grid-template-columns: auto 1fr;
-  gap: clamp(32px, 5vw, 64px); align-items: center;
-  padding: clamp(40px, 6vw, 72px);
-  background: var(--garnet); color: var(--cream);
-  border: 1.5px solid var(--ink); border-radius: 6px;
-  box-shadow: 8px 8px 0 var(--lime);
-}
-.home .lh-club__copy { max-width: 34rem; }
-.home .lh-club__copy .lh-title { margin-bottom: 16px; }
-.home .lh-club__copy p:not(.lh-eyebrow) { font-family: var(--sans); font-size: 1.05rem; line-height: 1.6; margin: 0 0 32px; opacity: .92; }
-.home .lh-club__stamp {
-  display: grid; place-items: center;
-  width: clamp(140px, 16vw, 200px); aspect-ratio: 4 / 5;
-  background: var(--paper); color: var(--garnet);
-  font-family: var(--hand); font-size: clamp(1.2rem, 1.8vw, 1.5rem); line-height: 1.5; line-height: 1; text-align: center;
-  transform: rotate(-6deg);
-  /* borde dentado de sello */
-  padding: 14px;
-  /* borde dentado de sello */
-  --t: radial-gradient(circle at 50% 50%, var(--garnet) 5px, #0000 5.5px);
-  background:
-    var(--t) 0 0 / 16px 16px repeat-x,
-    var(--t) 0 100% / 16px 16px repeat-x,
-    var(--t) 0 0 / 16px 16px repeat-y,
-    var(--t) 100% 0 / 16px 16px repeat-y,
-    var(--paper);
-  background-origin: border-box;
-}
-.home .lh-club__stamp span { border: 1.5px dashed var(--rose); width: 100%; height: 100%; display: grid; place-items: center; }
-.home .lh-hero__cta--light { background: var(--paper); color: var(--garnet); box-shadow: 3px 3px 0 var(--lime); }
-.home .lh-hero__cta--light:hover { box-shadow: 5px 5px 0 var(--lime); }
 
 /* Servicios */
 .home .lh-services {
@@ -539,31 +531,8 @@
   opacity: .8; mix-blend-mode: multiply; overflow: visible;
 }
 .home .lh-postmark text { font-family: var(--type); font-size: 8px; font-weight: 700; fill: var(--garnet); letter-spacing: .1em; }
-.lh-js .home .lh-envelope > .lh-postmark { opacity: 0; transform: rotate(-12deg) scale(1.4); transition: opacity .3s ease 2.8s, transform .5s var(--ease) 2.8s; }
+.lh-js .home .lh-envelope > .lh-postmark { opacity: 0; transform: rotate(-12deg) scale(1.4); transition: opacity .3s ease 3.4s, transform .5s var(--ease) 3.4s; }
 .lh-js .home .lh-envelope.is-drawn > .lh-postmark { opacity: .8; transform: rotate(-12deg) scale(1); }
-
-/* Costura entre secciones */
-.home .lh-stitch {
-  display: flex; align-items: center; gap: 16px;
-  max-width: 1144px; margin: 0 auto; padding: 0 clamp(20px, 4vw, 48px);
-  color: var(--olive);
-}
-.home .lh-stitch::before, .home .lh-stitch::after {
-  content: ""; flex: 1; height: 0;
-  border-top: 2px dashed rgba(102, 116, 54, .45);
-}
-.home .lh-stitch svg { width: 22px; height: 44px; transform: rotate(90deg); }
-
-/* Sobre de correo aéreo en el Mail Club */
-.home .lh-club__card {
-  border: 0;
-  outline: 1.5px solid var(--ink);
-  background:
-    linear-gradient(var(--garnet), var(--garnet)) padding-box,
-    repeating-linear-gradient(-45deg, var(--rose) 0 14px, var(--paper) 14px 22px, var(--lime) 22px 36px, var(--paper) 36px 44px) border-box;
-  border: 12px solid transparent;
-}
-.home .lh-club__card .lh-deco { animation-duration: 4s; }
 
 /* Ramitas junto al sello */
 .home .lh-about__art { position: relative; display: grid; place-items: center; padding: 0 40px; }
@@ -574,6 +543,133 @@
 /* Rastro del ratón */
 .home .lh-trail { position: fixed; inset: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 9999; }
 .home .flora-cursor-particle, .home .flora-cursor-flower { display: none !important; }
+
+
+/* ==========================================================
+   BANDAS, ONDAS Y RITMO DE SECCIONES (inspirado en el mockup)
+   ========================================================== */
+/* Onda punteada que generan home.js: toma el color de su sección */
+.home .lh-wave {
+  position: absolute; left: 0; width: 100%; height: 26px;
+  display: block; overflow: visible; pointer-events: none; z-index: 3;
+  color: inherit;
+}
+.home .lh-wave--top    { top: -25px; }
+.home .lh-wave--bottom { bottom: -25px; transform: scaleY(-1); }
+.home .lh-wave__fill { fill: var(--wave-bg, var(--cream)); }
+.home .lh-wave__dot  { fill: var(--wave-dot, var(--lime)); }
+
+/* Cinta de texto en movimiento */
+.home .lh-ribbon {
+  overflow: hidden;
+  background: var(--olive);
+  color: var(--cream);
+  border-block: 1.5px solid var(--ink);
+  padding: 12px 0;
+}
+.home .lh-ribbon__track {
+  display: flex; gap: 28px; width: max-content; align-items: center;
+  animation: lh-marquee 38s linear infinite;
+}
+.home .lh-ribbon span { font-family: var(--type); font-weight: 700; font-size: .82rem; letter-spacing: .28em; text-transform: uppercase; white-space: nowrap; }
+.home .lh-ribbon i { font-style: normal; color: var(--lime); }
+@keyframes lh-marquee { to { transform: translateX(-50%); } }
+
+/* Tienda: banda de papel con lazos dibujados */
+.home .lh-shop { background: var(--paper); overflow: hidden; }
+.home .lh-loop { position: absolute; width: clamp(90px, 12vw, 160px); pointer-events: none; }
+.home .lh-loop path { fill: none; stroke-width: 14; stroke-linecap: round; }
+.home .lh-loop--l { left: 0; top: 40px; }
+.home .lh-loop--l path { stroke: var(--rose); opacity: .7; }
+.home .lh-loop--r { right: 0; bottom: 30px; }
+.home .lh-loop--r path { stroke: var(--sage-mid); opacity: .8; }
+.home .lh-shop .lh-head, .home .lh-shop__cols { position: relative; z-index: 1; }
+.home .lh-product__name { font-family: var(--serif); font-weight: 400; font-size: 1.2rem; }
+.home .lh-product { align-items: center; text-align: center; }
+.home .lh-shop__group { align-items: center; }
+.home .lh-shop__artist {
+  font-family: var(--type); font-weight: 700; font-size: .85rem; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--olive); padding-bottom: 6px; border-bottom: 2px solid var(--olive);
+}
+.home .lh-shop__artist span { font-size: .95rem; letter-spacing: 0; text-transform: none; }
+
+/* Bloque partido: imagen + panel verde */
+.home .lh-split {
+  position: relative;
+  display: grid; grid-template-columns: 1fr 1fr;
+  margin-block: 26px;
+  --wave-bg: var(--cream);
+}
+.home .lh-split__media {
+  position: relative;
+  display: grid; place-items: center;
+  padding: clamp(56px, 7vw, 96px) clamp(24px, 4vw, 64px);
+  background: var(--cream);
+}
+.home .lh-frame {
+  margin: 0; width: min(100%, 420px);
+  padding: 10px; background: var(--paper);
+  border: 1.5px solid var(--ink); border-radius: 3px;
+  box-shadow: 8px 10px 0 var(--sage-mid);
+  transform: rotate(-3deg);
+  position: relative;
+}
+.home .lh-frame::before {
+  content: ""; position: absolute; top: -14px; left: 50%; width: 40%; height: 22px;
+  transform: translateX(-50%) rotate(3deg);
+  background: repeating-linear-gradient(45deg, rgba(217, 130, 141, .75) 0 6px, rgba(217, 130, 141, .5) 6px 12px);
+  clip-path: polygon(3% 0, 97% 4%, 100% 50%, 97% 100%, 2% 96%, 0 50%);
+}
+.home .lh-frame img { display: block; width: 100%; height: auto; }
+.home .lh-split .lh-club__stamp {
+  position: absolute; right: clamp(16px, 5vw, 64px); bottom: clamp(24px, 4vw, 56px);
+  display: grid; place-items: center;
+  width: clamp(96px, 10vw, 128px); aspect-ratio: 4 / 5; padding: 10px;
+  font-family: var(--hand); font-size: 1rem; line-height: 1.5; text-align: center; color: var(--garnet);
+  transform: rotate(8deg);
+  --t: radial-gradient(circle at 50% 50%, var(--cream) 4px, #0000 4.5px);
+  background: var(--t) 0 0 / 12px 12px repeat-x, var(--t) 0 100% / 12px 12px repeat-x,
+              var(--t) 0 0 / 12px 12px repeat-y, var(--t) 100% 0 / 12px 12px repeat-y, var(--lime);
+  filter: drop-shadow(2px 3px 0 rgba(29, 29, 27, .25));
+}
+.home .lh-split .lh-club__stamp span { border: 1.5px dashed var(--olive); width: 100%; height: 100%; display: grid; place-items: center; }
+.home .lh-split__panel {
+  display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
+  padding: clamp(56px, 7vw, 96px) clamp(24px, 5vw, 80px);
+  background: var(--olive); color: var(--cream);
+}
+.home .lh-split__panel .lh-title { margin-bottom: 16px; color: var(--paper); }
+.home .lh-split__panel p:not(.lh-eyebrow) { font-size: 1.05rem; line-height: 1.65; max-width: 30rem; margin: 0 0 32px; }
+.home .lh-split__sprigs { width: 150px; margin-bottom: 20px; color: var(--cream); }
+.home .lh-split .lh-wave { --wave-bg: var(--cream); }
+.home .lh-split .lh-wave--top    { --wave-bg: var(--cream); }
+
+/* Servicios: banda verde clara con iconos de línea */
+.home .lh-serv { background: var(--sage-soft); --wave-bg: var(--sage-soft); --wave-dot: var(--olive); }
+.home .lh-services { border-top: 0; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.home .lh-services li + li { border-left: 0; }
+.home .lh-services a { align-items: center; text-align: center; padding: 16px 16px 24px; border-radius: 8px; }
+.home .lh-services a:hover { background: rgba(255, 253, 246, .6); }
+.home .lh-services__icon {
+  width: 76px; height: 76px; margin-bottom: 8px;
+  fill: none; stroke: var(--olive); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round;
+  transition: transform .5s var(--ease);
+}
+.home .lh-services a:hover .lh-services__icon { transform: rotate(-8deg) translateY(-4px); }
+.home .lh-services b { font-family: var(--type); font-weight: 700; font-size: .9rem; letter-spacing: .12em; text-transform: uppercase; color: var(--olive-dark); }
+.home .lh-services small { color: var(--garnet); }
+.home .lh-services__more { margin-top: 4px; font-size: .85rem; color: var(--garnet); border-bottom: 1.5px solid var(--rose); }
+.home .lh-serv .lh-title { color: var(--olive-dark); }
+
+/* Sobre nosotras */
+.home .lh-about-band { background: var(--cream); --wave-bg: var(--cream); }
+
+/* Pie */
+.home .lh-footer { position: relative; margin-top: 26px; background: var(--olive-dark); --wave-bg: var(--olive-dark); --wave-dot: var(--lime); }
+
+/* Más verde en la cabecera y el aviso */
+.home .announcement { background: var(--olive); }
+.home .flora-cart-trigger { background: var(--sage-soft) !important; }
 
 /* ---------- Responsive ---------- */
 @media (max-width: 960px) {
@@ -599,17 +695,13 @@
   .home .lh-hero__aside { display: none; }
 
   .home .lh-shop__cols { grid-template-columns: 1fr; }
-  .home .lh-club__card { grid-template-columns: 1fr; justify-items: center; text-align: center; }
-  .home .lh-services { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .home .lh-services li:nth-child(3) { border-left: 0; }
-  .home .lh-services li:nth-child(n+3) { border-top: 1px dashed rgba(29, 29, 27, .3); }
+  .home .lh-split { grid-template-columns: 1fr; }
+  .home .lh-services { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
   .home .lh-about { grid-template-columns: 1fr; justify-items: center; text-align: center; }
 }
 @media (max-width: 520px) {
   .home .lh-shop__grid { gap: 16px; }
-  .home .lh-services { grid-template-columns: 1fr; }
-  .home .lh-services li + li { border-left: 0; border-top: 1px dashed rgba(29, 29, 27, .3); }
-  .home .lh-club__card { box-shadow: 5px 5px 0 var(--lime); }
+  .home .lh-services { grid-template-columns: 1fr 1fr; gap: 8px; }
 }
 
 /* ---------- Movimiento reducido ---------- */
@@ -622,7 +714,15 @@
   .lh-js .home .lh-card__enter,
   .lh-js .home .lh-butterfly__land,
   .lh-js .home .lh-reveal,
-  .lh-js .home .lh-envelope > .lh-postmark { opacity: 1; transform: none; }
+  .lh-js .home .lh-envelope > .lh-postmark { opacity: .8; transform: rotate(-12deg); }
   .home .lh-trail { display: none; }
+  .lh-js .home .lh-envelope__flap { opacity: 1; z-index: 1; }
+  .lh-js .home .lh-flap { transform: scaleY(-1); }
+  .lh-js .home .lh-flap__seal { opacity: 0; }
   .lh-js .home .lh-brand__trace { opacity: 0; }
 }
+
+/* Ajustes finales */
+.home .lh-product { width: 100%; }
+.home .lh-product__art { width: 100%; }
+.home .lh-split { margin-bottom: 0; }

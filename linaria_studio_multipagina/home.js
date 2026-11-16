@@ -26,11 +26,30 @@
       dots;
   };
   buildScallop();
+
+  /* 1b. Ondas punteadas entre secciones */
+  const waves = document.querySelectorAll(".lh-wave");
+  const buildWaves = () => waves.forEach((svg, k) => {
+    const w = Math.round(svg.getBoundingClientRect().width);
+    if (!w) return;
+    const H = 26, mid = 13, amp = 7;
+    const len = Math.max(140, w / Math.max(4, Math.round(w / 220)));   // longitud de onda
+    const phase = k * 1.7;
+    const y = (x) => mid + Math.sin((x / len) * Math.PI * 2 + phase) * amp;
+    let d = `M0 ${H + 2} L0 ${y(0).toFixed(1)}`;
+    for (let x = 6; x <= w; x += 6) d += ` L${x} ${y(x).toFixed(1)}`;
+    d += ` L${w} ${y(w).toFixed(1)} L${w} ${H + 2} Z`;
+    let dots = "";
+    for (let x = 6; x < w; x += 13) dots += `<circle class="lh-wave__dot" cx="${x}" cy="${(y(x) + 6).toFixed(1)}" r="2"/>`;
+    svg.setAttribute("viewBox", `0 0 ${w} ${H}`);
+    svg.innerHTML = `<path class="lh-wave__fill" d="${d}"/>${dots}`;
+  });
+  buildWaves();
   let rt, lastW = window.innerWidth;
   window.addEventListener("resize", () => {
     if (window.innerWidth === lastW) return;          // ignora la barra del móvil
     lastW = window.innerWidth;
-    clearTimeout(rt); rt = setTimeout(buildScallop, 150);
+    clearTimeout(rt); rt = setTimeout(() => { buildScallop(); buildWaves(); }, 150);
   });
 
   /* 2. Dibujar / revelar al entrar en pantalla */
@@ -48,16 +67,13 @@
     targets.forEach((t) => t.classList.add("is-drawn"));
   }
 
-  /* 3. Sobre: clic/toque alterna, teclado con Enter/Espacio.
-        (click en vez de touchstart: no se dispara al hacer scroll) */
-  const envelope = document.querySelector(".lh-envelope");
-  if (envelope) {
-    const toggle = () => envelope.classList.toggle("is-peek");
-    envelope.addEventListener("click", toggle);
-    envelope.addEventListener("keydown", (e) => {
-      if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggle(); }
+  /* 3. Postales: en táctil, tocar una la saca del sobre (en escritorio basta el hover) */
+  document.querySelectorAll(".lh-card").forEach((card) => {
+    card.addEventListener("click", () => {
+      document.querySelectorAll(".lh-card.is-up").forEach((c) => c !== card && c.classList.remove("is-up"));
+      card.classList.toggle("is-up");
     });
-  }
+  });
 
   /* 4. Rastro del ratón: trazo de tinta continuo + pétalos.
         Se intensifica sobre enlaces, botones, el sobre y los productos. */
