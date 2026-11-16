@@ -49,8 +49,27 @@
   window.addEventListener("resize", () => {
     if (window.innerWidth === lastW) return;          // ignora la barra del móvil
     lastW = window.innerWidth;
-    clearTimeout(rt); rt = setTimeout(() => { buildScallop(); buildWaves(); }, 150);
+    clearTimeout(rt); rt = setTimeout(() => { buildScallop(); buildWaves(); if (!bfly?.classList.contains('is-flying')) aimButterfly(); }, 150);
   });
+
+  /* 1c. Escalonado de las tarjetas dentro de cada grupo */
+  document.querySelectorAll(".lh-shop__grid, .lh-services").forEach((g) =>
+    g.querySelectorAll(".lh-reveal").forEach((el, i) => el.style.setProperty("--i", i)));
+
+  /* 1d. Mariposa: calcula el vuelo desde la boca del sobre hasta el titular */
+  const bfly = document.querySelector(".lh-butterfly");
+  const env = document.querySelector(".lh-envelope");
+  const aimButterfly = () => {
+    if (!bfly || !env) return;
+    const e = env.getBoundingClientRect(), b = bfly.getBoundingClientRect();
+    const fromX = e.left + e.width * .5, fromY = e.top + e.height * .5;
+    bfly.style.setProperty("--fx", `${Math.round(fromX - (b.left + b.width / 2))}px`);
+    bfly.style.setProperty("--fy", `${Math.round(fromY - (b.top + b.height / 2))}px`);
+  };
+  aimButterfly();
+  if (bfly && env) new MutationObserver(() => {
+    if (env.classList.contains("is-drawn")) bfly.classList.add("is-flying");
+  }).observe(env, { attributes: true, attributeFilter: ["class"] });
 
   /* 2. Dibujar / revelar al entrar en pantalla */
   const targets = document.querySelectorAll("[data-draw], .lh-reveal");
@@ -61,7 +80,7 @@
         requestAnimationFrame(() => requestAnimationFrame(() => e.target.classList.add("is-drawn")));
         io.unobserve(e.target);
       });
-    }, { threshold: 0.2 });
+    }, { threshold: 0.15, rootMargin: "0px 0px -6% 0px" });
     targets.forEach((t) => io.observe(t));
   } else {
     targets.forEach((t) => t.classList.add("is-drawn"));

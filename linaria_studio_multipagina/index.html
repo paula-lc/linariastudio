@@ -161,10 +161,15 @@
           <path d="M66 22 C78 18 90 26 102 22 C110 19 114 20 118 22 M66 35 C78 31 90 39 102 35 C110 32 114 33 118 35 M66 48 C78 44 90 52 102 48 C110 45 114 46 118 48" fill="none" stroke="var(--garnet)" stroke-width="1.5" stroke-linecap="round"/>
         </svg>
 
-        <!-- Mariposa posada -->
-        <div class="lh-butterfly">
+
+      </div>
+
+      <div class="lh-hero__copy">
+        <h1 class="lh-hero__title">
+          <span class="lh-hero__title-serif">Dos artistas,
+          <div class="lh-butterfly" aria-hidden="true">
           <div class="lh-butterfly__land">
-            <svg class="anim-stopmotion" style="--sm-dur:3.6s;--sm-amp:1.6" viewBox="0 0 80 64" aria-hidden="true">
+            <svg viewBox="0 0 80 64" aria-hidden="true">
               <g class="wing wing--l">
                 <path d="M38 30 C30 8 10 2 5 12 C1 22 14 32 38 33 Z"/>
                 <path d="M38 34 C24 36 12 48 18 56 C24 62 34 52 38 38 Z"/>
@@ -183,10 +188,9 @@
             </svg>
           </div>
         </div>
-      </div>
-
-      <div class="lh-hero__copy">
-        <h1 class="lh-hero__title">Dos artistas, un mismo mundo</h1>
+          </span>
+          <span class="lh-hero__title-hand">un mismo mundo</span>
+</h1>
         <p class="lh-hero__lead">
           Ilustraciones, historias y actividades para desconectar. Cada mes, una carta
           ilustrada por nosotras llega a tu buzón.
@@ -215,7 +219,7 @@
 <section class="lh-section lh-shop" aria-labelledby="shop-title">
   <svg class="lh-loop lh-loop--l" viewBox="0 0 160 260" aria-hidden="true"><path d="M-20 40 C60 10 130 40 120 100 C110 160 30 150 40 100 C50 50 140 80 120 160 C105 220 40 230 -20 250"/></svg>
   <svg class="lh-loop lh-loop--r" viewBox="0 0 160 260" aria-hidden="true"><path d="M180 20 C100 40 50 90 80 140 C110 190 150 150 120 120 C90 90 30 140 60 200 C80 240 140 250 180 240"/></svg>
-  <header class="lh-head">
+  <header class="lh-head lh-reveal">
     <p class="lh-eyebrow"><svg class="lh-eyebrow__star" aria-hidden="true"><use href="#lh-star"/></svg>Descubre nuestro arte</p>
     <h2 id="shop-title" class="lh-title">Lo más querido</h2>
   </header>
@@ -224,12 +228,12 @@
     <div class="lh-shop__group">
       <h3 class="lh-shop__artist"><span>de</span> Nyauarts</h3>
       <div class="lh-shop__grid">
-        <a class="lh-product" href="tienda-isabel.html">
+        <a class="lh-product lh-reveal" href="tienda-isabel.html">
           <span class="lh-product__art lh-art--rose" aria-hidden="true">♡</span>
           <span class="lh-product__name">Postal «Corazón»</span>
           <span class="lh-product__price">3,50 €</span>
         </a>
-        <a class="lh-product" href="tienda-isabel.html">
+        <a class="lh-product lh-reveal" href="tienda-isabel.html">
           <span class="lh-product__art lh-art--olive" aria-hidden="true">✿</span>
           <span class="lh-product__name">Pack de pegatinas</span>
           <span class="lh-product__price">5,00 €</span>
@@ -241,12 +245,12 @@
     <div class="lh-shop__group">
       <h3 class="lh-shop__artist"><span>de</span> Labellaarts</h3>
       <div class="lh-shop__grid">
-        <a class="lh-product" href="tienda.html">
+        <a class="lh-product lh-reveal" href="tienda.html">
           <span class="lh-product__art lh-art--lime" aria-hidden="true">☼</span>
           <span class="lh-product__name">Print «Sunny day»</span>
           <span class="lh-product__price">8,00 €</span>
         </a>
-        <a class="lh-product" href="tienda.html">
+        <a class="lh-product lh-reveal" href="tienda.html">
           <span class="lh-product__art lh-art--garnet" aria-hidden="true">✦</span>
           <span class="lh-product__name">Mini print floral</span>
           <span class="lh-product__price">6,00 €</span>
@@ -261,12 +265,12 @@
 <section class="lh-split lh-club" aria-labelledby="club-title">
   <svg class="lh-wave lh-wave--top" aria-hidden="true"></svg>
   <div class="lh-split__media">
-    <figure class="lh-frame">
+    <figure class="lh-frame lh-reveal">
       <img src="images/hero-2.png" alt="Ilustración del Mail Club" loading="lazy">
     </figure>
-    <div class="lh-club__stamp" aria-hidden="true"><span>Mail<br>Club</span></div>
+    <div class="lh-club__stamp lh-reveal" aria-hidden="true"><span>Mail<br>Club</span></div>
   </div>
-  <div class="lh-split__panel">
+  <div class="lh-split__panel lh-reveal">
     <svg class="lh-split__sprigs" viewBox="0 0 180 90" aria-hidden="true">
       <use href="#lh-sprig" x="0" y="0" width="45" height="90" transform="rotate(-14 22 90)"/>
       <use href="#lh-sprig" x="68" y="-6" width="45" height="96"/>
@@ -282,15 +286,15 @@
 <!-- ============ SERVICIOS ============ -->
 <section class="lh-section lh-serv" aria-labelledby="serv-title">
   <svg class="lh-wave lh-wave--top" aria-hidden="true"></svg>
-  <header class="lh-head">
+  <header class="lh-head lh-reveal">
     <p class="lh-eyebrow"><svg class="lh-eyebrow__star" aria-hidden="true"><use href="#lh-star"/></svg>¿Hacemos algo juntas?</p>
     <h2 id="serv-title" class="lh-title">También podemos ayudarte con…</h2>
   </header>
   <ul class="lh-services">
-    <li><a href="editorial.html"><svg class="lh-services__icon" viewBox="0 0 64 64" aria-hidden="true"><path d="M14 50 L44 14 L52 22 L22 56 Z M14 50 L10 60 L22 56 M40 18 L48 26"/><path d="M8 62 C20 58 30 66 44 60"/></svg><b>Editorial</b><small>Portadas, interiores y publicaciones</small><span class="lh-services__more">Ver más <span aria-hidden="true">→</span></span></a></li>
-    <li><a href="eventos.html"><svg class="lh-services__icon" viewBox="0 0 64 64" aria-hidden="true"><path d="M40 10 C52 14 56 24 50 30 L32 48 L22 40 L40 22 C44 18 42 14 40 10 Z"/><path d="M22 40 C14 42 10 50 12 58 C20 58 28 54 32 48"/><circle cx="50" cy="52" r="3"/><circle cx="56" cy="42" r="2"/></svg><b>Eventos creativos</b><small>Talleres y experiencias artísticas</small><span class="lh-services__more">Ver más <span aria-hidden="true">→</span></span></a></li>
-    <li><a href="contacto.html"><svg class="lh-services__icon" viewBox="0 0 64 64" aria-hidden="true"><path d="M32 54 C14 42 8 32 12 22 C16 12 28 12 32 22 C36 12 48 12 52 22 C56 32 50 42 32 54 Z"/><path d="M24 24 C22 28 22 32 24 36"/></svg><b>Ilustración</b><small>Encargos y proyectos personalizados</small><span class="lh-services__more">Pedir encargo <span aria-hidden="true">→</span></span></a></li>
-    <li><a href="contacto.html"><svg class="lh-services__icon" viewBox="0 0 64 64" aria-hidden="true"><path d="M8 20 L56 20 L56 52 L8 52 Z"/><path d="M8 20 L32 38 L56 20"/><path d="M8 52 L26 34 M56 52 L38 34"/><path d="M44 8 C48 4 54 6 52 12 C50 16 44 16 44 12" /></svg><b>Colaboraciones</b><small>Cuéntanos tu idea</small><span class="lh-services__more">Escribirnos <span aria-hidden="true">→</span></span></a></li>
+    <li class="lh-reveal"><a href="editorial.html"><svg class="lh-services__icon" viewBox="0 0 64 64" aria-hidden="true"><path d="M14 50 L44 14 L52 22 L22 56 Z M14 50 L10 60 L22 56 M40 18 L48 26"/><path d="M8 62 C20 58 30 66 44 60"/></svg><b>Editorial</b><small>Portadas, interiores y publicaciones</small><span class="lh-services__more">Ver más <span aria-hidden="true">→</span></span></a></li>
+    <li class="lh-reveal"><a href="eventos.html"><svg class="lh-services__icon" viewBox="0 0 64 64" aria-hidden="true"><path d="M40 10 C52 14 56 24 50 30 L32 48 L22 40 L40 22 C44 18 42 14 40 10 Z"/><path d="M22 40 C14 42 10 50 12 58 C20 58 28 54 32 48"/><circle cx="50" cy="52" r="3"/><circle cx="56" cy="42" r="2"/></svg><b>Eventos creativos</b><small>Talleres y experiencias artísticas</small><span class="lh-services__more">Ver más <span aria-hidden="true">→</span></span></a></li>
+    <li class="lh-reveal"><a href="contacto.html"><svg class="lh-services__icon" viewBox="0 0 64 64" aria-hidden="true"><path d="M32 54 C14 42 8 32 12 22 C16 12 28 12 32 22 C36 12 48 12 52 22 C56 32 50 42 32 54 Z"/><path d="M24 24 C22 28 22 32 24 36"/></svg><b>Ilustración</b><small>Encargos y proyectos personalizados</small><span class="lh-services__more">Pedir encargo <span aria-hidden="true">→</span></span></a></li>
+    <li class="lh-reveal"><a href="contacto.html"><svg class="lh-services__icon" viewBox="0 0 64 64" aria-hidden="true"><path d="M8 20 L56 20 L56 52 L8 52 Z"/><path d="M8 20 L32 38 L56 20"/><path d="M8 52 L26 34 M56 52 L38 34"/><path d="M44 8 C48 4 54 6 52 12 C50 16 44 16 44 12" /></svg><b>Colaboraciones</b><small>Cuéntanos tu idea</small><span class="lh-services__more">Escribirnos <span aria-hidden="true">→</span></span></a></li>
   </ul>
 </section>
 
@@ -298,7 +302,7 @@
 <section class="lh-section lh-about-band" aria-labelledby="about-title">
   <svg class="lh-wave lh-wave--top" aria-hidden="true"></svg>
   <div class="lh-about">
-  <div class="lh-about__art" aria-hidden="true">
+  <div class="lh-about__art lh-reveal" aria-hidden="true">
     <svg class="lh-about__sprig lh-about__sprig--l"><use href="#lh-sprig"/></svg>
     <div class="lh-about__seal">hecho<br>con amor</div>
     <svg class="lh-about__sprig lh-about__sprig--r"><use href="#lh-sprig"/></svg>
