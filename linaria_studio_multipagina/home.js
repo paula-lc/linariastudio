@@ -71,6 +71,17 @@
     if (env.classList.contains("is-drawn")) bfly.classList.add("is-flying");
   }).observe(env, { attributes: true, attributeFilter: ["class"] });
 
+  /* 1e. Clic en la mariposa: da una vuelta y vuelve a su sitio */
+  if (bfly) {
+    bfly.addEventListener("click", () => {
+      if (bfly.classList.contains("is-looping")) return;
+      bfly.classList.add("is-looping");
+    });
+    bfly.addEventListener("animationend", (e) => {
+      if (e.animationName === "lh-loop") bfly.classList.remove("is-looping");
+    });
+  }
+
   /* 2. Dibujar / revelar al entrar en pantalla */
   const targets = document.querySelectorAll("[data-draw], .lh-reveal");
   if ("IntersectionObserver" in window) {
