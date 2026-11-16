@@ -1040,3 +1040,13 @@
 .home .lh-hero__lead { font-size: clamp(1.25rem, 1.6vw, 1.45rem); line-height: 1.45; }
 .home .lh-split__panel p, .home .lh-about__text { font-size: 1.3rem; }
 .home .lh-services small { font-size: 1.1rem; }
+
+/* Móvil: el titular va antes que el sobre */
+@media (max-width: 960px) {
+  .home .lh-hero__copy { order: -1; }
+  .home .lh-hero { padding-top: 48px; gap: 32px; }
+}
+@media (max-width: 960px) {
+  .home .lh-hero .lh-envelope { margin-top: 64px; }
+  .home .lh-hero > .lh-deco--sprig { display: none; }
+}
