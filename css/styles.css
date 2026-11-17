@@ -1640,3 +1640,7 @@ a.cesta__btn { display: inline-block; color: inherit; }
 .mesa__pieza--ilustracion { left: 0%; top: 14%; width: 42%; }
 .mesa__tag[data-pieza="carta"] { --x: 44% !important; --y: -12% !important; }
 .mesa__tag[data-pieza="actividad"] { --x: 74% !important; --y: 6% !important; }
+
+/* botones con líneas: al pasar el ratón, texto y líneas cambian juntos a magenta */
+.boton-lineas::before, .boton-lineas::after, .boton::before, .boton::after, .indice__pagar::before, .indice__pagar::after { transition: background .35s; }
+.boton-lineas:hover::before, .boton-lineas:hover::after, .boton:hover::before, .boton:hover::after, .indice__pagar:hover::before, .indice__pagar:hover::after, .cierre .boton-lineas:hover::before, .cierre .boton-lineas:hover::after { background: var(--magenta); }
