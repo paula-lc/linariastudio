@@ -419,6 +419,31 @@
     });
   });
 
+  /* ---------- Desplegable de la postal (lista accesible con teclado) ---------- */
+  $$('.lista').forEach(lista => {
+    const boton = $('.lista__boton', lista), caja = $('.lista__opciones', lista), valor = $('.lista__valor', lista);
+    const oculto = $('input[type=hidden]', lista), ops = $$('[role=option]', caja);
+    let activa = 0;
+    const marca = i => { activa = (i + ops.length) % ops.length; ops.forEach((o, k) => o.classList.toggle('is-activa', k === activa)); caja.setAttribute('aria-activedescendant', ops[activa].id); };
+    const abre = () => { caja.hidden = false; requestAnimationFrame(() => lista.classList.add('is-abierta')); boton.setAttribute('aria-expanded', 'true'); marca(ops.findIndex(o => o.getAttribute('aria-selected') === 'true')); caja.focus(); };
+    const cierra = (devolver = true) => { lista.classList.remove('is-abierta'); boton.setAttribute('aria-expanded', 'false'); setTimeout(() => { if (!lista.classList.contains('is-abierta')) caja.hidden = true; }, 260); if (devolver) boton.focus(); };
+    const elige = i => { ops.forEach((o, k) => o.setAttribute('aria-selected', k === i)); valor.textContent = oculto.value = ops[i].dataset.valor; cierra(); };
+    boton.addEventListener('click', () => lista.classList.contains('is-abierta') ? cierra() : abre());
+    boton.addEventListener('keydown', e => { if (['ArrowDown', 'ArrowUp'].includes(e.key)) { e.preventDefault(); abre(); } });
+    ops.forEach((o, i) => { o.addEventListener('click', () => elige(i)); o.addEventListener('pointermove', () => marca(i)); });
+    caja.addEventListener('keydown', e => {
+      if (e.key === 'ArrowDown') { e.preventDefault(); marca(activa + 1); }
+      else if (e.key === 'ArrowUp') { e.preventDefault(); marca(activa - 1); }
+      else if (e.key === 'Home') { e.preventDefault(); marca(0); }
+      else if (e.key === 'End') { e.preventDefault(); marca(ops.length - 1); }
+      else if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); elige(activa); }
+      else if (e.key === 'Escape') { e.preventDefault(); cierra(); }
+      else if (e.key === 'Tab') cierra(false);
+    });
+    document.addEventListener('pointerdown', e => { if (lista.classList.contains('is-abierta') && !lista.contains(e.target)) cierra(false); });
+    lista.closest('form')?.addEventListener('reset', () => setTimeout(() => elige(0), 0));
+  });
+
   /* ---------- Postal de contacto ---------- */
   const postal = $('#postal');
   if (postal) {

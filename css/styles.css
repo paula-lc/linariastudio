@@ -2191,3 +2191,41 @@ html.lenis, html.lenis body { height: auto; }
 }
 
 @media (max-width: 760px) { .postal__sellos { position: relative; right: auto; top: auto; align-self: flex-end; } }
+
+/* desplegable de la postal: una tarjetita de papel que se abre con muelle */
+.postal__etq { font-family: "Cormorant Garamond", serif; font-size: 18px; font-style: italic; white-space: nowrap; }
+.lista { position: relative; min-width: 0; }
+.lista__boton {
+  display: flex; align-items: center; justify-content: space-between; gap: 8px; width: 100%;
+  padding: 4px 2px 2px; text-align: left;
+  font-family: "Caveat", cursive; font-size: 24px; color: #4E3221;
+}
+.lista__boton:focus-visible { outline: 2px dashed var(--magenta); outline-offset: 2px; }
+.lista__flecha { width: 18px; flex: none; fill: none; stroke: var(--magenta); stroke-width: 2.2; stroke-linecap: round; transition: rotate .5s var(--muelle); }
+.lista.is-abierta .lista__flecha { rotate: 180deg; }
+.lista__opciones {
+  position: absolute; z-index: 30; left: -10px; right: -10px; top: calc(100% + 8px);
+  margin: 0; padding: 8px 6px;
+  list-style: none;
+  background: #FAF3E3;
+  border: 1.5px solid rgba(78, 50, 33, .35);
+  border-radius: 10px;
+  outline: 1px dashed rgba(199, 169, 123, .7); outline-offset: -5px;
+  box-shadow: 0 16px 30px -12px rgba(78, 50, 33, .4);
+  transform-origin: 50% 0;
+  opacity: 0; scale: 1 .6; translate: 0 -6px;
+  transition: opacity .2s, scale .25s var(--sale), translate .25s var(--sale);
+}
+.lista__opciones:focus { outline: 1px dashed rgba(199, 169, 123, .7); }
+.lista.is-abierta .lista__opciones { opacity: 1; scale: 1; translate: 0 0; transition: opacity .2s, scale .6s var(--muelle), translate .6s var(--muelle); }
+.lista__opciones [role=option] {
+  display: flex; align-items: center; gap: 10px;
+  padding: 6px 12px; border-radius: 6px;
+  font-family: "Caveat", cursive; font-size: 23px; color: #4E3221;
+  cursor: pointer;
+  transition: background .2s, color .2s, translate .4s var(--muelle);
+}
+.lista__opciones [role=option].is-activa { background: rgba(248, 202, 228, .45); color: var(--magenta); translate: 3px 0; }
+.lista__lacre { width: 14px; height: 14px; flex: none; border-radius: 50%; border: 1.5px dashed rgba(131, 45, 81, .45); transition: background .3s, border-color .3s, scale .5s var(--muelle); }
+.lista__opciones [aria-selected=true] .lista__lacre { background: radial-gradient(circle at 35% 30%, #9E3868, #832D51 60%, #561835); border: 0; scale: 1.15; }
+.lista__opciones [aria-selected=true] { color: var(--magenta); }

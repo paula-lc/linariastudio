@@ -653,10 +653,15 @@
               <p class="postal__error" id="error-email" hidden>Necesitamos un email válido para responderte.</p>
 
               <div class="postal__campo">
-                <label for="postal-tema">Sobre</label>
-                <select id="postal-tema" name="tema">
-                  <option>el Mail Club</option><option>un evento</option><option>un encargo editorial</option><option>otra cosa</option>
-                </select>
+                <span class="postal__etq" id="postal-tema-etq">Sobre</span>
+                <div class="lista">
+                  <input type="hidden" name="tema" value="el Mail Club">
+                  <button class="lista__boton" type="button" id="postal-tema" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="postal-tema-etq postal-tema">
+                    <span class="lista__valor">el Mail Club</span>
+                    <svg class="lista__flecha" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 8c2 2 3 3 5 5 2-2 3-3 5-5"/></svg>
+                  </button>
+                  <ul class="lista__opciones" role="listbox" tabindex="-1" aria-labelledby="postal-tema-etq" hidden><li role="option" id="tema-op0" aria-selected="true" data-valor="el Mail Club"><span class="lista__lacre" aria-hidden="true"></span>el Mail Club</li><li role="option" id="tema-op1" aria-selected="false" data-valor="un evento"><span class="lista__lacre" aria-hidden="true"></span>un evento</li><li role="option" id="tema-op2" aria-selected="false" data-valor="un encargo editorial"><span class="lista__lacre" aria-hidden="true"></span>un encargo editorial</li><li role="option" id="tema-op3" aria-selected="false" data-valor="otra cosa"><span class="lista__lacre" aria-hidden="true"></span>otra cosa</li></ul>
+                </div>
               </div>
 
               <p class="postal__fecha" aria-live="off"></p>
