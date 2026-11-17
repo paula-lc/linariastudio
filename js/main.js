@@ -31,7 +31,8 @@
     sobre.setAttribute('aria-expanded', abierto);
     sobre.setAttribute('aria-label', abierto ? 'Cerrar el sobre' : 'Abrir el sobre');
     if (!abierto) {
-      objetos.forEach(o => { o.querySelector('.objeto__in').style.cssText = ''; o.classList.remove('is-arriba'); });
+      objetos.forEach(o => { o.querySelector('.objeto__in').style.cssText = ''; o.classList.remove('is-arriba'); o.style.zIndex = ''; });
+      $$('.etiqueta', escena).forEach(et => { et.style.removeProperty('--dx'); et.style.removeProperty('--dy'); et.style.zIndex = ''; });
       quitarFoco();
     }
   };
@@ -70,42 +71,60 @@
   });
 
   // Arrastrar las piezas, con inclinación según la velocidad
-  let z = 12;
-  objetos.filter(o => o.dataset.tag).forEach(o => {
+  // Todas las piezas se arrastran; la etiqueta viaja con su pieza (y arrastrar la etiqueta mueve la pieza)
+  let z = 20;
+  objetos.forEach(o => {
     const inn = o.querySelector('.objeto__in');
-    let ini = null, ultimo = null;
-    inn.addEventListener('pointerdown', e => {
-      if (escena.dataset.estado !== 'abierto') return;
+    const et = o.dataset.tag ? $(`.etiqueta[data-tag="${o.dataset.tag}"]`, escena) : null;
+    let ini = null, ultimo = null, movido = false;
+
+    const empieza = (e, asa) => {
+      if (escena.dataset.estado !== 'abierto' || e.button > 0) return;
       e.preventDefault();
-      inn.setPointerCapture(e.pointerId);
+      asa.setPointerCapture(e.pointerId);
       const dx = parseFloat(inn.style.getPropertyValue('--dx')) || 0;
       const dy = parseFloat(inn.style.getPropertyValue('--dy')) || 0;
-      ini = { x: e.clientX - dx, y: e.clientY - dy };
+      ini = { x: e.clientX - dx, y: e.clientY - dy, x0: e.clientX, y0: e.clientY };
       ultimo = { x: e.clientX, t: performance.now() };
-      escena.querySelectorAll('.is-arriba').forEach(x => x.classList.remove('is-arriba'));
+      movido = false;
+      $$('.is-arriba', escena).forEach(x => x.classList.remove('is-arriba'));
       o.classList.add('is-arriba', 'is-arrastra');
-      o.style.zIndex = ++z;
+      o.style.zIndex = z += 2;
+      if (et) { et.style.zIndex = z + 1; et.classList.add('is-arrastra'); }
       inn.style.transition = 'rotate .5s var(--muelle), scale .4s var(--muelle)';
-    });
-    inn.addEventListener('pointermove', e => {
+    };
+    const mueve = e => {
       if (!ini) return;
       const esc = parseFloat(getComputedStyle(escena).scale) || 1;
-      inn.style.setProperty('--dx', (e.clientX - ini.x) / esc + 'px');
-      inn.style.setProperty('--dy', (e.clientY - ini.y) / esc + 'px');
+      // que no se salgan demasiado de la escena (y no tapen el titular)
+      const { x, y, w, h } = o.dataset, m = 40;
+      const cx = Math.max(-m - x, Math.min(350 + m - w - x, (e.clientX - ini.x) / esc));
+      const cy = Math.max(-m - y, Math.min(310 + m - h - y, (e.clientY - ini.y) / esc));
+      const dx = cx + 'px', dy = cy + 'px';
+      inn.style.setProperty('--dx', dx); inn.style.setProperty('--dy', dy);
+      if (et) { et.style.setProperty('--dx', dx); et.style.setProperty('--dy', dy); }
+      if (Math.hypot(e.clientX - ini.x0, e.clientY - ini.y0) > 4) movido = true;
       const now = performance.now();
       const v = (e.clientX - ultimo.x) / Math.max(16, now - ultimo.t);
       inn.style.setProperty('--t', Math.max(-14, Math.min(14, v * 18)) + 'deg');
       ultimo = { x: e.clientX, t: now };
-    });
+    };
     const suelta = () => {
       if (!ini) return;
       ini = null;
       o.classList.remove('is-arrastra');
+      if (et) et.classList.remove('is-arrastra');
       inn.style.transition = '';
       inn.style.setProperty('--t', '0deg');
     };
-    inn.addEventListener('pointerup', suelta);
-    inn.addEventListener('pointercancel', suelta);
+    [inn, et].filter(Boolean).forEach(asa => {
+      asa.addEventListener('pointerdown', e => empieza(e, asa));
+      asa.addEventListener('pointermove', mueve);
+      asa.addEventListener('pointerup', suelta);
+      asa.addEventListener('pointercancel', suelta);
+    });
+    // un arrastre de la etiqueta no cuenta como clic
+    if (et) et.addEventListener('click', e => { if (movido) { e.stopImmediatePropagation(); movido = false; } }, true);
   });
 
   // La escena se encoge en pantallas estrechas
@@ -143,7 +162,7 @@
   $$('.plan__elige [role="radio"]').forEach((b, i, todos) => {
     b.addEventListener('click', () => {
       todos.forEach(x => x.setAttribute('aria-checked', x === b));
-      $('.plan__marca').style.setProperty('--pos', i);
+      $('.plan').dataset.elegido = 'si';
       plan = b.dataset.plan;
       const nuevo = euros(PLANES[plan].precio);
       if (cifra.textContent !== nuevo) {
