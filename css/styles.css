@@ -1599,3 +1599,19 @@ a.cesta__btn { display: inline-block; color: inherit; }
 .camino[data-paso="0"] .h-corazon { fill: #fff3a0; filter: drop-shadow(0 0 6px #ffe680); }
 .camino[data-paso="1"] .h-aura { opacity: 1; animation: aura 1.6s ease-in-out infinite alternate; }
 @keyframes aura { to { opacity: .55; } }
+
+/* Cesta: textos más grandes y legibles */
+.indice { width: 270px; padding: 30px 22px 22px; }
+.indice__titulo { font-size: 15px; }
+.indice__vacio .indice__nota { font-size: 18px; line-height: 1.35; color: #3f4a3a; }
+.indice__vacio .indice__nota--script { font-size: 27px; line-height: 1.15; margin-top: 10px; }
+.indice__cap { font-size: 15px; }
+.indice__linea { font-size: 15px; color: #3f4a3a; }
+.indice__total { font-size: 19px; }
+.indice__desglose { font-size: 14px; }
+.indice__pagar { font-size: 15px; }
+.indice__vacio .indice__nota.indice__nota--script { color: var(--magenta); }
+
+/* las piezas que se arrastran pasan por encima del texto de la pista */
+.escena { z-index: 2; }
+.apertura__pista { z-index: 1; pointer-events: none; }
