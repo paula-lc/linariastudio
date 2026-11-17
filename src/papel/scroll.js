@@ -13,6 +13,7 @@ export function iniciarScroll({ suave }) {
     lenis.on('scroll', ScrollTrigger.update);
     gsap.ticker.add(t => lenis.raf(t * 1000));
     gsap.ticker.lagSmoothing(0);
+    window.__lenis = lenis; // para que otras partes de la web puedan desplazar con suavidad
   }
   return lenis;
 }

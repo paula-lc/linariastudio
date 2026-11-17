@@ -147,7 +147,17 @@
   piezas.forEach(el => {
     el.addEventListener('pointerenter', e => { if (e.pointerType === 'mouse') enfoca(el.dataset.pieza); });
     el.addEventListener('pointerleave', e => { if (e.pointerType === 'mouse') enfoca(fija); });
-    el.addEventListener('click', e => { e.stopPropagation(); alterna(el.dataset.pieza); });
+    el.addEventListener('click', e => {
+      e.stopPropagation();
+      alterna(el.dataset.pieza);
+      // en móvil las piezas están debajo del papel: bajamos hasta ellas
+      const mesaMovil = $('.papel-mesa--movil');
+      if (el.classList.contains('pl-item') && mesaMovil && mesaMovil.offsetParent && matchMedia('(max-width: 760px)').matches) {
+        const destino = mesaMovil.getBoundingClientRect().top + scrollY - (innerHeight - mesaMovil.offsetHeight) / 2;
+        if (window.__lenis) window.__lenis.scrollTo(destino, { duration: reduce ? 0 : 1.1 });
+        else window.scrollTo({ top: destino, behavior: reduce ? 'auto' : 'smooth' });
+      }
+    });
   });
   $$('.pl-item').forEach(el => {
     el.tabIndex = 0;
