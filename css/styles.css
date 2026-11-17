@@ -2056,3 +2056,10 @@ html.lenis, html.lenis body { height: auto; }
 .brote { bottom: 34px; }
 .brote--i { left: -44px; rotate: 4deg; }
 .brote--d { right: -48px; rotate: 4deg; }
+/* ramitas: la base queda dentro del bolsillo (tapada por la cara del sobre) y brotan hacia arriba por la abertura */
+.brote { width: 88px; height: 98px; bottom: 66px; }
+.brote--i { left: 2px; rotate: -14deg; }
+.brote--d { right: -2px; left: auto; rotate: 12deg; }
+.brote { width: 116px; height: 130px; bottom: 60px; }
+.brote--i { left: 6px; rotate: 30deg; }
+.brote--d { right: 0; rotate: -26deg; }
