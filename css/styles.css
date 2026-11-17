@@ -1673,3 +1673,17 @@ a.cesta__btn { display: inline-block; color: inherit; }
 .titulo.is-visto::after { animation: rama-d 6s ease-in-out 1.6s infinite; transform-origin: 0% 50%; }
 @keyframes rama-i { 0%, 100% { rotate: 0deg; } 50% { rotate: 5deg; } }
 @keyframes rama-d { 0%, 100% { rotate: 0deg; } 50% { rotate: -5deg; } }
+
+/* árboles del bosque encantado */
+.ar-tronco { fill: #b08d63; stroke: #7d5f3d; stroke-width: 1.4; stroke-linejoin: round; }
+.ar-rama { fill: none; stroke: #7d5f3d; stroke-width: 2; stroke-linecap: round; }
+.ar-sombra { fill: #6f9a7d; opacity: .35; }
+.ar-copa { stroke: var(--viridian-hondo); stroke-width: 1.6; }
+.ar-copa--a { fill: #a9cba7; }
+.ar-copa--b { fill: #8fb89a; }
+.ar-luz { fill: none; stroke: #e6f2d8; stroke-width: 3; stroke-linecap: round; opacity: .8; }
+.ar-hojas circle { fill: var(--hada); stroke: var(--ciclamen); stroke-width: .8; }
+.ar-pino { fill: #9cc4a3; stroke: var(--viridian-hondo); stroke-width: 1.6; stroke-linejoin: round; }
+.ar-estrella { fill: #fdf0aa; stroke: #e0c05a; stroke-width: 1; }
+.arbol { animation: mece-arbol 5s ease-in-out infinite; animation-delay: calc(var(--d) * -1); }
+@keyframes mece-arbol { 0%, 100% { rotate: -1.4deg; } 50% { rotate: 1.4deg; } }
