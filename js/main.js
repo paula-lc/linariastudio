@@ -137,13 +137,36 @@
   ajusta();
   addEventListener('resize', ajusta);
 
-  /* ---------- Lo que cabe en un sobre: texto y piezas se señalan entre sí ---------- */
+  /* ---------- Lo que cabe en un sobre: cada texto hace responder a su pieza ---------- */
+  // pasar el ratón la destaca; un clic (o Intro) la deja delante hasta pulsar otra vez o fuera
   const piezas = $$('.sobre-contenido [data-pieza]');
-  const enfoca = k => piezas.forEach(el => el.classList.toggle('is-foco', el.dataset.pieza === k));
+  let fija = '';
+  const enfoca = k => piezas.forEach(el => el.classList.toggle('is-foco', !!k && el.dataset.pieza === k));
+  const marcaFija = () => piezas.forEach(el => el.classList.toggle('is-fija', !!fija && el.dataset.pieza === fija));
+  const alterna = k => { fija = fija === k ? '' : k; marcaFija(); enfoca(fija); };
   piezas.forEach(el => {
-    el.addEventListener('pointerenter', () => enfoca(el.dataset.pieza));
-    el.addEventListener('pointerleave', () => enfoca(''));
+    el.addEventListener('pointerenter', e => { if (e.pointerType === 'mouse') enfoca(el.dataset.pieza); });
+    el.addEventListener('pointerleave', e => { if (e.pointerType === 'mouse') enfoca(fija); });
+    el.addEventListener('click', e => {
+      e.stopPropagation();
+      alterna(el.dataset.pieza);
+      // en móvil las piezas están debajo del papel: bajamos hasta ellas
+      const mesaMovil = $('.papel-mesa--movil');
+      if (el.classList.contains('pl-item') && mesaMovil && mesaMovil.offsetParent && matchMedia('(max-width: 760px)').matches) {
+        const destino = mesaMovil.getBoundingClientRect().top + scrollY - (innerHeight - mesaMovil.offsetHeight) / 2;
+        if (window.__lenis) window.__lenis.scrollTo(destino, { duration: reduce ? 0 : 1.1 });
+        else window.scrollTo({ top: destino, behavior: reduce ? 'auto' : 'smooth' });
+      }
+    });
   });
+  $$('.pl-item').forEach(el => {
+    el.tabIndex = 0;
+    el.setAttribute('role', 'button');
+    el.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); alterna(el.dataset.pieza); } });
+    el.addEventListener('focus', () => enfoca(el.dataset.pieza));
+    el.addEventListener('blur', () => enfoca(fija));
+  });
+  document.addEventListener('click', () => { if (fija) { fija = ''; marcaFija(); enfoca(''); } });
 
   /* ---------- Idioma ---------- */
   const aviso = $('.idioma__aviso');
@@ -276,12 +299,6 @@
 
   /* ---------- Revelado al hacer scroll ---------- */
   $$('.titulo').forEach(t => { t.innerHTML = '<span class="titulo__texto">' + t.innerHTML + '</span>'; });
-  // separadores de enredadera entre secciones (no junto a una franja)
-  $$('main > .seccion').forEach(sec => {
-    const prev = sec.previousElementSibling;
-    if (!prev || prev.classList.contains('franja')) return;
-    sec.insertAdjacentHTML('beforebegin', '<div class="separador revela" aria-hidden="true"><span class="separador__vid"></span></div>');
-  });
   const grupos = new Map();
   $$('.revela').forEach(el => {
     const padre = el.parentElement;
@@ -402,21 +419,65 @@
     });
   });
 
-  /* ---------- Nota de contacto ---------- */
-  const form = $('.nota-form');
-  form.addEventListener('submit', e => {
-    e.preventDefault();
-    const ok = $('.nota-form__ok');
-    if (!form.checkValidity()) {
-      form.classList.remove('is-error'); void form.offsetWidth; form.classList.add('is-error');
-      ok.textContent = 'Falta algún dato.';
-      return;
-    }
-    form.classList.remove('is-error', 'is-enviada'); void form.offsetWidth; form.classList.add('is-enviada');
-    // TODO: conectar con el servicio de formularios (Formspree, Netlify Forms…)
-    ok.textContent = 'Versión de prueba: esta nota todavía no se envía.';
-    form.reset();
+  /* ---------- Desplegable de la postal (lista accesible con teclado) ---------- */
+  $$('.lista').forEach(lista => {
+    const boton = $('.lista__boton', lista), caja = $('.lista__opciones', lista), valor = $('.lista__valor', lista);
+    const oculto = $('input[type=hidden]', lista), ops = $$('[role=option]', caja);
+    let activa = 0;
+    const marca = i => { activa = (i + ops.length) % ops.length; ops.forEach((o, k) => o.classList.toggle('is-activa', k === activa)); caja.setAttribute('aria-activedescendant', ops[activa].id); };
+    const abre = () => { caja.hidden = false; requestAnimationFrame(() => lista.classList.add('is-abierta')); boton.setAttribute('aria-expanded', 'true'); marca(ops.findIndex(o => o.getAttribute('aria-selected') === 'true')); caja.focus(); };
+    const cierra = (devolver = true) => { lista.classList.remove('is-abierta'); boton.setAttribute('aria-expanded', 'false'); setTimeout(() => { if (!lista.classList.contains('is-abierta')) caja.hidden = true; }, 260); if (devolver) boton.focus(); };
+    const elige = i => { ops.forEach((o, k) => o.setAttribute('aria-selected', k === i)); valor.textContent = oculto.value = ops[i].dataset.valor; cierra(); };
+    boton.addEventListener('click', () => lista.classList.contains('is-abierta') ? cierra() : abre());
+    boton.addEventListener('keydown', e => { if (['ArrowDown', 'ArrowUp'].includes(e.key)) { e.preventDefault(); abre(); } });
+    ops.forEach((o, i) => { o.addEventListener('click', () => elige(i)); o.addEventListener('pointermove', () => marca(i)); });
+    caja.addEventListener('keydown', e => {
+      if (e.key === 'ArrowDown') { e.preventDefault(); marca(activa + 1); }
+      else if (e.key === 'ArrowUp') { e.preventDefault(); marca(activa - 1); }
+      else if (e.key === 'Home') { e.preventDefault(); marca(0); }
+      else if (e.key === 'End') { e.preventDefault(); marca(ops.length - 1); }
+      else if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); elige(activa); }
+      else if (e.key === 'Escape') { e.preventDefault(); cierra(); }
+      else if (e.key === 'Tab') cierra(false);
+    });
+    document.addEventListener('pointerdown', e => { if (lista.classList.contains('is-abierta') && !lista.contains(e.target)) cierra(false); });
+    lista.closest('form')?.addEventListener('reset', () => setTimeout(() => elige(0), 0));
   });
+
+  /* ---------- Postal de contacto ---------- */
+  const postal = $('#postal');
+  if (postal) {
+    const nota = $('#postal-nota'), nombre = $('#postal-nombre'), email = $('#postal-email');
+    const firma = $('.postal__firma'), fecha = $('.postal__fecha'), hecho = $('.postal__hecho'), marco = $('.postal__marco');
+    const MESES = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+    const ponFecha = () => { const d = new Date(); fecha.textContent = `A ${d.getDate()} de ${MESES[d.getMonth()]} de ${d.getFullYear()}`; };
+    ponFecha();
+    // la firma de la carta se escribe sola con el nombre del remite
+    nombre.addEventListener('input', () => { firma.textContent = nombre.value.trim(); });
+    const campos = [[nota, 'error-nota', v => v.trim()], [nombre, 'error-nombre', v => v.trim()], [email, 'error-email', v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim())]];
+    campos.forEach(([el, id]) => el.addEventListener('input', () => { $('#' + id).hidden = true; el.removeAttribute('aria-invalid'); }));
+    postal.addEventListener('submit', e => {
+      e.preventDefault();
+      let primero = null;
+      campos.forEach(([el, id, ok]) => {
+        const bien = !!ok(el.value);
+        $('#' + id).hidden = bien;
+        el.toggleAttribute('aria-invalid', !bien);
+        if (!bien && !primero) primero = el;
+      });
+      if (primero) { primero.focus(); return; }
+      // TODO: conectar con el servicio de formularios (Formspree, Netlify Forms…)
+      $('.postal__gracias').textContent = `Gracias, ${nombre.value.trim()}. Te contestaremos a ${email.value.trim()}.`;
+      marco.hidden = true;
+      hecho.hidden = false;
+      $('.postal__estampa').classList.remove('is-estampa'); void hecho.offsetWidth; $('.postal__estampa').classList.add('is-estampa');
+      $('[data-otra]', postal).focus();
+    });
+    $('[data-otra]', postal).addEventListener('click', () => {
+      postal.reset(); firma.textContent = ''; ponFecha();
+      hecho.hidden = true; marco.hidden = false; nota.focus();
+    });
+  }
 
   /* ---------- Franjas: mensajitos que van cambiando ---------- */
   $$('.franja[data-mensajes]').forEach((f, n) => {

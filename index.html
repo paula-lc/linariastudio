@@ -8,15 +8,16 @@
   <meta name="description" content="Cada mes, un sobre ilustrado a mano por dos artistas, con prints, postales y pegatinas. Suscripción de 13 €/mes con envío incluido.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600&family=Great+Vibes&family=Homemade+Apple&family=Inter:wght@400;500&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
-  <script src="js/main.js" defer></script>
+  <script type="module" src="./src/main.js"></script>
 </head>
 <body>
 
   <a class="skip" href="#contenido">Saltar al contenido</a>
 
   <!-- Barra de aviso -->
+  <div class="barra-superior">
   <div class="aviso" role="note">
     <p>• recibe tu carta con gastos de envío incluidos •</p>
   </div>
@@ -63,6 +64,7 @@
       </div>
     </nav>
   </header>
+  </div>
 
   <main id="contenido">
 
@@ -72,9 +74,6 @@
         <div class="escena" data-estado="cerrado">
 
           <!-- Objetos que salen del sobre -->
-          <div class="objeto objeto--rama1" data-x="70" data-y="0" data-w="70" data-h="78" data-r="-6" data-d="0.32" aria-hidden="true">
-            <div class="objeto__in"><svg class="rama" viewBox="0 0 70 78"><use href="#rama"/></svg></div>
-          </div>
           <div class="objeto objeto--carta" data-x="122" data-y="34" data-w="126" data-h="142" data-r="8" data-d="0.06" data-tag="carta">
             <div class="objeto__in carta" aria-hidden="true">
               <svg viewBox="0 0 126 142">
@@ -141,9 +140,6 @@
               </svg>
             </div>
           </div>
-          <div class="objeto objeto--rama2" data-x="258" data-y="100" data-w="82" data-h="70" data-r="12" data-d="0.38" aria-hidden="true">
-            <div class="objeto__in"><svg class="rama" viewBox="0 0 70 78"><use href="#rama"/></svg></div>
-          </div>
           <div class="objeto objeto--foto1" data-x="26" data-y="92" data-w="132" data-h="160" data-r="-12" data-d="0.22" data-tag="ilustracion">
             <div class="objeto__in polaroid">
               <img src="assets/img/ilustracion-baile.jpg" alt="Ilustración A5: una pareja de seres del bosque bailando bajo un marco verde" draggable="false">
@@ -190,6 +186,11 @@
               </span>
             </div>
           </div>
+          <!-- las ramitas brotan del bolsillo del sobre y se quedan fijas en él -->
+          <div class="capa capa--ramas" aria-hidden="true"><div class="capa__in">
+            <svg class="brote brote--i" viewBox="0 0 70 78"><use href="#rama"/></svg>
+            <svg class="brote brote--d" viewBox="0 0 70 78"><use href="#rama"/></svg>
+          </div></div>
           <button class="capa capa--frente sobre" type="button" aria-expanded="false" aria-label="Abrir el sobre">
             <span class="capa__in">
               <svg class="sobre__frente" viewBox="0 0 200 134" aria-hidden="true">
@@ -225,25 +226,41 @@
       </div>
     </section>
 
-    <!-- 2 · Lo que cabe en un sobre -->
-    <section class="seccion seccion--te sobre-contenido" id="meses">
-      <div class="seccion__caja dentro">
-        <div class="dentro__texto">
-          <h2 class="lema lema--seccion revela" aria-label="Lo que cabe en un sobre">
-            <span class="lema__fila" aria-hidden="true"><span class="lema__script">L</span>o que cabe</span>
-            <span class="lema__fila" aria-hidden="true">en un <span class="lema__magenta"><span class="lema__script">S</span>obre</span></span>
-          </h2>
-          <p class="dentro__intro revela">No es una newsletter ni una caja de cosas al azar. Es correspondencia de verdad, escrita para ti, preparada a mano y cerrada con lacre.</p>
-          <dl class="dentro__lista">
-            <div class="revela" data-pieza="carta"><dt>Tu carta</dt><dd>Escrita para ti: historias, hechizos, rincones más misteriosos o noticias de tu personaje en su mundo.</dd></div>
-            <div class="revela" data-pieza="ilustracion"><dt>Ilustración A5</dt><dd>Algo que todavía no ha visto nadie. Para enmarcar, o para guardar entre las páginas de un libro.</dd></div>
-            <div class="revela" data-pieza="actividad"><dt>Actividad del mes</dt><dd>Algo para hacer con las manos, una tarde de lluvia.</dd></div>
-            <div class="revela" data-pieza="pegatina"><dt>Pegatinas</dt><dd>Se pegan en todo. Avisadas estáis.</dd></div>
-            <div class="revela" data-pieza="tarjeta"><dt>Tarjeta de personaje <small>solo en tu primer sobre</small></dt><dd>Cada mes suma un sello. Acumúlalos para subir de rango y conseguir ventajas.</dd></div>
-          </dl>
-        </div>
-
-        <div class="dentro__mesa revela" aria-hidden="true">
+    <!-- 2 · Lo que cabe en un sobre: una bola de papel que se despliega con el scroll -->
+    <section class="papel-seccion sobre-contenido" id="meses" aria-labelledby="papel-titulo">
+      <div class="papel-pin">
+        <canvas class="papel-canvas" aria-hidden="true"></canvas>
+        <div class="papel-escena">
+          <div class="papel-hueco">
+            <div class="papel-portal" aria-hidden="true">
+              <span class="papel-portal__motas"><i style="--x:38%;--d:1.8s;--v:7.0s;--t:0.84"></i><i style="--x:19%;--d:0.4s;--v:5.9s;--t:1.14"></i><i style="--x:15%;--d:1.3s;--v:6.4s;--t:0.69"></i><i style="--x:30%;--d:5.0s;--v:5.4s;--t:1.16"></i><i style="--x:11%;--d:5.0s;--v:7.3s;--t:1.06"></i><i style="--x:32%;--d:1.0s;--v:5.5s;--t:1.11"></i><i style="--x:55%;--d:0.5s;--v:6.6s;--t:0.97"></i><i style="--x:72%;--d:1.5s;--v:5.4s;--t:0.70"></i><i style="--x:78%;--d:5.0s;--v:4.5s;--t:0.70"></i><i style="--x:47%;--d:5.1s;--v:6.3s;--t:0.79"></i><i style="--x:84%;--d:1.7s;--v:6.1s;--t:0.66"></i><i style="--x:41%;--d:4.9s;--v:4.7s;--t:0.53"></i><i style="--x:88%;--d:6.0s;--v:6.3s;--t:0.95"></i><i style="--x:51%;--d:0.9s;--v:6.9s;--t:0.55"></i><i style="--x:33%;--d:3.8s;--v:6.0s;--t:0.63"></i><i style="--x:63%;--d:4.5s;--v:5.6s;--t:0.89"></i><i style="--x:49%;--d:0.6s;--v:4.7s;--t:0.66"></i><i style="--x:82%;--d:3.7s;--v:5.3s;--t:0.73"></i><i style="--x:30%;--d:1.7s;--v:4.6s;--t:0.75"></i><i style="--x:18%;--d:5.4s;--v:7.8s;--t:1.01"></i><i style="--x:49%;--d:0.1s;--v:5.5s;--t:1.18"></i><i style="--x:91%;--d:2.5s;--v:7.8s;--t:0.93"></i><i style="--x:17%;--d:1.8s;--v:5.2s;--t:0.81"></i><i style="--x:25%;--d:1.5s;--v:6.6s;--t:0.61"></i><i style="--x:81%;--d:0.1s;--v:4.7s;--t:0.62"></i><i style="--x:54%;--d:6.0s;--v:6.5s;--t:0.81"></i></span>
+              <p class="papel-portal__texto">pasa, hay algo para ti</p>
+            </div>
+            <div class="papel-chispas" aria-hidden="true"><i style="--x:18%;--y:30%;--d:0s;--t:1"></i><i style="--x:78%;--y:26%;--d:0.5s;--t:0.8"></i><i style="--x:30%;--y:70%;--d:1.1s;--t:0.7"></i><i style="--x:70%;--y:66%;--d:0.3s;--t:1.1"></i><i style="--x:50%;--y:16%;--d:1.6s;--t:0.9"></i><i style="--x:12%;--y:52%;--d:0.8s;--t:0.6"></i><i style="--x:88%;--y:48%;--d:1.3s;--t:0.75"></i><i style="--x:42%;--y:82%;--d:0.2s;--t:0.85"></i><i style="--x:62%;--y:40%;--d:1.9s;--t:0.55"></i><i style="--x:36%;--y:38%;--d:2.3s;--t:0.6"></i></div>
+            <p class="papel-pista" aria-hidden="true"><span>desliza para abrirla</span><svg viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></svg></p>
+            <article class="papel-html">
+              <div class="papel-lienzo">
+                <svg class="pl-ornamento" data-pinta="svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 170 64" width="170" height="64" aria-hidden="true">
+                  <g fill="none" stroke="#5E8F6E" stroke-width="2.4" stroke-linecap="round">
+                    <path d="M76 38 C62 46 44 44 36 34 C30 26 36 17 44 20 C50 23 48 31 42 30"/>
+                    <path d="M94 38 C108 46 126 44 134 34 C140 26 134 17 126 20 C120 23 122 31 128 30"/>
+                    <path d="M70 44 C56 56 34 56 22 48 C14 42 18 34 24 36"/>
+                    <path d="M100 44 C114 56 136 56 148 48 C156 42 152 34 146 36"/>
+                    <path d="M85 44 C80 50 80 56 85 60 C90 56 90 50 85 44"/>
+                  </g>
+                  <path fill="#5E8F6E" d="M85 40 C72 31 68 23 72 17 C76 12 82 14 85 19 C88 14 94 12 98 17 C102 23 98 31 85 40Z"/>
+                  <g fill="#5E8F6E"><circle cx="14" cy="44" r="2.6"/><circle cx="156" cy="44" r="2.6"/><circle cx="58" cy="12" r="2"/><circle cx="112" cy="12" r="2"/></g>
+                </svg>
+                <h2 class="pl-titulo" id="papel-titulo">
+                  <span class="pl-fila"><span class="pl-lo" data-pinta="texto">Lo</span> <span data-pinta="texto">que cabe</span></span>
+                  <span class="pl-fila pl-fila--2"><span data-pinta="texto">en un</span> <span class="pl-sobre" data-pinta="texto">sobre</span></span>
+                </h2>
+                <div class="pl-raya" data-pinta="rect" aria-hidden="true"></div>
+                <dl class="pl-lista"><div class="pl-item" data-pieza="carta"><dt><span data-pinta="texto">tu carta</span></dt><dd><span class="pl-l" data-pinta="texto">Escrita para ti: historias, hechizos, rincones más</span><span class="pl-l" data-pinta="texto">misteriosos o noticias de tu personaje en su mundo.</span></dd></div><div class="pl-item" data-pieza="ilustracion"><dt><span data-pinta="texto">ilustración A5</span></dt><dd><span class="pl-l" data-pinta="texto">Algo que todavía no ha visto nadie. Para enmarcar,</span><span class="pl-l" data-pinta="texto">o para guardar entre las páginas de un libro.</span></dd></div><div class="pl-item" data-pieza="actividad"><dt><span data-pinta="texto">actividad del mes</span></dt><dd><span class="pl-l" data-pinta="texto">Algo para hacer con las manos, una tarde de lluvia.</span></dd></div><div class="pl-item" data-pieza="pegatina"><dt><span data-pinta="texto">pegatinas</span></dt><dd><span class="pl-l" data-pinta="texto">Se pegan en todo. Avisadas estáis.</span></dd></div><div class="pl-item" data-pieza="tarjeta"><dt><span data-pinta="texto">tarjeta de personaje</span> <small data-pinta="texto">(solo en tu primer sobre)</small></dt><dd><span class="pl-l" data-pinta="texto">Cada mes suma un sello. Acumúlalos para subir de</span><span class="pl-l" data-pinta="texto">rango y conseguir ventajas.</span></dd></div></dl>
+              </div>
+            </article>
+          </div>
+          <div class="dentro__mesa papel-mesa" aria-hidden="true">
           <div class="mesa__pieza mesa__pieza--carta" data-pieza="carta" data-clona=".objeto--carta .objeto__in"></div>
           <div class="mesa__pieza mesa__pieza--actividad" data-pieza="actividad" data-clona=".objeto--actividad .objeto__in"></div>
           <div class="mesa__pieza mesa__pieza--ilustracion" data-pieza="ilustracion"><div class="polaroid"><img src="assets/img/ilustracion-mariposas.jpg" alt="" loading="lazy"></div></div>
@@ -256,27 +273,92 @@
           <span class="mesa__tag" style="--x:70%;--y:46%" data-pieza="pegatina">pegatinas</span>
           <span class="mesa__tag" style="--x:30%;--y:93%" data-pieza="tarjeta">tarjeta de personaje</span>
         </div>
+        </div>
       </div>
+      <div class="dentro__mesa papel-mesa papel-mesa--movil" aria-hidden="true">
+          <div class="mesa__pieza mesa__pieza--carta" data-pieza="carta" data-clona=".objeto--carta .objeto__in"></div>
+          <div class="mesa__pieza mesa__pieza--actividad" data-pieza="actividad" data-clona=".objeto--actividad .objeto__in"></div>
+          <div class="mesa__pieza mesa__pieza--ilustracion" data-pieza="ilustracion"><div class="polaroid"><img src="assets/img/ilustracion-mariposas.jpg" alt="" loading="lazy"></div></div>
+          <div class="mesa__pieza mesa__pieza--tarjeta" data-pieza="tarjeta" data-clona=".objeto--tarjeta .objeto__in"></div>
+          <div class="mesa__pieza mesa__pieza--pegatina1" data-pieza="pegatina"><span class="pegatina pegatina--luna"><svg viewBox="0 0 60 60"><circle cx="30" cy="30" r="28"/><path d="M36 15a16 16 0 1 0 10 24 13 13 0 1 1-10-24z"/><circle class="pg-p" cx="18" cy="20" r="2"/><circle class="pg-p" cx="44" cy="44" r="1.6"/></svg></span></div>
+          <div class="mesa__pieza mesa__pieza--pegatina2" data-pieza="pegatina"><span class="pegatina pegatina--seta"><svg viewBox="0 0 70 64"><path class="pg-borde" d="M8 34C8 16 22 5 35 5s27 11 27 29c0 4-3 6-8 6H45v13c0 5-4 8-10 8s-10-3-10-8V40H16c-5 0-8-2-8-6z"/><path class="pg-sombrero" d="M13 33C13 19 24 10 35 10s22 9 22 23c0 2-2 3-4 3H17c-2 0-4-1-4-3z"/><path class="pg-pie" d="M30 36h10v16c0 3-2 5-5 5s-5-2-5-5z"/><circle class="pg-punto" cx="27" cy="21" r="3.5"/><circle class="pg-punto" cx="42" cy="18" r="3"/><circle class="pg-punto" cx="46" cy="28" r="2.5"/><circle class="pg-punto" cx="22" cy="30" r="2"/></svg></span></div>
+          <span class="mesa__tag" style="--x:2%;--y:6%" data-pieza="ilustracion">ilustración a5</span>
+          <span class="mesa__tag" style="--x:36%;--y:-3%" data-pieza="carta">tu carta</span>
+          <span class="mesa__tag" style="--x:64%;--y:2%" data-pieza="actividad">actividad del mes</span>
+          <span class="mesa__tag" style="--x:70%;--y:46%" data-pieza="pegatina">pegatinas</span>
+          <span class="mesa__tag" style="--x:30%;--y:93%" data-pieza="tarjeta">tarjeta de personaje</span>
+        </div>
     </section>
 
     <!-- 3 · Quién te escribe -->
     <section class="seccion seccion--te" id="quien">
       <div class="seccion__caja">
         <h2 class="titulo revela"><span class="titulo__script">Q</span>uién te escribe</h2>
-        <div class="autoras">
-          <article class="autora revela">
-            <div class="autora__marco autora__marco--luna" aria-hidden="true">
-              <svg viewBox="0 0 120 120"><path d="M74 22a40 40 0 1 0 26 58 32 32 0 1 1-26-58z"/><circle cx="34" cy="30" r="2"/><circle cx="96" cy="40" r="1.5"/><circle cx="28" cy="88" r="1.5"/></svg>
+        <div class="identidades">
+          <article class="ident ident--bruja revela" aria-label="Carta de identidad de la bruja Morna">
+            <div class="ident__marco">
+              <header class="ident__cabeza">
+                <p class="ident__reino">Reino de Linaria</p>
+                <p class="ident__ministerio">Ministerio de Correo Lento</p>
+              </header>
+              <p class="ident__num">Nº <span>473829</span></p>
+              <div class="ident__cuerpo">
+                <figure class="ident__foto"><svg viewBox="0 0 100 128" aria-hidden="true">
+                  <rect width="100" height="128" fill="url(#sepiaB)"/>
+                  <defs><linearGradient id="sepiaB" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#cbb79a"/><stop offset="1" stop-color="#8f7a5e"/></linearGradient></defs>
+                  <path d="M14 128c2-24 16-36 36-36s34 12 36 36z" fill="#3b3128"/>
+                  <ellipse cx="50" cy="70" rx="15" ry="18" fill="#5a4a3b"/>
+                  <path d="M33 88c4-18 8-28 17-28s13 10 17 28c-6-4-11-6-17-6s-11 2-17 6z" fill="#2f271f"/>
+                  <path d="M18 56c10-4 54-4 64 0-6 3-58 3-64 0z" fill="#2b231c"/>
+                  <path d="M34 55c4-18 9-34 22-46 2 6 0 10-4 12 6 10 8 22 10 34z" fill="#2b231c"/>
+                  <circle cx="72" cy="22" r="1.4" fill="#f3e6c8"/><circle cx="20" cy="30" r="1" fill="#f3e6c8"/>
+                </svg></figure>
+                <div class="ident__datos">
+                  <h3 class="ident__titulo">Carta de identidad<small>de bruja</small></h3>
+                  <dl><div class="ident__campo"><dt>Nombre</dt><dd>Morna</dd></div><div class="ident__campo"><dt>Especie</dt><dd>Bruja</dd></div><div class="ident__campo"><dt>Edad</dt><dd>trescientos y pico (dice 29)</dd></div><div class="ident__campo"><dt>Magia</dt><dd>Hechizos de tinta y noches sin luna</dd></div><div class="ident__campo"><dt>Soporte favorito</dt><dd>Tinta china y acuarela</dd></div><div class="ident__campo"><dt>Domicilio</dt><dd>La torre más alta del castillo</dd></div><div class="ident__campo"><dt>Señas</dt><dd>Hollín en los dedos</dd></div></dl>
+                </div>
+              </div>
+              <p class="ident__firma"><span>Morna</span><small>Firma de la titular</small></p>
+              <svg class="ident__sello" viewBox="0 0 120 120" aria-hidden="true">
+                <defs><path id="curvaB" d="M60 60 m-44 0 a44 44 0 1 1 88 0 a44 44 0 1 1 -88 0"/></defs>
+                <circle cx="60" cy="60" r="56" fill="none" stroke="currentColor" stroke-width="2.6"/>
+                <circle cx="60" cy="60" r="33" fill="none" stroke="currentColor" stroke-width="1.6"/>
+                <text font-size="11.5" letter-spacing="2.2"><textPath href="#curvaB">MINISTERIO DE CORREO LENTO · LINARIA ·</textPath></text>
+                <path fill="currentColor" d="M60 44l4 11 11 1-9 7 3 11-9-6-9 6 3-11-9-7 11-1z"/>
+              </svg>
             </div>
-            <h3>La bruja <em>Morna</em></h3>
-            <p class="autora__bio">Escribe de noche, con tinta y un poco de hollín. Su presentación llegará en el próximo correo.</p>
           </article>
-          <article class="autora revela">
-            <div class="autora__marco autora__marco--hoja" aria-hidden="true">
-              <svg viewBox="0 0 120 120"><path d="M60 100V44"/><path d="M60 70c-18 0-28-12-28-26 16 0 28 10 28 26z"/><path d="M60 58c16 0 26-12 26-24-15 0-26 9-26 24z"/><path d="M60 44c-6-8-6-18 0-26 6 8 6 18 0 26z"/></svg>
+          <article class="ident ident--driade revela" aria-label="Permiso de boticaria de la dríade Melisa">
+            <div class="ident__marco">
+              <header class="ident__cabeza">
+                <p class="ident__reino">Reino de Linaria</p>
+                <p class="ident__ministerio">Ministerio de Correo Lento</p>
+              </header>
+              <p class="ident__num">Nº <span>26731</span></p>
+              <div class="ident__cuerpo">
+                <figure class="ident__foto"><svg viewBox="0 0 100 128" aria-hidden="true">
+                  <defs><linearGradient id="sepiaD" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d6c2a8"/><stop offset="1" stop-color="#9b8166"/></linearGradient></defs>
+                  <rect width="100" height="128" fill="url(#sepiaD)"/>
+                  <path d="M14 128c2-24 16-36 36-36s34 12 36 36z" fill="#46392c"/>
+                  <path d="M28 100c-6-30 2-62 22-62s28 32 22 62c-4-8-6-24-8-36H36c-2 12-4 28-8 36z" fill="#3a2f24"/>
+                  <ellipse cx="50" cy="62" rx="14" ry="17" fill="#6a5745"/>
+                  <g fill="#5f6e4a"><path d="M34 44c-8-2-10-8-8-12 6 1 9 6 8 12z"/><path d="M44 38c-4-6-2-12 2-14 3 5 2 10-2 14z"/><path d="M56 38c4-6 2-12-2-14-3 5-2 10 2 14z"/><path d="M66 44c8-2 10-8 8-12-6 1-9 6-8 12z"/></g>
+                  <g fill="#e9d6c8"><circle cx="40" cy="41" r="2.2"/><circle cx="60" cy="41" r="2.2"/><circle cx="50" cy="37" r="2.4"/></g>
+                </svg></figure>
+                <div class="ident__datos">
+                  <h3 class="ident__titulo">Permiso de boticaria<small>de dríade</small></h3>
+                  <dl><div class="ident__campo"><dt>Nombre</dt><dd>Melisa</dd></div><div class="ident__campo"><dt>Especie</dt><dd>Dríade</dd></div><div class="ident__campo"><dt>Edad</dt><dd>la de su roble</dd></div><div class="ident__campo"><dt>Magia</dt><dd>Botánica: remedios, infusiones y alguna cosa más</dd></div><div class="ident__campo"><dt>Soporte favorito</dt><dd>Lápices de colores y gouache</dd></div><div class="ident__campo"><dt>Domicilio</dt><dd>El bosque encantado, tercer roble</dd></div><div class="ident__campo"><dt>Señas</dt><dd>Hojas en el pelo, siempre</dd></div></dl>
+                </div>
+              </div>
+              <p class="ident__firma"><span>Melisa</span><small>Firma de la titular</small></p>
+              <svg class="ident__sello" viewBox="0 0 120 120" aria-hidden="true">
+                <defs><path id="curvaD" d="M60 60 m-44 0 a44 44 0 1 1 88 0 a44 44 0 1 1 -88 0"/></defs>
+                <circle cx="60" cy="60" r="56" fill="none" stroke="currentColor" stroke-width="2.6"/>
+                <circle cx="60" cy="60" r="33" fill="none" stroke="currentColor" stroke-width="1.6"/>
+                <text font-size="11.5" letter-spacing="2.2"><textPath href="#curvaD">REGISTRO DE BOTICARIAS · LINARIA ·</textPath></text>
+                <path fill="currentColor" d="M60 44l4 11 11 1-9 7 3 11-9-6-9 6 3-11-9-7 11-1z"/>
+              </svg>
             </div>
-            <h3>La dríade <em>Melisa</em></h3>
-            <p class="autora__bio">Botánica y boticaria. Sabe qué planta cura qué cosa, y cuáles es mejor no tocar.</p>
           </article>
         </div>
         <p class="nota revela">Detrás de cada una hay una ilustradora de verdad. Si quieres conocerlas sin disfraz, <a href="nosotras.html">aquí están sus portfolios</a>.</p>
@@ -394,7 +476,7 @@
           </header>
 
           <div class="receta__cuerpo">
-            <div class="receta__texto">
+            <div class="receta__ingred">
               <h4 class="receta__apartado">Ingredientes</h4>
               <p class="receta__pregunta" id="pregunta-cartas">¿De quién quieres recibir las cartas? Puedes elegir una o las dos.</p>
               <div class="plan__elige receta__ingredientes" role="group" aria-labelledby="pregunta-cartas">
@@ -406,7 +488,9 @@
                 </button>
               </div>
               <p class="receta__consejo">Si eliges las dos, se mezclan con un 12 % de descuento.</p>
+            </div>
 
+            <div class="receta__prep">
               <h4 class="receta__apartado">Preparación</h4>
               <ol class="receta__pasos">
                 <li>Elige quién te escribe: una, o las dos.</li>
@@ -468,7 +552,7 @@
         <h2 class="titulo revela"><span class="titulo__script">M</span>ás allá del buzón</h2>
         <div class="rincones">
           <a class="rincon revela" href="tienda.html">
-            <span class="rincon__img"><img src="assets/img/ilustracion-bosque.jpg" alt="" loading="lazy"></span>
+            <span class="rincon__img"><img src="assets/img/ilustracion-bosque.jpg" alt=""></span>
             <h3>La tienda</h3>
             <p>Lo de las dos en un mismo sitio. Filtra por artista o por personaje.</p>
             <span class="rincon__ir">Entrar</span>
@@ -512,17 +596,93 @@
         <p class="intro revela">Solo falta tu dirección.</p>
         <p class="revela centro"><a class="boton-lineas" href="#unete">Quiero mi sobre</a></p>
 
-        <form class="nota-form revela" novalidate>
-          <h3>Déjanos una nota</h3>
-          <p>Para eventos, encargos, ideas raras o solo saludar. Las leemos todas.</p>
-          <label>Nombre<input name="nombre" autocomplete="name" required></label>
-          <label>Email<input name="email" type="email" autocomplete="email" required></label>
-          <label>¿De qué va?
-            <select name="tema"><option>Mail Club</option><option>Evento</option><option>Editorial</option><option>Otra cosa</option></select>
-          </label>
-          <label>Tu nota<textarea name="nota" rows="4" required></textarea></label>
-          <button class="boton boton--magenta" type="submit">Enviar la nota</button>
-          <p class="nota-form__ok" role="status" aria-live="polite"></p>
+        <form class="postal revela" id="postal" novalidate aria-labelledby="postal-titulo">
+          <div class="postal__marco">
+            <h3 class="postal__titulo" id="postal-titulo">Déjanos una postal</h3>
+
+            <!-- cara izquierda: la carta -->
+            <div class="postal__carta">
+              <label class="postal__saludo" for="postal-nota">Querida Linaria,</label>
+              <textarea class="postal__lineas" id="postal-nota" name="nota" rows="6" required
+                placeholder="Un encargo, un evento, una idea rara o solo un saludo. Las leemos todas."
+                aria-describedby="error-nota"></textarea>
+              <p class="postal__error" id="error-nota" hidden>Escribe unas líneas antes de sellarla.</p>
+              <p class="postal__despedida">Con cariño,<span class="postal__firma" aria-hidden="true"></span></p>
+            </div>
+
+            <span class="postal__division" aria-hidden="true"></span>
+
+            <!-- cara derecha: sello, matasellos y remite -->
+            <div class="postal__remite">
+              <div class="postal__sellos" aria-hidden="true">
+                <svg class="postal__matasellos" viewBox="0 0 160 160">
+                  <defs><path id="arcoSup" d="M24 80a56 56 0 1 1 112 0"/><path id="arcoInf" d="M22 82a58 58 0 0 0 116 0"/></defs>
+                  <circle cx="80" cy="80" r="74" fill="none" stroke="currentColor" stroke-width="2"/>
+                  <circle cx="80" cy="80" r="68" fill="none" stroke="currentColor" stroke-width="1" stroke-dasharray="3 2"/>
+                  <text font-size="12" letter-spacing="2" font-weight="600"><textPath href="#arcoSup" startOffset="50%" text-anchor="middle">CORREO LENTO</textPath></text>
+                  <text font-size="11" letter-spacing="2" font-weight="600"><textPath href="#arcoInf" startOffset="50%" text-anchor="middle">LINARIA</textPath></text>
+                  <path fill="currentColor" d="M80 50c-10 0-17 8-17 18v14c0 10 7 18 17 18s17-8 17-18V68c0-10-7-18-17-18zm-17 4l6 7m28-7l-6 7"/>
+                  <circle cx="73" cy="68" r="4" fill="#FBF8EE"/><circle cx="87" cy="68" r="4" fill="#FBF8EE"/>
+                  <circle cx="73" cy="68" r="1.6" fill="currentColor"/><circle cx="87" cy="68" r="1.6" fill="currentColor"/>
+                  <path fill="currentColor" d="M30 70l2 5 5 2-5 2-2 5-2-5-5-2 5-2zM130 70l2 5 5 2-5 2-2 5-2-5-5-2 5-2z"/>
+                </svg>
+                <div class="postal__sello">
+                  <svg viewBox="0 0 60 70">
+                    <rect width="60" height="70" fill="#F8CAE4"/>
+                    <text x="5" y="11" font-size="7" font-weight="700" fill="#4F7C64">CORREOS</text>
+                    <path d="M30 60V20" stroke="#4F7C64" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M30 48c-8-2-12-8-9-12 4 1 7 6 9 12zM30 42c8-2 12-8 9-12-4 1-7 6-9 12z" fill="#4F7C64"/>
+                    <path d="M30 32c-7-2-10-8-7-11 3 1 6 6 7 11zM30 28c7-2 10-8 7-11-3 1-6 6-7 11z" fill="#EA6993"/>
+                    <circle cx="30" cy="18" r="3.4" fill="#832D51"/>
+                  </svg>
+                </div>
+              </div>
+
+              <p class="postal__para">Para: <span>Linaria Studio</span></p>
+
+              <div class="postal__campo">
+                <label for="postal-nombre">De parte de</label>
+                <input id="postal-nombre" name="nombre" autocomplete="name" required placeholder="tu nombre" aria-describedby="error-nombre">
+              </div>
+              <p class="postal__error" id="error-nombre" hidden>Dinos quién nos escribe.</p>
+
+              <div class="postal__campo">
+                <label for="postal-email">Tu email</label>
+                <input id="postal-email" name="email" type="email" autocomplete="email" required placeholder="para poder contestarte" aria-describedby="error-email">
+              </div>
+              <p class="postal__error" id="error-email" hidden>Necesitamos un email válido para responderte.</p>
+
+              <div class="postal__campo">
+                <span class="postal__etq" id="postal-tema-etq">Sobre</span>
+                <div class="lista">
+                  <input type="hidden" name="tema" value="el Mail Club">
+                  <button class="lista__boton" type="button" id="postal-tema" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="postal-tema-etq postal-tema">
+                    <span class="lista__valor">el Mail Club</span>
+                    <svg class="lista__flecha" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 8c2 2 3 3 5 5 2-2 3-3 5-5"/></svg>
+                  </button>
+                  <ul class="lista__opciones" role="listbox" tabindex="-1" aria-labelledby="postal-tema-etq" hidden><li role="option" id="tema-op0" aria-selected="true" data-valor="el Mail Club"><span class="lista__lacre" aria-hidden="true"></span>el Mail Club</li><li role="option" id="tema-op1" aria-selected="false" data-valor="un evento"><span class="lista__lacre" aria-hidden="true"></span>un evento</li><li role="option" id="tema-op2" aria-selected="false" data-valor="un encargo editorial"><span class="lista__lacre" aria-hidden="true"></span>un encargo editorial</li><li role="option" id="tema-op3" aria-selected="false" data-valor="otra cosa"><span class="lista__lacre" aria-hidden="true"></span>otra cosa</li></ul>
+                </div>
+              </div>
+
+              <p class="postal__fecha" aria-live="off"></p>
+
+              <div class="postal__enviar">
+                <button class="sello-btn" type="submit">
+                  <span class="sello-btn__estrella" aria-hidden="true">✦</span>
+                  <span class="sello-btn__texto"><span class="sello-btn__inicial">S</span>ellar y enviar</span>
+                  <span class="sello-btn__estrella" aria-hidden="true">✦</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- confirmación -->
+          <div class="postal__hecho" hidden>
+            <p class="postal__estampa"><span>Correo lento</span>Postal sellada</p>
+            <p class="postal__gracias"></p>
+            <p class="postal__aviso">Versión de prueba: esta postal todavía no se envía de verdad.</p>
+            <button class="boton" type="button" data-otra>Escribir otra postal</button>
+          </div>
         </form>
       </div>
     </section>
