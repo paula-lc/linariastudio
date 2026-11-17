@@ -43,7 +43,7 @@ vec3 bola(vec2 uv) {
   // pocas caras grandes con aristas marcadas, como una bola de papel de verdad
   vec3 q = vec3(uv * uTamano / 230.0, uSemilla);
   float r = 1.0 - abs(snoise(q)); r *= r;                  // aristas grandes
-  r += 0.35 * (1.0 - abs(snoise(q * 2.2 + 4.0)));          // algún pliegue más fino
+  r += 0.18 * (1.0 - abs(snoise(q * 2.2 + 4.0)));          // algún pliegue más fino
   float f = facetas(q * 0.7 + 3.1);
   float radio = uRadio * (0.84 + uIntensidad * (0.2 * r - 0.22 * f));
   vec3 lateral = vec3(snoise(q * 0.6 + 11.0), snoise(q * 0.6 + 23.0), snoise(q * 0.6 + 37.0)) * uRadio * 0.09 * uIntensidad;

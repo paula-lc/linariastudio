@@ -16,7 +16,7 @@ export const SCROLL = {
 // Forma de la bola y de los pliegues.
 export const ARRUGAS = {
   radioBola: 0.27,      // radio de la bola, en proporción al ancho del papel
-  intensidad: 1.0,      // fuerza de los pliegues de la bola (0.5 suaves, 1.5 muy marcados)
+  intensidad: 0.75,     // fuerza de los pliegues de la bola (0.5 suaves, 1.5 muy marcados)
   retardoEsquinas: 0.35, // cuánto tardan en abrirse las esquinas respecto al centro (0 = todo a la vez)
   arrugasTransito: 0.11, // arrugas extra mientras se despliega (en proporción al ancho)
   escalaInicial: 0.7,   // tamaño de la bola al principio, respecto al papel final
@@ -29,16 +29,16 @@ export const RESIDUALES = {
   relieve: 14,    // cuánto relieve se saca del sombreado de la hoja ilustrada (assets/img/papel.webp)
 };
 
-// Luz: la misma en el shader y en el horneado del HTML, para que el fundido no salte.
+// Luz suave: mucha luz ambiente y una difusa "envolvente" para que las sombras no sean duras.
 const l = [-0.42, 0.5, 0.76];
 const m = Math.hypot(...l);
 export const LUZ = {
   dir: l.map(v => v / m),
-  ambiente: 0.5,
+  ambiente: 0.64,   // sube para sombras más claras (0.5 = más contraste)
+  envoltura: 0.7,   // cuánto rodea la luz los pliegues (0 = sombras duras, 1 = muy suaves)
 };
-// Difusa calibrada para que el papel plano y de frente salga con brillo 1.
-LUZ.difusa = (1 - LUZ.ambiente) / LUZ.dir[2];
+// Difusa calibrada para que el papel plano y de frente salga con brillo 1 (igual que el HTML).
+LUZ.difusa = (1 - LUZ.ambiente) / ((LUZ.dir[2] + LUZ.envoltura) / (1 + LUZ.envoltura));
 
-// el papel queda un poco torcido, como en la maqueta (en Three el giro positivo es antihorario = rotate(-2deg) en CSS)
 export const ROTACION_FINAL = 2 * Math.PI / 180;
 export const COLOR_PAPEL = [252, 251, 247];
