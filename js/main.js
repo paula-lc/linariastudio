@@ -276,12 +276,6 @@
 
   /* ---------- Revelado al hacer scroll ---------- */
   $$('.titulo').forEach(t => { t.innerHTML = '<span class="titulo__texto">' + t.innerHTML + '</span>'; });
-  // separadores de enredadera entre secciones (no junto a una franja)
-  $$('main > .seccion').forEach(sec => {
-    const prev = sec.previousElementSibling;
-    if (!prev || prev.classList.contains('franja')) return;
-    sec.insertAdjacentHTML('beforebegin', '<div class="separador revela" aria-hidden="true"><span class="separador__vid"></span></div>');
-  });
   const grupos = new Map();
   $$('.revela').forEach(el => {
     const padre = el.parentElement;

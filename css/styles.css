@@ -1687,3 +1687,9 @@ a.cesta__btn { display: inline-block; color: inherit; }
 .ar-estrella { fill: #fdf0aa; stroke: #e0c05a; stroke-width: 1; }
 .arbol { animation: mece-arbol 5s ease-in-out infinite; animation-delay: calc(var(--d) * -1); }
 @keyframes mece-arbol { 0%, 100% { rotate: -1.4deg; } 50% { rotate: 1.4deg; } }
+
+/* sin enredaderas fuera del sobre */
+.titulo::before, .titulo::after,
+.contenido__item::after, .extra::after, .rincon::after,
+.receta__esquina,
+.separador { display: none !important; }
