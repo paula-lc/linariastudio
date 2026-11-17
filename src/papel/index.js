@@ -34,6 +34,7 @@ async function arrancar() {
   const lienzo = seccion.querySelector('.papel-lienzo');
   const hueco = seccion.querySelector('.papel-hueco');
   const mesa = seccion.querySelector('.papel-mesa:not(.papel-mesa--movil)');
+  const magia = seccion.querySelectorAll('.papel-aura, .papel-chispas, .papel-pista');
 
   const sinMovimiento = matchMedia('(prefers-reduced-motion: reduce)').matches;
   iniciarScroll({ suave: !sinMovimiento });
@@ -100,6 +101,11 @@ async function arrancar() {
     sombra.position.set(hoja.position.x + 14 * destino.escala, hoja.position.y - 22 * destino.escala, -ANCHO * ARRUGAS.radioBola * s * 1.1);
     sombra.rotation.z = ROTACION_FINAL * k;
     sombra.material.opacity = mezcla(0.22, 0.32, k);
+
+    // brillos y luz mientras es bola: se apagan en cuanto empieza a abrirse
+    // se ven mientras la bola entra en pantalla y se apagan cuando ya está casi abierta
+    const brillo = 1 - suave(limita((p - 0.25) / 0.2));
+    magia.forEach(el => { el.style.opacity = brillo; });
 
     // 0.85 → 1: fundido al papel HTML
     const f = suave(limita((p - SCROLL.inicioFundido) / (1 - SCROLL.inicioFundido)));

@@ -1802,3 +1802,42 @@ html.lenis, html.lenis body { height: auto; }
 
 /* la hoja ilustrada del cliente es la superficie del papel (WebGL y HTML usan la misma imagen) */
 .papel-html { background: url("../assets/img/papel.webp") center / 100% 100% no-repeat; overflow: visible; }
+
+/* brillos y luz alrededor de la bola, pidiendo hacer scroll */
+.papel-aura, .papel-chispas, .papel-pista { position: absolute; pointer-events: none; transition: opacity .3s; }
+.papel-aura {
+  z-index: 1;
+  left: 50%; top: 50%; width: 120%; aspect-ratio: 1; translate: -50% -50%;
+  background: radial-gradient(circle, rgba(255, 248, 196, .95) 0%, rgba(255, 240, 170, .55) 22%, rgba(248, 202, 228, .25) 42%, transparent 64%);
+  animation: aura-late 3.2s ease-in-out infinite;
+}
+@keyframes aura-late { 0%, 100% { scale: .9; opacity: .75; } 50% { scale: 1.06; opacity: 1; } }
+.papel-chispas { z-index: 3; left: 50%; top: 50%; width: 82%; aspect-ratio: 1; translate: -50% -50%; }
+.papel-chispas i {
+  position: absolute; left: var(--x); top: var(--y);
+  width: calc(22px * var(--t)); aspect-ratio: 1; translate: -50% -50%;
+  background: #fff6c8;
+  clip-path: polygon(50% 0, 60% 40%, 100% 50%, 60% 60%, 50% 100%, 40% 60%, 0 50%, 40% 40%);
+  filter: drop-shadow(0 0 6px #ffe680);
+  animation: chispa 2.4s ease-in-out infinite;
+  animation-delay: var(--d);
+}
+.papel-chispas i:nth-child(3n) { background: #f8cae4; filter: drop-shadow(0 0 6px #ea6993); }
+@keyframes chispa {
+  0%, 100% { opacity: 0; scale: .2; rotate: 0deg; }
+  45% { opacity: 1; scale: 1; }
+  70% { opacity: .8; scale: .8; rotate: 45deg; }
+}
+.papel-pista {
+  z-index: 3;
+  left: 50%; top: calc(50% + 140px); translate: -50% 0;
+  margin: 0;
+  display: grid; justify-items: center; gap: 2px;
+  font-family: var(--script); font-size: 30px; color: var(--magenta);
+  white-space: nowrap;
+  text-shadow: 0 0 12px rgba(255, 246, 200, .9);
+}
+.papel-pista svg { width: 26px; height: 26px; fill: none; stroke: var(--magenta); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; animation: baja 1.4s ease-in-out infinite; }
+@keyframes baja { 0%, 100% { translate: 0 0; opacity: .5; } 50% { translate: 0 7px; opacity: 1; } }
+.papel--estatico .papel-aura, .papel--estatico .papel-chispas, .papel--estatico .papel-pista { display: none; }
+@media (max-width: 760px) { .papel-pista { top: calc(50% + 110px); font-size: 26px; } }
