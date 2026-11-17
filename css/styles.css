@@ -940,6 +940,145 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .barra-movil { display: none; }
 
 /* ==========================================================
+   Sistema unificado con la portada
+   verde té liso · enredaderas · líneas finas · tarjetas planas
+   ========================================================== */
+.seccion, .seccion--viridian, .seccion--rosa, .seccion--te { background: var(--te); color: var(--viridian-hondo); padding-block: 64px 72px; }
+.seccion::before, .pie::before { display: none; }
+.seccion--viridian .titulo__script, .titulo__script { color: var(--viridian); }
+.titulo { color: var(--viridian); }
+.intro, .nota, .paso p, .autora__bio { color: var(--viridian-hondo); }
+
+/* enredaderas a los lados de cada título: brotan al aparecer */
+.titulo { display: flex; justify-content: center; align-items: center; }
+.titulo__texto { min-width: 0; text-wrap: balance; }
+.titulo::before, .titulo::after {
+  content: "";
+  flex: none;
+  display: block;
+  width: 100px;
+  aspect-ratio: 546 / 220;
+  vertical-align: middle;
+  background: url("../assets/img/enredadera-flores.svg") center / contain no-repeat, url("../assets/img/enredadera-tallo.svg") center / contain no-repeat;
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 1.2s cubic-bezier(.3, .7, .3, 1) .35s;
+}
+.titulo::before { margin-right: 14px; scale: -1 1; }
+.titulo::after { margin-left: 14px; }
+.titulo.is-visto::before, .titulo.is-visto::after { clip-path: inset(-10% -10% -10% -10%); }
+
+/* separadores: una enredadera que crece al llegar */
+.separador { display: flex; justify-content: center; padding-block: 8px; background: var(--te); }
+.separador__vid {
+  width: min(460px, 78%);
+  aspect-ratio: 546 / 220;
+  background: url("../assets/img/enredadera-flores.svg") center / contain no-repeat, url("../assets/img/enredadera-tallo.svg") center / contain no-repeat;
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 1.8s cubic-bezier(.3, .7, .3, 1);
+}
+.separador:nth-of-type(even) .separador__vid { scale: -1 1; }
+.separador.is-visto .separador__vid { clip-path: inset(-10% -10% -10% -10%); }
+
+/* franjas con mensaje */
+.franja {
+  background: var(--viridian);
+  color: #fff;
+  text-align: center;
+  padding-block: 16px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  font-size: 15px;
+  letter-spacing: .02em;
+}
+.franja p { margin: 0; }
+
+/* tarjetas planas con borde verde */
+.contenido__item, .extra, .rincon, .nota-form, .plan, .opcion {
+  background: var(--papel);
+  border: 2px solid var(--viridian);
+  border-radius: 0;
+  box-shadow: none;
+  outline: 0;
+  rotate: 0deg;
+}
+.contenido__item { --giro: 0deg; }
+.contenido__item:hover, .rincon:hover, .extra:hover { translate: 0 -6px; rotate: 0deg; box-shadow: none; }
+.extra, .rincon { transition: translate .7s var(--muelle); }
+.rincon__img { border-radius: 0; aspect-ratio: 4 / 3.2; }
+.nota-form { color: var(--viridian-hondo); }
+.opcion { border-color: #b9c38a; }
+.opcion:hover { border-color: var(--viridian); }
+.opcion[aria-checked="true"] { background: var(--viridian); border-color: var(--viridian); box-shadow: none; }
+.paso__num { border-color: var(--viridian); color: var(--viridian); }
+.autora__marco { outline: 0; }
+
+/* enredadera que trepa por el borde de la tarjeta al pasar el ratón */
+.contenido__item, .extra, .rincon, .plan { position: relative; }
+.contenido__item::after, .extra::after, .rincon::after {
+  content: "";
+  position: absolute;
+  left: -16px; top: -34px;
+  width: 58%;
+  aspect-ratio: 546 / 220;
+  background: url("../assets/img/enredadera-flores.svg") center / contain no-repeat, url("../assets/img/enredadera-tallo.svg") center / contain no-repeat;
+  clip-path: inset(0 100% 0 0);
+  pointer-events: none;
+  z-index: 2;
+  transition: clip-path .35s var(--sale);
+}
+.contenido__item:hover::after, .extra:hover::after, .rincon:hover::after {
+  clip-path: inset(-10% -10% -10% -10%);
+  transition: clip-path 1s cubic-bezier(.3, .7, .3, 1);
+}
+
+/* todos los botones con líneas, como "Quiero mi sobre" */
+.boton, .boton.boton--magenta, .boton.boton--borde, .indice__pagar {
+  position: relative;
+  display: inline-block;
+  padding: 5px 16px 6px;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+  color: var(--viridian);
+  font-family: var(--sans);
+  font-size: 18px;
+  letter-spacing: 0;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition: color .35s, scale .4s var(--muelle);
+}
+.boton::before, .boton::after, .indice__pagar::before, .indice__pagar::after {
+  content: "";
+  position: absolute; left: 0; right: 0; height: 2px;
+  background: var(--viridian);
+}
+.boton::before, .indice__pagar::before { top: 0; }
+.boton::after, .indice__pagar::after { bottom: 0; }
+.boton:hover, .boton.boton--magenta:hover, .boton.boton--borde:hover, .indice__pagar:hover {
+  color: var(--magenta); background: none; box-shadow: none; scale: 1; translate: 0 0;
+}
+.boton:active, .indice__pagar:active { scale: .97; }
+.indice__pagar { display: block; font-size: 13px; padding: 6px 4px; }
+.cierre .boton-lineas { color: var(--viridian); }
+.cierre .boton-lineas:hover { color: var(--magenta); }
+.cierre .boton-lineas::before, .cierre .boton-lineas::after { background: var(--viridian); }
+
+/* barra móvil: franja fija, como la de aviso */
+@media (max-width: 560px) {
+  .barra-movil {
+    left: 0; right: 0; bottom: 0;
+    border-radius: 0;
+    background: var(--viridian);
+    box-shadow: none;
+    padding-block: 14px calc(14px + env(safe-area-inset-bottom, 0px));
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+  }
+  .titulo::before, .titulo::after { width: 44px; margin-inline: 6px; }
+}
+
+/* ==========================================================
    Responsive
    ========================================================== */
 @media (max-width: 860px) {
@@ -1003,3 +1142,9 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 }
 
 @keyframes aparece { from { opacity: 0; } }
+
+@media (min-width: 561px) {
+.seccion__caja--estrecha .titulo::before, .seccion__caja--estrecha .titulo::after { width: 64px; }
+.seccion__caja--estrecha .titulo::before { margin-right: 10px; }
+.seccion__caja--estrecha .titulo::after { margin-left: 10px; }
+}

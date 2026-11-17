@@ -249,6 +249,13 @@
   }));
 
   /* ---------- Revelado al hacer scroll ---------- */
+  $$('.titulo').forEach(t => { t.innerHTML = '<span class="titulo__texto">' + t.innerHTML + '</span>'; });
+  // separadores de enredadera entre secciones (no junto a una franja)
+  $$('main > .seccion').forEach(sec => {
+    const prev = sec.previousElementSibling;
+    if (!prev || prev.classList.contains('franja')) return;
+    sec.insertAdjacentHTML('beforebegin', '<div class="separador revela" aria-hidden="true"><span class="separador__vid"></span></div>');
+  });
   const grupos = new Map();
   $$('.revela').forEach(el => {
     const padre = el.parentElement;
@@ -262,7 +269,9 @@
   // solo se esconde lo que todavía está por debajo de la pantalla
   if (!reduce) $$('.revela').forEach(el => {
     if (el.getBoundingClientRect().top > innerHeight) { el.classList.add('espera'); io.observe(el); }
+    else el.classList.add('is-visto');
   });
+  if (reduce) $$('.revela').forEach(el => el.classList.add('is-visto'));
 
   /* ---------- El camino de una carta ---------- */
   const senda = $('#senda'), sobrecito = $('.camino__sobrecito'), mapa = $('.camino__mapa');
