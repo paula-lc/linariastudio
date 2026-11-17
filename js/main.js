@@ -137,13 +137,26 @@
   ajusta();
   addEventListener('resize', ajusta);
 
-  /* ---------- Lo que cabe en un sobre: texto y piezas se señalan entre sí ---------- */
+  /* ---------- Lo que cabe en un sobre: cada texto hace responder a su pieza ---------- */
+  // pasar el ratón la destaca; un clic (o Intro) la deja delante hasta pulsar otra vez o fuera
   const piezas = $$('.sobre-contenido [data-pieza]');
-  const enfoca = k => piezas.forEach(el => el.classList.toggle('is-foco', el.dataset.pieza === k));
+  let fija = '';
+  const enfoca = k => piezas.forEach(el => el.classList.toggle('is-foco', !!k && el.dataset.pieza === k));
+  const marcaFija = () => piezas.forEach(el => el.classList.toggle('is-fija', !!fija && el.dataset.pieza === fija));
+  const alterna = k => { fija = fija === k ? '' : k; marcaFija(); enfoca(fija); };
   piezas.forEach(el => {
-    el.addEventListener('pointerenter', () => enfoca(el.dataset.pieza));
-    el.addEventListener('pointerleave', () => enfoca(''));
+    el.addEventListener('pointerenter', e => { if (e.pointerType === 'mouse') enfoca(el.dataset.pieza); });
+    el.addEventListener('pointerleave', e => { if (e.pointerType === 'mouse') enfoca(fija); });
+    el.addEventListener('click', e => { e.stopPropagation(); alterna(el.dataset.pieza); });
   });
+  $$('.pl-item').forEach(el => {
+    el.tabIndex = 0;
+    el.setAttribute('role', 'button');
+    el.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); alterna(el.dataset.pieza); } });
+    el.addEventListener('focus', () => enfoca(el.dataset.pieza));
+    el.addEventListener('blur', () => enfoca(fija));
+  });
+  document.addEventListener('click', () => { if (fija) { fija = ''; marcaFija(); enfoca(''); } });
 
   /* ---------- Idioma ---------- */
   const aviso = $('.idioma__aviso');
