@@ -1995,3 +1995,48 @@ html.lenis, html.lenis body { height: auto; }
 /* el sello pisa la esquina de la foto, como en los documentos antiguos */
 .ident__sello { left: 6cqw; top: 40cqw; width: 22cqw; }
 .ident--driade .ident__sello { left: auto; right: 6cqw; top: 42cqw; }
+
+/* ==========================================================
+   Pulido: contraste, legibilidad y orden en móvil
+   ========================================================== */
+/* contraste AA del texto sobre el verde té (el tono claro queda para títulos grandes) */
+:root { --viridian-hondo: #3F6852; --banda: #4F7C64; }
+.nav { color: var(--viridian-hondo); }
+.aviso, .franja, .pie, .barra-movil { background: var(--banda); }
+.apertura__precio, .apertura__sub, .intro, .nota, .faq__r p, .historia__pasos p { color: var(--viridian-hondo); }
+
+/* receta: rejilla con zonas; en móvil el matraz va justo después de los ingredientes */
+.receta__cuerpo { grid-template-areas: "ingred matraz" "prep matraz"; column-gap: 40px; row-gap: 26px; }
+.receta__ingred { grid-area: ingred; }
+.receta__prep { grid-area: prep; }
+.receta__matraz { grid-area: matraz; align-self: center; }
+@media (max-width: 760px) {
+  .receta__cuerpo { grid-template-areas: "ingred" "matraz" "prep"; }
+  .matraz { width: 140px; }
+}
+
+/* documentos de identidad: nunca por debajo de un tamaño legible */
+.ident__campo dt { font-size: max(11px, 2.6cqw); }
+.ident__campo dd { font-size: max(12.5px, 2.6cqw); }
+.ident__titulo { font-size: max(17px, 4.6cqw); }
+.ident__titulo small { font-size: max(11px, 2.6cqw); }
+.ident__reino { font-size: max(12px, 3.2cqw); }
+.ident__ministerio, .ident__firma small { font-size: max(10px, 2.3cqw); }
+@container (max-width: 420px) {
+  .ident__cuerpo, .ident--driade .ident__cuerpo { grid-template-columns: 34% 1fr; }
+  .ident--driade .ident__cuerpo { grid-template-columns: 1fr 34%; }
+  .ident__campo { grid-template-columns: 1fr; gap: 0; }
+}
+
+/* "Más allá del buzón" en móvil: imagen al lado del texto, no una tarjeta por pantalla */
+@media (max-width: 760px) {
+  .rincones { max-width: none; gap: 16px; }
+  .rincon { display: grid; grid-template-columns: 38% 1fr; column-gap: 16px; align-items: center; text-align: left; padding: 12px; }
+  .rincon__img { grid-row: span 3; aspect-ratio: 1; }
+  .rincon h3 { margin: 0 0 4px; font-size: 16px; }
+  .rincon p { margin: 0 0 6px; font-size: 14px; }
+}
+
+/* ritmo vertical más uniforme entre secciones */
+.seccion { padding-block: 80px; }
+@media (max-width: 560px) { .seccion { padding-block: 56px; } }
