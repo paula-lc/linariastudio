@@ -137,6 +137,14 @@
   ajusta();
   addEventListener('resize', ajusta);
 
+  /* ---------- Lo que cabe en un sobre: texto y piezas se señalan entre sí ---------- */
+  const piezas = $$('.sobre-contenido [data-pieza]');
+  const enfoca = k => piezas.forEach(el => el.classList.toggle('is-foco', el.dataset.pieza === k));
+  piezas.forEach(el => {
+    el.addEventListener('pointerenter', () => enfoca(el.dataset.pieza));
+    el.addEventListener('pointerleave', () => enfoca(''));
+  });
+
   /* ---------- Idioma ---------- */
   const aviso = $('.idioma__aviso');
   $('[data-lang="ca"]').addEventListener('click', () => {
@@ -156,17 +164,22 @@
     regalo: { id: 'regalo', nombre: 'Regalo · 3 meses', precio: 36, unico: true },
     encargo: { id: 'encargo', nombre: 'Carta por encargo', precio: 65, unico: true },
   };
-  let plan = 'bruja';
+  let plan = '';
   const cifra = $('.plan__cifra');
   const euros = n => n.toLocaleString('es-ES', { minimumFractionDigits: n % 1 ? 2 : 0, maximumFractionDigits: 2 });
-  $$('.plan__elige [role="radio"]').forEach((b, i, todos) => {
+  // se puede elegir una carta o las dos; con las dos se aplica el descuento
+  const elegidas = new Set();
+  $$('.plan__elige [role="checkbox"]').forEach(b => {
     b.addEventListener('click', () => {
-      todos.forEach(x => x.setAttribute('aria-checked', x === b));
+      const q = b.dataset.quien;
+      elegidas.has(q) ? elegidas.delete(q) : elegidas.add(q);
+      b.setAttribute('aria-checked', elegidas.has(q));
+      plan = elegidas.size === 2 ? 'ambas' : ([...elegidas][0] || '');
       const pl = $('.plan');
-      pl.dataset.elegido = 'si';
-      pl.dataset.plan = b.dataset.plan;
+      pl.dataset.elegido = plan ? 'si' : 'no';
+      pl.dataset.plan = plan;
+      if (!plan) return;
       pl.classList.remove('is-remueve'); void pl.offsetWidth; pl.classList.add('is-remueve');
-      plan = b.dataset.plan;
       const nuevo = euros(PLANES[plan].precio);
       if (cifra.textContent !== nuevo) {
         cifra.textContent = nuevo;
@@ -192,7 +205,12 @@
         <p class="indice__linea"><span class="nombre">${it.nombre}${it.cant > 1 ? ' ×' + it.cant : ''}</span><span class="indice__puntos"></span><span class="precio">${euros(it.precio * it.cant)} €${it.unico ? '' : '/mes'}</span><button class="indice__quitar" type="button" aria-label="Quitar ${it.nombre}">×</button></p>
       </li>`).join('');
     const total = cesta.reduce((s, it) => s + it.precio * it.cant, 0);
-    $('.indice__suma').textContent = euros(total) + ' €';
+    const alMes = cesta.filter(it => !it.unico).reduce((s, it) => s + it.precio * it.cant, 0);
+    const unaVez = total - alMes;
+    $('.indice__suma').textContent = euros(+total.toFixed(2)) + ' €';
+    $('.indice__desglose').textContent = alMes && unaVez
+      ? `${euros(+alMes.toFixed(2))} € al mes + ${euros(+unaVez.toFixed(2))} € de pago único`
+      : alMes ? 'al mes, envío incluido' : unaVez ? 'pago único, envío incluido' : '';
     num.textContent = cesta.reduce((s, it) => s + it.cant, 0);
     indice.classList.toggle('tiene', cesta.length > 0);
   };
@@ -243,6 +261,7 @@
   };
 
   $$('[data-anadir]').forEach(b => b.addEventListener('click', () => {
+    if (b.dataset.anadir === 'plan' && !plan) return;
     const p = b.dataset.anadir === 'plan' ? PLANES[plan] : EXTRAS[b.dataset.anadir];
     const ya = cesta.find(it => it.id === p.id);
     if (ya) { if (p.unico) ya.cant++; }
@@ -280,26 +299,44 @@
   });
   if (reduce) $$('.revela').forEach(el => el.classList.add('is-visto'));
 
-  /* ---------- El camino de una carta ---------- */
-  const senda = $('#senda'), sobrecito = $('.camino__sobrecito'), mapa = $('.camino__mapa');
-  if (senda && sobrecito) {
-    const largo = senda.getTotalLength();
-    let pedido = false;
-    const mueve = () => {
+  /* ---------- El camino de una carta: el búho cruza el mapa con el scroll ---------- */
+  const camino = $('#camino'), pista = $('.camino__pista'), ruta = $('#ruta'), buho = $('#buho');
+  if (camino && ruta && buho) {
+    const largo = ruta.getTotalLength();
+    const senal = $('#senal'), chispa = $('#chispa');
+    const largoSenal = senal ? senal.getTotalLength() : 0;
+    const pasos = $$('.historia__pasos li');
+    let pedido = false, pasoActual = -1;
+    const avanza = () => {
       pedido = false;
-      if (!mapa.offsetParent) return;
-      const r = mapa.getBoundingClientRect();
-      const p = Math.max(0, Math.min(1, (innerHeight * .85 - r.top) / (innerHeight * .6)));
-      const svgEl = senda.ownerSVGElement, rs = svgEl.getBoundingClientRect();
-      const k = rs.width / 900, ox = rs.left - r.left, oy = rs.top - r.top;
-      const pt = senda.getPointAtLength(p * largo);
-      const pt2 = senda.getPointAtLength(Math.min(largo, p * largo + 2));
-      const ang = Math.atan2(pt2.y - pt.y, pt2.x - pt.x) * 180 / Math.PI;
-      sobrecito.style.transform = `translate(${ox + pt.x * k}px, ${oy + pt.y * k}px) rotate(${ang * .6}deg)`;
+      const r = pista.getBoundingClientRect();
+      const recorrido = Math.max(1, r.height - innerHeight);
+      const p = reduce ? 1 : Math.max(0, Math.min(1, -r.top / recorrido));
+      // 0–0.14 te apuntas · 0.14–0.3 se prepara en el castillo · 0.3–0.9 vuela · 0.9–1 llega
+      const t = Math.max(0, Math.min(1, (p - .3) / .6));
+      const pt = ruta.getPointAtLength(t * largo);
+      const pt2 = ruta.getPointAtLength(Math.min(largo, t * largo + 3));
+      const ang = t > 0 && t < 1 ? Math.atan2(pt2.y - pt.y, pt2.x - pt.x) * 180 / Math.PI * .35 : 0;
+      buho.setAttribute('transform', `translate(${pt.x.toFixed(1)} ${pt.y.toFixed(1)}) rotate(${ang.toFixed(1)}) scale(1.25)`);
+      camino.classList.toggle('is-vuela', t > 0 && t < 1);
+      // la chispa: recorre la señal durante el primer paso
+      if (senal) {
+        const sp = Math.max(0, Math.min(1, p / .13));
+        senal.style.strokeDasharray = largoSenal;
+        senal.style.strokeDashoffset = largoSenal * (1 - sp);
+        const q = senal.getPointAtLength(sp * largoSenal);
+        chispa.setAttribute('transform', `translate(${q.x.toFixed(1)} ${q.y.toFixed(1)})`);
+      }
+      const paso = p < .14 ? 0 : p < .3 ? 1 : p < .9 ? 2 : 3;
+      if (paso !== pasoActual) {
+        pasoActual = paso;
+        camino.dataset.paso = paso;
+        pasos.forEach((li, i) => { li.classList.toggle('is-activo', reduce || i === paso); li.toggleAttribute('aria-current', i === paso); });
+      }
     };
-    addEventListener('scroll', () => { if (!pedido) { pedido = true; requestAnimationFrame(mueve); } }, { passive: true });
-    addEventListener('resize', mueve);
-    mueve();
+    addEventListener('scroll', () => { if (!pedido) { pedido = true; requestAnimationFrame(avanza); } }, { passive: true });
+    addEventListener('resize', avanza);
+    avanza();
   }
 
   /* ---------- Preguntas: abrir y cerrar con muelle ---------- */

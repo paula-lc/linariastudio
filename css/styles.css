@@ -1356,3 +1356,246 @@ a.cesta__btn { display: inline-block; color: inherit; }
     padding-right: max(16px, env(safe-area-inset-right, 0px));
   }
 }
+
+/* ==========================================================
+   El camino de una carta: historia con búho, sobre crema
+   ========================================================== */
+.camino { background: var(--papel); padding: 0; }
+.camino__pista { position: relative; height: 300vh; }
+.camino__fijo {
+  position: sticky; top: 0;
+  height: 100vh; min-height: 520px;
+  display: flex; flex-direction: column; justify-content: center; gap: 14px;
+  padding-block: 24px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  overflow: hidden;
+}
+.camino__fijo .titulo { margin: 0; }
+.historia { width: min(1000px, 100%); margin: 0 auto; }
+.historia__mapa { display: block; width: 100%; height: auto; max-height: 58vh; overflow: visible; }
+
+.h-suelo { fill: #eef2d8; }
+.h-rio { fill: none; stroke: #bcdcec; stroke-width: 10; stroke-linecap: round; }
+.h-estrellas path { fill: #f0ce99; animation: titila 2.6s ease-in-out infinite; animation-delay: var(--d); transform-box: fill-box; transform-origin: center; }
+@keyframes titila { 0%, 100% { opacity: .35; scale: .8; } 50% { opacity: 1; scale: 1.15; } }
+
+.h-castillo rect, .h-castillo > path:not(.h-tejado):not(.h-bandera):not(.h-ventana):not(.h-puerta):not(.h-mastil) { fill: #fffdf6; stroke: var(--viridian-hondo); stroke-width: 2; stroke-linejoin: round; }
+.h-castillo > path:nth-of-type(1) { fill: none !important; }
+.h-tejado { fill: var(--ciclamen); stroke: var(--magenta); stroke-width: 2; stroke-linejoin: round; }
+.h-mastil { stroke: var(--viridian-hondo); stroke-width: 2; }
+.h-bandera { fill: var(--magenta); animation: ondea-bandera 2.4s ease-in-out infinite; transform-box: fill-box; transform-origin: left center; }
+@keyframes ondea-bandera { 50% { scale: .8 1; } }
+.h-ventana { fill: #fdf0aa; stroke: var(--viridian-hondo); stroke-width: 1.5; }
+.camino[data-paso="1"] .h-castillo .h-ventana { animation: vela 1.2s ease-in-out infinite alternate; }
+@keyframes vela { to { fill: #f9d36b; } }
+.h-puerta { fill: var(--kraft); stroke: var(--kraft-hondo); stroke-width: 1.5; }
+.h-aura { opacity: .7; }
+
+.h-tronco { stroke: #a88b62; stroke-width: 6; stroke-linecap: round; }
+.h-copa { fill: #a6c9a6; stroke: var(--viridian-hondo); stroke-width: 2; }
+.h-copa--b { fill: #8fb89a; }
+.h-copa--c { fill: #b5d3a8; }
+.h-seta path:nth-child(odd) { stroke: #e9dcc0; stroke-width: 4; stroke-linecap: round; }
+.h-seta path:nth-child(even) { fill: var(--ciclamen); stroke: var(--magenta); stroke-width: 1.5; }
+.h-luciernagas circle { fill: #fff3a0; filter: drop-shadow(0 0 4px #ffe680); animation: luciernaga 3s ease-in-out infinite; animation-delay: var(--d); transform-box: fill-box; transform-origin: center; }
+@keyframes luciernaga { 0%, 100% { opacity: .2; translate: 0 0; } 50% { opacity: 1; translate: 5px -8px; } }
+
+.h-muro { fill: #fff8ee; stroke: var(--viridian-hondo); stroke-width: 2; }
+.h-chimenea { fill: var(--kraft); stroke: var(--kraft-hondo); stroke-width: 1.5; }
+.h-corazon { fill: #fdf0aa; stroke: var(--magenta); stroke-width: 2; transition: fill .6s; }
+.camino[data-paso="3"] .h-corazon { fill: #f9b7cf; animation: late 1.4s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+.h-puerta--casa { fill: var(--viridian); stroke: var(--viridian-hondo); }
+.h-flores circle { fill: var(--hada); stroke: var(--ciclamen); stroke-width: 1.5; }
+.h-buzon path:first-child { stroke: var(--viridian-hondo); stroke-width: 3; }
+.h-buzon rect { fill: var(--viridian); stroke: var(--viridian-hondo); stroke-width: 1.5; }
+.h-humo circle { fill: #fff; stroke: #d4d9bd; stroke-width: 1.5; transform-box: fill-box; transform-origin: center; animation: humo-sube 3.6s ease-out infinite; opacity: 0; }
+.h-humo circle:nth-child(2) { animation-delay: 1.2s; }
+.h-humo circle:nth-child(3) { animation-delay: 2.4s; }
+@keyframes humo-sube {
+  0% { opacity: 0; translate: 0 0; scale: .5; }
+  20% { opacity: .95; }
+  100% { opacity: 0; translate: 18px -70px; scale: 1.6; }
+}
+.h-rotulo { font-family: var(--script); font-size: 26px; fill: var(--viridian-hondo); }
+.h-ruta { fill: none; stroke: var(--magenta); stroke-width: 2.4; stroke-dasharray: 3 9; stroke-linecap: round; opacity: .55; }
+
+/* el búho */
+.buho__in { transform-box: fill-box; }
+.buho__cuerpo { fill: #a77b56; stroke: #6f4f33; stroke-width: 1.4; }
+.buho__tripa { fill: #f3e2c4; }
+.buho__ojo { fill: #fff; stroke: #6f4f33; stroke-width: 1.2; }
+.buho__pupila { fill: #3b3b33; }
+.buho__pico { fill: #e9a23b; }
+.buho__pata { stroke: #e9a23b; stroke-width: 2; stroke-linecap: round; }
+.buho__sobre rect { fill: var(--kraft); stroke: var(--kraft-hondo); stroke-width: 1.2; }
+.buho__sobre path { fill: none; stroke: var(--kraft-hondo); stroke-width: 1; }
+.buho__sobre circle { fill: var(--magenta); }
+.buho__ala { fill: #8d6444; stroke: #6f4f33; stroke-width: 1.2; transform-box: fill-box; }
+.buho__ala--i { transform-origin: 100% 30%; }
+.buho__ala--d { transform-origin: 0% 30%; }
+.camino.is-vuela .buho__ala--i { animation: aleteo-i .38s ease-in-out infinite alternate; }
+.camino.is-vuela .buho__ala--d { animation: aleteo-d .38s ease-in-out infinite alternate; }
+@keyframes aleteo-i { from { rotate: 18deg; } to { rotate: -38deg; } }
+@keyframes aleteo-d { from { rotate: -18deg; } to { rotate: 38deg; } }
+.camino:not(.is-vuela) .buho__in { animation: posado 2.4s ease-in-out infinite; }
+@keyframes posado { 50% { translate: 0 -2px; } }
+
+/* los pasos de la historia */
+.historia__pasos {
+  list-style: none; margin: 0 auto; padding: 0;
+  width: min(1000px, 100%);
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px;
+}
+.historia__pasos li {
+  display: grid; grid-template-columns: auto 1fr; gap: 10px; align-items: start;
+  opacity: .38;
+  transition: opacity .5s, translate .7s var(--muelle);
+}
+.historia__pasos li.is-activo { opacity: 1; translate: 0 -4px; }
+.historia__pasos .paso__num { width: 38px; height: 38px; font-size: 24px; }
+.historia__pasos li.is-activo .paso__num { background: var(--magenta); border-color: var(--magenta); color: #fff; }
+.historia__pasos h3 { margin: 4px 0 2px; font-size: 16px; color: var(--viridian-hondo); }
+.historia__pasos p { margin: 0; font-size: 14px; line-height: 1.4; color: var(--viridian-hondo); }
+
+@media (max-width: 760px) {
+  .camino__pista { height: 260vh; }
+  .historia__pasos { grid-template-columns: 1fr; }
+  .historia__pasos li { display: none; }
+  .historia__pasos li.is-activo { display: grid; }
+  .h-rotulo { font-size: 34px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .camino__pista { height: auto; }
+  .camino__fijo { position: static; height: auto; }
+  .historia__pasos li { opacity: 1; display: grid !important; }
+}
+
+/* ==========================================================
+   Ingredientes: sellos de lacre en vez de casillas
+   ========================================================== */
+.ingrediente__gota { display: none; }
+.ingrediente__sello { flex: none; position: relative; top: 5px; width: 26px; height: 26px; }
+.ingrediente__sello svg { width: 100%; height: 100%; overflow: visible; }
+.sello__hueco { fill: none; stroke: #b9a27a; stroke-width: 1.6; stroke-dasharray: 3 3; }
+.sello__lacre { opacity: 0; scale: 1.8; rotate: -25deg; transform-box: fill-box; transform-origin: center; transition: opacity .15s, scale .55s var(--muelle), rotate .55s var(--muelle); }
+.sello__lacre path:first-child { fill: var(--magenta); filter: drop-shadow(1px 2px 1.5px rgba(80, 20, 40, .35)); }
+.sello__corazon { fill: none; stroke: #c06a91; stroke-width: 1.8; }
+.ingrediente[aria-checked="true"] .sello__lacre { opacity: 1; scale: 1; rotate: 0deg; }
+.ingrediente:hover .sello__hueco { stroke: var(--magenta); }
+.receta__consejo { margin: 6px 0 0; font-family: var(--script); font-size: 22px; color: var(--magenta); }
+.receta__descuento { display: none; margin: -8px 0 12px; font-style: italic; font-size: 17px; color: var(--magenta); }
+.receta[data-plan="ambas"] .receta__descuento { display: block; }
+
+/* lema: más interlineado para que "un" no toque la D */
+.lema { line-height: 1.12; }
+.lema__fila:last-child { margin-top: .14em; }
+
+/* ==========================================================
+   Tarjeta de personaje
+   ========================================================== */
+.tarjeta-personaje { filter: drop-shadow(2px 4px 5px rgba(130, 45, 81, .22)); }
+.tarjeta-personaje svg { display: block; width: 100%; height: 100%; overflow: visible; }
+.tp-fondo { fill: #fde9f2; stroke: var(--ciclamen); stroke-width: 2; }
+.tp-borde { fill: none; stroke: #f3a5c3; stroke-width: 1; stroke-dasharray: 3 2.5; }
+.tp-cabecera { fill: var(--ciclamen); }
+.tp-titulo { font-family: var(--sans); font-size: 8px; letter-spacing: .16em; fill: #fff; }
+.tp-firma { font-family: var(--script); font-size: 15px; fill: #fff; }
+.tp-marco { fill: var(--papel); stroke: var(--magenta); stroke-width: 1.6; }
+.tp-marco--in { fill: none; stroke: #f3a5c3; stroke-width: 1; stroke-dasharray: 2 2; }
+.tp-silueta { fill: var(--hada); stroke: var(--ciclamen); stroke-width: 1.2; }
+.tp-brillo { fill: #f0ce99; }
+.tp-etq { font-family: var(--sans); font-size: 6.5px; letter-spacing: .14em; fill: var(--magenta); }
+.tp-linea { stroke: #e7a5c0; stroke-width: 1; }
+.tp-rango { font-family: var(--libro); font-style: italic; fill: var(--magenta); }
+.tp-sello { fill: #fffafc; stroke: #e7a5c0; stroke-width: 1; stroke-dasharray: 1.6 1.4; }
+.tp-sello--lleno { fill: var(--papel); stroke: var(--magenta); }
+.tp-marca { fill: var(--magenta); }
+.tp-estrellas { font-size: 11px; letter-spacing: 1px; fill: var(--magenta); text-anchor: middle; }
+.tp-rango::after { content: ""; }
+
+/* ==========================================================
+   Lo que cabe en un sobre: tipografía a la izquierda, piezas a la derecha
+   ========================================================== */
+.sobre-contenido { padding-block: 72px 80px; }
+.dentro { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: 48px; align-items: center; }
+.lema--seccion { font-size: 44px; color: var(--viridian); margin-bottom: 22px; }
+.lema--seccion .lema__fila:last-child { padding-left: 46px; }
+.lema--seccion .lema__script, .lema--seccion .lema__palabra { opacity: 1; translate: none; clip-path: none; animation: none; }
+.lema--seccion .lema__script:first-child { font-size: 2.3em; vertical-align: -.12em; margin: 0 .02em 0 -.08em; }
+.lema--seccion .lema__magenta .lema__script { font-size: 2em; vertical-align: -.1em; margin-right: -.02em; }
+.dentro__intro { max-width: 420px; margin: 0 0 26px; font-size: 16px; color: var(--viridian-hondo); }
+.dentro__lista { margin: 0; display: grid; gap: 0; border-top: 1px solid var(--viridian); }
+.dentro__lista > div {
+  display: grid; grid-template-columns: 180px 1fr; gap: 16px;
+  padding: 12px 4px;
+  border-bottom: 1px solid var(--viridian);
+  cursor: default;
+  transition: background .3s, padding .5s var(--muelle);
+}
+.dentro__lista dt { font-size: 14px; letter-spacing: .06em; text-transform: uppercase; color: var(--viridian); }
+.dentro__lista dt small { display: block; margin-top: 2px; font-family: var(--script); font-size: 18px; letter-spacing: 0; text-transform: none; color: var(--magenta); }
+.dentro__lista dd { margin: 0; font-size: 15px; color: var(--viridian-hondo); }
+.dentro__lista > div.is-foco { background: var(--crema); padding-left: 12px; }
+.dentro__lista > div.is-foco dt { color: var(--magenta); }
+
+.dentro__mesa { position: relative; aspect-ratio: 1 / .95; max-width: 520px; width: 100%; justify-self: center; }
+.mesa__pieza {
+  position: absolute;
+  rotate: var(--g);
+  transition: rotate .8s var(--muelle), scale .8s var(--muelle), translate .8s var(--muelle);
+}
+.mesa__pieza.is-foco { rotate: 0deg; scale: 1.06; translate: 0 -8px; z-index: 6; }
+.mesa__pieza--actividad { --g: 7deg; left: 50%; top: 6%; width: 36%; aspect-ratio: 96 / 110; z-index: 1; }
+.mesa__pieza--actividad > div { width: 100%; height: 100%; }
+.mesa__pieza--ilustracion { --g: -7deg; left: 4%; top: 12%; width: 46%; z-index: 2; }
+.mesa__pieza--ilustracion .polaroid { aspect-ratio: 1 / 1.15; }
+.mesa__pieza--tarjeta { --g: -4deg; left: 26%; top: 56%; width: 56%; aspect-ratio: 220 / 140; z-index: 4; }
+.mesa__pieza--tarjeta > div { width: 100%; height: 100%; }
+.mesa__pieza--pegatina1 { --g: 12deg; left: 76%; top: 34%; width: 19%; z-index: 5; }
+.mesa__pieza--pegatina2 { --g: -10deg; left: 2%; top: 68%; width: 20%; z-index: 5; }
+.pegatina svg { display: block; width: 100%; height: auto; overflow: visible; filter: drop-shadow(2px 3px 3px rgba(80, 60, 40, .25)); }
+.pegatina--luna circle:first-child { fill: var(--magenta); stroke: #fff; stroke-width: 4; }
+.pegatina--luna path { fill: #fdf0aa; }
+.pegatina--luna .pg-p { fill: #fdf0aa; }
+.pg-borde { fill: #fff; }
+.pg-sombrero { fill: var(--ciclamen); }
+.pg-pie { fill: #f6ead2; }
+.pg-punto { fill: #fff; }
+.mesa__tag {
+  position: absolute; left: var(--x); top: var(--y); z-index: 8;
+  background: var(--crema); color: var(--viridian);
+  font-size: 12px; padding: 3px 8px 4px;
+  transition: scale .5s var(--muelle), background .3s, color .3s;
+}
+.mesa__tag.is-foco { scale: 1.08; background: var(--magenta); color: #fff; }
+
+@media (max-width: 860px) {
+  .dentro { grid-template-columns: 1fr; gap: 36px; }
+  .lema--seccion { font-size: 34px; }
+  .dentro__lista > div { grid-template-columns: 1fr; gap: 4px; }
+}
+
+/* Cesta: solo hay contenido si hay cosas; si no, un texto por defecto */
+.indice { min-height: 0; }
+.indice.tiene .indice__lista { display: block; }
+.indice:not(.tiene) .indice__lista { display: none; }
+.indice__vacio { text-align: center; padding: 6px 0 4px; }
+.indice__vacio .indice__nota { font-size: 14px; color: #55554a; margin: 0; }
+.indice__vacio .indice__nota--script { margin-top: 6px; font-family: var(--script); font-style: normal; font-size: 20px; line-height: 1.2; color: var(--magenta); }
+.indice__total { font-size: 16px; color: var(--magenta); margin-bottom: 4px; }
+.indice__desglose { margin: 0 0 12px; font-size: 12px; font-style: italic; color: #6c6c5c; text-align: right; }
+.indice__desglose:empty { display: none; }
+
+.lema--seccion { line-height: 1.02; }
+
+/* Paso 1: la chispa viaja de tu casa al castillo */
+.h-senal { fill: none; stroke: #f0c46a; stroke-width: 3; stroke-linecap: round; filter: drop-shadow(0 0 4px #ffe680); transition: opacity .5s; }
+.h-chispa { transition: opacity .5s; }
+.h-chispa__nucleo { fill: #fff6c8; stroke: #f0c46a; stroke-width: 1.5; }
+.h-chispa__rayos { stroke: #f0c46a; stroke-width: 1.6; stroke-linecap: round; animation: destella 1s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+@keyframes destella { 50% { scale: 1.35; opacity: .5; } }
+.camino:not([data-paso="0"]) .h-senal, .camino:not([data-paso="0"]) .h-chispa { opacity: 0; }
+.camino[data-paso="0"] .h-corazon { fill: #fff3a0; filter: drop-shadow(0 0 6px #ffe680); }
+.camino[data-paso="1"] .h-aura { opacity: 1; animation: aura 1.6s ease-in-out infinite alternate; }
+@keyframes aura { to { opacity: .55; } }
