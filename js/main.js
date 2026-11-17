@@ -314,7 +314,10 @@
       const pt = ruta.getPointAtLength(t * largo);
       const pt2 = ruta.getPointAtLength(Math.min(largo, t * largo + 3));
       const ang = t > 0 && t < 1 ? Math.atan2(pt2.y - pt.y, pt2.x - pt.x) * 180 / Math.PI * .35 : 0;
-      buho.setAttribute('transform', `translate(${pt.x.toFixed(1)} ${pt.y.toFixed(1)}) rotate(${ang.toFixed(1)}) scale(1.25)`);
+      let dy = 0;
+      if (p >= .14 && p < .3) dy = -Math.abs(Math.sin((p - .14) / .16 * Math.PI * 2)) * 10; // salta de impaciencia en la torre
+      if (p >= .9) dy = Math.sin(Math.min(1, (p - .9) / .1) * Math.PI) * -12;              // aterriza junto al buzón
+      buho.setAttribute('transform', `translate(${pt.x.toFixed(1)} ${(pt.y + dy).toFixed(1)}) rotate(${ang.toFixed(1)}) scale(1.25)`);
       camino.classList.toggle('is-vuela', t > 0 && t < 1);
       // la chispa: recorre la señal durante el primer paso
       if (senal) {
@@ -340,18 +343,19 @@
       pinta(reduce ? 1 : Math.max(0, Math.min(1, (innerHeight * .85 - centro) / (innerHeight * .55))));
     };
     // con un clic en un paso: la historia viaja hasta ese momento
-    const DESTINOS = [.13, .26, .62, 1];
-    const viaja = destino => {
+    // con un clic en un paso: se reproduce entero el tramo de ese paso
+    const TRAMOS = [[0, .139], [.14, .299], [.3, .899], [.9, 1]];
+    const viaja = i => {
       manual = true;
       if (anim) cancelAnimationFrame(anim);
-      if (reduce) return pinta(destino);
-      // siempre desde el principio: la chispa sale de la casa y la historia avanza hasta el paso pulsado
-      const desde = 0, dur = 1400 + destino * 3200, t0 = performance.now();
-      pinta(0);
-      const suave = x => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+      const [desde, hasta] = TRAMOS[i];
+      if (reduce) return pinta(hasta);
+      const dur = 1500 + (hasta - desde) * 4000, t0 = performance.now();
+      const suave = x => x < .5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2;
+      pinta(desde);
       const paso = now => {
         const k = Math.min(1, (now - t0) / dur);
-        pinta(desde + (destino - desde) * suave(k));
+        pinta(desde + (hasta - desde) * suave(k));
         if (k < 1) anim = requestAnimationFrame(paso);
       };
       anim = requestAnimationFrame(paso);
@@ -359,8 +363,8 @@
     pasos.forEach((li, i) => {
       li.tabIndex = 0;
       li.setAttribute('role', 'button');
-      li.addEventListener('click', () => viaja(DESTINOS[i]));
-      li.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); viaja(DESTINOS[i]); } });
+      li.addEventListener('click', () => viaja(i));
+      li.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); viaja(i); } });
     });
     // al volver a hacer scroll, la historia vuelve a seguirlo
     ['wheel', 'touchmove'].forEach(ev => addEventListener(ev, () => { if (manual) { manual = false; if (anim) cancelAnimationFrame(anim); } }, { passive: true }));
