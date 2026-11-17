@@ -86,7 +86,8 @@ export async function iniciarPapel() {
 
     const s = mezcla(ARRUGAS.escalaInicial, 1, k) * destino.escala;
     hoja.scale.setScalar(s);
-    hoja.position.set(destino.x * k, destino.y * k, 0);
+    // la bola empieza ya en su sitio, a la izquierda, y se despliega ahí mismo
+    hoja.position.set(destino.x, destino.y, 0);
 
     // sombra: de redonda (bola) a rectangular (papel), un poco desplazada
     const ladoBola = ANCHO * ARRUGAS.radioBola * 2.5;
