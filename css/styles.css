@@ -1693,3 +1693,109 @@ a.cesta__btn { display: inline-block; color: inherit; }
 .contenido__item::after, .extra::after, .rincon::after,
 .receta__esquina,
 .separador { display: none !important; }
+
+/* ==========================================================
+   Barra superior fija que se encoge al hacer scroll
+   ========================================================== */
+body:has(.barra-superior) { padding-top: var(--alto-barra, 0px); }
+.barra-superior {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 60;
+  background: var(--te);
+  transition: box-shadow .45s var(--sale);
+}
+.barra-superior .aviso { max-height: 40px; overflow: hidden; transition: max-height .45s var(--sale), padding .45s var(--sale), opacity .3s; }
+.barra-superior .cabecera { transition: padding .45s var(--sale), gap .45s var(--sale); }
+.barra-superior .logo { transition: width .5s var(--suave), scale .6s var(--suave); }
+.barra-superior .nav { transition: font-size .45s var(--sale), margin .45s var(--sale), gap .45s var(--sale); }
+.barra-superior.is-mini { box-shadow: 0 1px 0 rgba(79, 124, 100, .25), 0 10px 24px -18px rgba(40, 60, 30, .45); }
+.barra-superior.is-mini .aviso { max-height: 0; padding-block: 0; opacity: 0; }
+.barra-superior.is-mini .cabecera { padding-block: 8px; }
+.barra-superior.is-mini .logo { width: 118px; }
+.barra-superior.is-mini .nav { font-size: 16px; margin-top: 0; gap: 34px; }
+.barra-superior.is-mini .cesta__btn { padding: 2px 9px; }
+@media (max-width: 860px) {
+  .barra-superior.is-mini .cabecera { gap: 4px; padding-block: 6px; }
+  .barra-superior.is-mini .logo { width: 96px; }
+  .barra-superior.is-mini .nav { font-size: 14px; gap: 16px; }
+}
+
+/* Lenis: el scroll suave lo lleva JS */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-stopped { overflow: hidden; }
+
+/* ==========================================================
+   Lo que cabe en un sobre: la bola de papel
+   ========================================================== */
+.papel-seccion { position: relative; background: var(--te); }
+.papel-pin {
+  position: relative;
+  height: 100vh; height: 100svh;
+  min-height: 560px;
+  overflow: hidden;
+  padding-top: 84px; /* deja sitio a la barra encogida */
+}
+.papel-canvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 2; }
+.papel-escena {
+  position: relative;
+  height: 100%;
+  max-width: 1080px; margin: 0 auto;
+  display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1fr); gap: 40px; align-items: center;
+  padding-block: 12px 28px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.papel-hueco {
+  position: relative;
+  justify-self: center;
+  width: min(430px, 100%, calc((100svh - 150px) * 600 / 848));
+  aspect-ratio: 600 / 848;
+}
+.papel-html {
+  position: absolute; inset: 0;
+  rotate: -2deg;
+  background: rgb(252, 251, 247) center / 100% 100% no-repeat;
+  filter: drop-shadow(10px 16px 18px rgba(38, 58, 34, .26));
+  overflow: hidden;
+}
+.papel--vivo .papel-html { opacity: 0; }
+.papel-lienzo {
+  position: relative;
+  width: 600px; height: 848px;
+  padding: 46px 58px 0 64px;
+  transform: scale(var(--k, .7));
+  transform-origin: 0 0;
+  font-family: "Inter", "Helvetica Neue", Arial, sans-serif;
+  color: #4a4d45;
+}
+.pl-ornamento { display: block; width: 170px; height: 64px; margin: 0 auto 4px; }
+.pl-titulo { margin: 0; font-family: "Inter", "Helvetica Neue", Arial, sans-serif; font-weight: 400; font-size: 64px; line-height: 1; letter-spacing: 0; text-transform: uppercase; color: #5E8F6E; }
+.pl-fila { display: block; white-space: nowrap; }
+.pl-fila--2 { padding-left: 46px; margin-top: 4px; }
+.pl-lo { font-family: "Great Vibes", cursive; font-size: 150px; line-height: 0; text-transform: none; vertical-align: -.06em; margin-right: -4px; margin-left: -10px; }
+.pl-sobre { color: #7A1F4F; }
+.pl-raya { width: 290px; height: 3px; margin: 26px auto 24px; background: #5E8F6E; border-radius: 2px; }
+.pl-lista { margin: 0; }
+.pl-item + .pl-item { margin-top: 14px; }
+.pl-lista dt { font-family: "Great Vibes", cursive; font-size: 38px; line-height: 1.05; color: #5E8F6E; margin-bottom: 2px; }
+.pl-lista dt small { font-size: 21px; color: #7A1F4F; margin-left: 8px; }
+.pl-lista dd { margin: 0; }
+.pl-l { display: block; white-space: nowrap; font-size: 17px; line-height: 1.42; color: #4a4d45; }
+
+.papel-mesa { justify-self: center; }
+.papel--vivo .papel-mesa:not(.papel-mesa--movil) { opacity: 0; }
+.papel-mesa--movil { display: none; }
+
+/* estático: sin movimiento o sin WebGL */
+.papel--estatico .papel-pin { height: auto; min-height: 0; padding-top: 32px; }
+.papel--estatico .papel-canvas { display: none; }
+
+@media (max-width: 760px) {
+  .papel-escena { grid-template-columns: 1fr; align-items: center; justify-items: center; }
+  .papel-hueco { width: min(90vw, calc((100svh - 140px) * 600 / 848)); }
+  .papel-escena > .papel-mesa { display: none; }
+  .papel-mesa--movil { display: block; margin: 8px auto 48px; width: min(92vw, 520px); }
+}
+/* el adorno y la raya ya van dentro del fondo horneado del papel */
+.papel-html.horneado .pl-ornamento, .papel-html.horneado .pl-raya { visibility: hidden; }
+.pl-lo { margin-right: 8px; }
