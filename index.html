@@ -319,54 +319,82 @@
       <div class="seccion__caja">
         <h2 class="titulo revela"><span class="titulo__script">U</span>n sitio en tu buzón</h2>
 
-        <article class="plan revela" data-elegido="no">
-          <p class="plan__nombre">Mail Club Linaria</p>
-          <h3 class="plan__pregunta" id="pregunta-cartas">¿De quién quieres recibir las cartas?</h3>
-          <div class="plan__elige" role="radiogroup" aria-labelledby="pregunta-cartas">
-            <button class="opcion" type="button" role="radio" aria-checked="false" data-plan="bruja">
-              <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M30 9a16 16 0 1 0 10 23 13 13 0 1 1-10-23z"/></svg>
-              <span class="opcion__nombre">La bruja</span>
-              <span class="opcion__precio">13 €/mes</span>
-            </button>
-            <button class="opcion" type="button" role="radio" aria-checked="false" data-plan="driade">
-              <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 42V18"/><path d="M24 30c-8 0-12-5-12-11 7 0 12 4 12 11z"/><path d="M24 24c7 0 11-5 11-10-7 0-11 4-11 10z"/></svg>
-              <span class="opcion__nombre">La dríade</span>
-              <span class="opcion__precio">13 €/mes</span>
-            </button>
-            <button class="opcion" type="button" role="radio" aria-checked="false" data-plan="ambas">
-              <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M20 10a12 12 0 1 0 8 17 10 10 0 1 1-8-17z"/><path d="M34 40V24"/><path d="M34 32c-5 0-8-3-8-7 5 0 8 3 8 7z"/><path d="M34 28c5 0 7-3 7-7-5 0-7 3-7 7z"/></svg>
-              <span class="opcion__nombre">Las dos</span>
-              <span class="opcion__precio">−12 %</span>
-            </button>
-          </div>
-          <div class="plan__detalle">
-          <div class="plan__detalle-in">
-          <p class="plan__precio"><span class="plan__cifra">13</span> € <small>al mes</small></p>
-          <ul class="plan__lista">
-            <li>Un sobre cada mes, cerrado a mano.</li>
-            <li>El sello corre de nuestra cuenta (en España).</li>
-            <li>Te quedas el tiempo que quieras. Te vas cuando quieras, aunque te echaremos de menos.</li>
-          </ul>
-          <button class="boton boton--magenta" type="button" data-anadir="plan">Quiero mi sobre</button>
-          </div>
-          </div>
-        </article>
+        <article class="plan receta revela" data-elegido="no" data-plan="">
+          <span class="receta__esquina receta__esquina--a" aria-hidden="true"></span>
+          <span class="receta__esquina receta__esquina--b" aria-hidden="true"></span>
+          <header class="receta__cabeza">
+            <p class="receta__num">Receta nº 13 · Mail Club Linaria</p>
+            <h3 class="receta__titulo">Poción para recibir cartas</h3>
+            <p class="receta__sub">Rinde un sobre al mes. Reposo: unos treinta días.</p>
+          </header>
 
-        <div class="extras">
-          <article class="extra revela">
-            <h3>¿Es para otra persona?</h3>
-            <p>Regala tres meses de cartas. Pago único, sin renovación.</p>
-            <p class="extra__precio">36 €</p>
-            <button class="boton boton--borde" type="button" data-anadir="regalo">Regalar el club</button>
-          </article>
-          <article class="extra revela">
-            <h3>Una carta por encargo</h3>
-            <p>Nos das una palabra, un color y un ingrediente. Un único envío.</p>
-            <p class="extra__precio">65 €</p>
-            <button class="boton boton--borde" type="button" data-anadir="encargo">Encargar mi carta</button>
-          </article>
-        </div>
-        <p class="nota revela"><strong>Socias fundadoras:</strong> las primeras 50 personas se quedan con este precio mientras sigan en el club. Lo apuntamos en el libro blanco.</p>
+          <div class="receta__cuerpo">
+            <div class="receta__texto">
+              <h4 class="receta__apartado">Ingredientes</h4>
+              <p class="receta__pregunta" id="pregunta-cartas">¿De quién quieres recibir las cartas?</p>
+              <div class="plan__elige receta__ingredientes" role="radiogroup" aria-labelledby="pregunta-cartas">
+                <button class="ingrediente" type="button" role="radio" aria-checked="false" data-plan="bruja">
+                  <span class="ingrediente__gota" aria-hidden="true"></span><span class="ingrediente__nombre">una carta de la bruja</span><span class="ingrediente__puntos" aria-hidden="true"></span><span class="ingrediente__precio">13 €</span>
+                </button>
+                <button class="ingrediente" type="button" role="radio" aria-checked="false" data-plan="driade">
+                  <span class="ingrediente__gota" aria-hidden="true"></span><span class="ingrediente__nombre">una carta de la dríade</span><span class="ingrediente__puntos" aria-hidden="true"></span><span class="ingrediente__precio">13 €</span>
+                </button>
+                <button class="ingrediente" type="button" role="radio" aria-checked="false" data-plan="ambas">
+                  <span class="ingrediente__gota" aria-hidden="true"></span><span class="ingrediente__nombre">las dos, bien mezcladas</span><span class="ingrediente__puntos" aria-hidden="true"></span><span class="ingrediente__precio">−12 %</span>
+                </button>
+              </div>
+
+              <h4 class="receta__apartado">Preparación</h4>
+              <ol class="receta__pasos">
+                <li>Elige quién te escribe.</li>
+                <li>Añade un sello. Corre de nuestra cuenta (en España).</li>
+                <li>Cierra con lacre y deja reposar un mes.</li>
+                <li>Repite cada mes. Te vas cuando quieras, aunque te echaremos de menos.</li>
+              </ol>
+            </div>
+
+            <div class="receta__matraz">
+              <svg class="matraz" viewBox="0 0 160 210" aria-hidden="true">
+                <defs>
+                  <clipPath id="forma-matraz"><path d="M66 58 V84 L26 164 Q18 194 48 194 H112 Q142 194 134 164 L94 84 V58 Z"/></clipPath>
+                  <linearGradient id="mezcla" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#832D51"/><stop offset="1" stop-color="#6C9775"/></linearGradient>
+                </defs>
+                <g clip-path="url(#forma-matraz)">
+                  <rect class="matraz__liquido" x="0" y="0" width="160" height="210"/>
+                  <g class="matraz__burbujas"><circle cx="62" cy="186" r="4"/><circle cx="84" cy="190" r="3"/><circle cx="100" cy="184" r="5"/><circle cx="74" cy="192" r="2.5"/></g>
+                </g>
+                <path class="matraz__vidrio" d="M66 58 V84 L26 164 Q18 194 48 194 H112 Q142 194 134 164 L94 84 V58"/>
+                <path class="matraz__brillo" d="M44 162 Q40 176 50 182"/>
+                <rect class="matraz__corcho" x="62" y="40" width="36" height="20" rx="3"/>
+                <path class="matraz__cuerda" d="M60 60 H100"/>
+                <g class="matraz__etiqueta"><rect x="54" y="128" width="52" height="26" rx="2"/><text x="80" y="146" text-anchor="middle">Linaria</text></g>
+              </svg>
+              <p class="receta__espera">Elige un ingrediente para empezar.</p>
+              <div class="plan__detalle">
+                <div class="plan__detalle-in">
+                  <p class="plan__precio"><span class="plan__cifra">13</span> € <small>al mes</small></p>
+                  <button class="boton" type="button" data-anadir="plan">Quiero mi sobre</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <footer class="receta__variantes">
+            <div class="variante">
+              <p class="variante__titulo">Variante para regalar</p>
+              <p>Tres meses de cartas. Pago único, sin renovación.</p>
+              <p class="variante__precio">36 €</p>
+              <button class="boton" type="button" data-anadir="regalo">Regalar el club</button>
+            </div>
+            <div class="variante">
+              <p class="variante__titulo">Variante por encargo</p>
+              <p>Una palabra, un color y un ingrediente. Un único envío.</p>
+              <p class="variante__precio">65 €</p>
+              <button class="boton" type="button" data-anadir="encargo">Encargar mi carta</button>
+            </div>
+          </footer>
+          <p class="receta__nota">Nota al margen: las primeras 50 socias fundadoras se quedan con este precio mientras sigan en el club. Lo apuntamos en el libro blanco.</p>
+        </article>
       </div>
     </section>
 

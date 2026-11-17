@@ -51,10 +51,13 @@
     asomo = true;
     estado('asomado');
   };
-  if (reduce) estado('abierto');
-  else {
-    addEventListener('scroll', () => scrollY > 30 && asomar(), { passive: true });
-    setTimeout(asomar, 6000);
+  // Al cargar, el sobre siempre está cerrado. Solo se entreabre cuando la persona
+  // empieza a moverse por la página (no con el scroll que restaura el navegador).
+  escena.dataset.estado = 'cerrado';
+  if (!reduce) {
+    const alMoverse = () => { if (performance.now() > 1500) asomar(); };
+    ['wheel', 'touchmove', 'keydown'].forEach(ev => addEventListener(ev, alMoverse, { passive: true }));
+    setTimeout(asomar, 8000);
   }
 
   // Etiquetas <-> objetos
@@ -159,7 +162,10 @@
   $$('.plan__elige [role="radio"]').forEach((b, i, todos) => {
     b.addEventListener('click', () => {
       todos.forEach(x => x.setAttribute('aria-checked', x === b));
-      $('.plan').dataset.elegido = 'si';
+      const pl = $('.plan');
+      pl.dataset.elegido = 'si';
+      pl.dataset.plan = b.dataset.plan;
+      pl.classList.remove('is-remueve'); void pl.offsetWidth; pl.classList.add('is-remueve');
       plan = b.dataset.plan;
       const nuevo = euros(PLANES[plan].precio);
       if (cifra.textContent !== nuevo) {

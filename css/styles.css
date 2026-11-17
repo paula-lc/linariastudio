@@ -1218,3 +1218,141 @@ a.cesta__btn { display: inline-block; color: inherit; }
 @keyframes planea { 0%, 100% { translate: 0 0; } 50% { translate: 14px -5px; } }
 .camino__sobrecito { z-index: 2; margin-left: -19px; }
 @media (max-width: 860px) { .camino__mapa { display: block; padding: 10px; } .mapa__rotulo { font-size: 26px; } }
+
+/* ==========================================================
+   Únete: una página de recetario de pociones
+   ========================================================== */
+.plan.receta {
+  max-width: 880px;
+  margin: 30px auto 0;
+  padding: 52px 56px 40px;
+  text-align: left;
+  background:
+    radial-gradient(120% 90% at 0% 0%, rgba(215, 180, 127, .14), transparent 45%),
+    radial-gradient(120% 90% at 100% 100%, rgba(215, 180, 127, .16), transparent 45%),
+    var(--papel);
+  border: 2px solid var(--viridian);
+  box-shadow: inset 0 0 0 8px var(--papel), inset 0 0 0 9px var(--viridian);
+  font-family: var(--libro);
+  color: #3f4a3a;
+}
+.receta__esquina {
+  position: absolute; width: 120px; aspect-ratio: 546 / 220; pointer-events: none;
+  background: url("../assets/img/enredadera-flores.svg") center / contain no-repeat, url("../assets/img/enredadera-tallo.svg") center / contain no-repeat;
+}
+.receta__esquina--a { top: -22px; right: -26px; rotate: 18deg; }
+.receta__esquina--b { bottom: -20px; left: -28px; rotate: 198deg; }
+
+.receta__cabeza { text-align: center; margin-bottom: 28px; }
+.receta__num { margin: 0; font-family: var(--sans); font-size: 12px; letter-spacing: .22em; text-transform: uppercase; color: var(--viridian); }
+.receta__titulo { margin: 6px 0 2px; font-family: var(--script); font-weight: 400; font-size: 52px; line-height: 1.05; color: var(--magenta); }
+.receta__sub { margin: 0; font-style: italic; font-size: 18px; color: var(--viridian-hondo); }
+.receta__cabeza::after { content: "❦"; display: block; margin-top: 10px; color: var(--viridian); font-size: 20px; }
+
+.receta__cuerpo { display: grid; grid-template-columns: 1.25fr 1fr; gap: 40px; align-items: start; }
+.receta__apartado {
+  display: flex; align-items: center; gap: 12px;
+  margin: 0 0 10px;
+  font-family: var(--sans); font-weight: 400; font-size: 13px; letter-spacing: .22em; text-transform: uppercase;
+  color: var(--viridian);
+}
+.receta__apartado::after { content: ""; flex: 1; height: 1px; background: #b9c38a; }
+.receta__texto .receta__apartado:not(:first-child) { margin-top: 28px; }
+.receta__pregunta { margin: 0 0 10px; font-style: italic; font-size: 19px; color: var(--viridian-hondo); }
+
+.receta .plan__elige { display: grid; grid-template-columns: 1fr; gap: 2px; }
+.ingrediente {
+  display: flex; align-items: baseline; gap: 10px;
+  width: 100%;
+  padding: 8px 4px;
+  font-family: var(--libro); font-size: 21px; text-align: left;
+  color: #3f4a3a;
+  border-radius: 0;
+  transition: color .3s, translate .5s var(--muelle);
+}
+.ingrediente:hover { translate: 4px 0; color: var(--magenta); }
+.ingrediente__gota {
+  flex: none; position: relative; top: 2px;
+  width: 15px; height: 15px; border-radius: 50%;
+  border: 1.5px solid var(--viridian);
+  transition: background .3s, border-color .3s;
+}
+.ingrediente__gota::after {
+  content: ""; position: absolute; inset: 2px; border-radius: 50%;
+  background: var(--magenta); scale: 0;
+  transition: scale .6s var(--muelle);
+}
+.ingrediente__puntos { flex: 1; border-bottom: 1.5px dotted #a9b07f; translate: 0 -5px; min-width: 20px; }
+.ingrediente__precio { font-weight: 600; color: var(--magenta); white-space: nowrap; }
+.ingrediente[aria-checked="true"] { color: var(--magenta); }
+.ingrediente[aria-checked="true"] .ingrediente__gota { border-color: var(--magenta); }
+.ingrediente[aria-checked="true"] .ingrediente__gota::after { scale: 1; }
+
+.receta__pasos { margin: 0; padding: 0; list-style: none; counter-reset: paso; display: grid; gap: 8px; }
+.receta__pasos li { counter-increment: paso; display: grid; grid-template-columns: 34px 1fr; font-size: 19px; line-height: 1.35; }
+.receta__pasos li::before { content: counter(paso, upper-roman) "."; font-weight: 600; color: var(--magenta); }
+
+/* el matraz */
+.receta__matraz { display: grid; justify-items: center; text-align: center; }
+.matraz { width: 180px; height: auto; overflow: visible; }
+.matraz__vidrio { fill: rgba(255, 255, 255, .35); stroke: var(--viridian-hondo); stroke-width: 2.4; stroke-linejoin: round; }
+.matraz__brillo { fill: none; stroke: #fff; stroke-width: 3; stroke-linecap: round; opacity: .8; }
+.matraz__corcho { fill: var(--kraft); stroke: var(--kraft-hondo); stroke-width: 1.5; }
+.matraz__cuerda { stroke: var(--magenta); stroke-width: 2; }
+.matraz__etiqueta rect { fill: var(--papel); stroke: var(--viridian); stroke-width: 1.2; }
+.matraz__etiqueta text { font-family: var(--script); font-size: 15px; fill: var(--magenta); }
+.matraz__liquido {
+  fill: #e6e9cf;
+  transform-box: view-box;
+  translate: 0 170px;
+  transition: translate 1.4s var(--muelle), fill .8s;
+}
+.receta[data-elegido="si"] .matraz__liquido { translate: 0 104px; }
+.receta[data-plan="bruja"] .matraz__liquido { fill: #a8577a; }
+.receta[data-plan="driade"] .matraz__liquido { fill: #8fb89a; }
+.receta[data-plan="ambas"] .matraz__liquido { fill: url(#mezcla); }
+.matraz__burbujas circle { fill: rgba(255, 255, 255, .75); opacity: 0; }
+.receta[data-elegido="si"] .matraz__burbujas circle { animation: burbuja 2.6s ease-in infinite; }
+.receta[data-elegido="si"] .matraz__burbujas circle:nth-child(2) { animation-delay: .7s; }
+.receta[data-elegido="si"] .matraz__burbujas circle:nth-child(3) { animation-delay: 1.3s; }
+.receta[data-elegido="si"] .matraz__burbujas circle:nth-child(4) { animation-delay: 1.9s; }
+@keyframes burbuja { 0% { opacity: 0; translate: 0 0; } 20% { opacity: 1; } 100% { opacity: 0; translate: 0 -78px; } }
+.receta.is-remueve .matraz { animation: remueve .8s ease-in-out; transform-origin: 50% 90%; }
+@keyframes remueve { 25% { rotate: -5deg; } 55% { rotate: 4deg; } 80% { rotate: -1.5deg; } }
+
+.receta__espera { margin: 6px 0 0; font-style: italic; font-size: 18px; color: var(--viridian-hondo); transition: opacity .3s; }
+.receta[data-elegido="si"] .receta__espera { display: none; }
+.receta .plan__precio { margin: 8px 0 12px; }
+.receta .plan__detalle-in { text-align: center; }
+
+.receta__variantes {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 34px;
+  margin-top: 36px; padding-top: 24px;
+  border-top: 1px solid #b9c38a;
+}
+.variante p { margin: 0 0 4px; font-size: 18px; }
+.variante__titulo { font-family: var(--sans); font-size: 12px !important; letter-spacing: .2em; text-transform: uppercase; color: var(--viridian); }
+.variante__precio { font-family: var(--script); font-size: 38px !important; color: var(--magenta); line-height: 1.1; }
+.variante .boton { font-size: 15px; margin-top: 6px; }
+.receta__nota { margin: 28px 0 0; text-align: center; font-family: var(--script); font-size: 22px; color: var(--viridian-hondo); }
+
+@media (max-width: 760px) {
+  .plan.receta { padding: 36px 20px 30px; }
+  .receta__cuerpo, .receta__variantes { grid-template-columns: 1fr; }
+  .receta__titulo { font-size: 40px; }
+  .ingrediente { font-size: 19px; }
+  .receta__esquina { width: 80px; }
+}
+
+/* barra móvil: franja fija verde, como la de aviso */
+@media (max-width: 560px) {
+  .barra-movil {
+    left: 0; right: 0; bottom: 0;
+    border-radius: 0;
+    background: var(--viridian);
+    box-shadow: none;
+    padding-block: 14px calc(14px + env(safe-area-inset-bottom, 0px));
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+  }
+}
