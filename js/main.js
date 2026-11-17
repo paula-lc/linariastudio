@@ -5,8 +5,9 @@
   const $$ = (s, c = document) => [...c.querySelectorAll(s)];
 
   /* ---------- Entrada ---------- */
+  // las piezas de "Lo que cabe en un sobre" reutilizan las del sobre de la portada
+  $$('[data-clona]').forEach(d => { const o = $(d.dataset.clona); if (o) d.append(o.cloneNode(true)); });
   $$('.lema__palabra, .lema__script').forEach((el, i) => el.style.setProperty('--w', i));
-  $$('.nav__link').forEach(a => a.insertAdjacentHTML('beforeend', '<span class="enredadera" aria-hidden="true"><img class="enredadera__tallo" src="assets/img/enredadera-tallo.svg" alt=""><img class="enredadera__flores" src="assets/img/enredadera-flores.svg" alt=""></span>'));
   requestAnimationFrame(() => requestAnimationFrame(() => document.body.classList.add('listo')));
 
   /* ---------- El sobre ---------- */
@@ -283,11 +284,12 @@
       if (!mapa.offsetParent) return;
       const r = mapa.getBoundingClientRect();
       const p = Math.max(0, Math.min(1, (innerHeight * .85 - r.top) / (innerHeight * .6)));
-      const k = mapa.clientWidth / 900;
+      const svgEl = senda.ownerSVGElement, rs = svgEl.getBoundingClientRect();
+      const k = rs.width / 900, ox = rs.left - r.left, oy = rs.top - r.top;
       const pt = senda.getPointAtLength(p * largo);
       const pt2 = senda.getPointAtLength(Math.min(largo, p * largo + 2));
       const ang = Math.atan2(pt2.y - pt.y, pt2.x - pt.x) * 180 / Math.PI;
-      sobrecito.style.transform = `translate(${pt.x * k}px, ${pt.y * k}px) rotate(${ang * .6}deg)`;
+      sobrecito.style.transform = `translate(${ox + pt.x * k}px, ${oy + pt.y * k}px) rotate(${ang * .6}deg)`;
     };
     addEventListener('scroll', () => { if (!pedido) { pedido = true; requestAnimationFrame(mueve); } }, { passive: true });
     addEventListener('resize', mueve);
@@ -328,6 +330,28 @@
     // TODO: conectar con el servicio de formularios (Formspree, Netlify Forms…)
     ok.textContent = 'Versión de prueba: esta nota todavía no se envía.';
     form.reset();
+  });
+
+  /* ---------- Franjas: mensajitos que van cambiando ---------- */
+  $$('.franja[data-mensajes]').forEach((f, n) => {
+    let ms; try { ms = JSON.parse(f.dataset.mensajes); } catch (_) { return; }
+    const p = f.querySelector('p');
+    let i = 0, pausa = false;
+    f.addEventListener('pointerenter', () => { pausa = true; });
+    f.addEventListener('pointerleave', () => { pausa = false; });
+    const cambia = () => {
+      if (pausa || document.hidden) return;
+      i = (i + 1) % ms.length;
+      if (reduce) { p.textContent = '• ' + ms[i] + ' •'; return; }
+      p.classList.add('is-sale');
+      setTimeout(() => {
+        p.textContent = '• ' + ms[i] + ' •';
+        p.classList.remove('is-sale'); p.classList.add('is-entra');
+        void p.offsetWidth;
+        p.classList.remove('is-entra');
+      }, 380);
+    };
+    setTimeout(() => setInterval(cambia, 4200), n * 1300);
   });
 
   /* ---------- Barra fija en móvil ---------- */

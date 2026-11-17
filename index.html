@@ -24,8 +24,8 @@
   <!-- Cabecera -->
   <header class="cabecera">
     <nav class="nav nav--izq" aria-label="Principal">
-      <a class="nav__link" href="#mas-alla">tienda</a>
-      <a class="nav__link" href="#meses">meses pasados</a>
+      <a class="nav__link" href="tienda.html">tienda</a>
+      <a class="nav__link" href="meses-pasados.html">meses pasados</a>
     </nav>
 
     <a class="logo" href="#top" aria-label="Linaria Studio, inicio">
@@ -33,7 +33,7 @@
     </a>
 
     <nav class="nav nav--der" aria-label="Secundaria">
-      <a class="nav__link" href="#quien">nosotras</a>
+      <a class="nav__link" href="nosotras.html">nosotras</a>
       <div class="idioma" role="group" aria-label="Idioma">
         <button class="idioma__btn is-activo" type="button" data-lang="es" aria-pressed="true">ES</button><span aria-hidden="true">/</span><button class="idioma__btn" type="button" data-lang="ca" aria-pressed="false">CAT</button>
         <span class="idioma__aviso" role="status" aria-live="polite"></span>
@@ -215,22 +215,33 @@
         <p class="intro revela">No es una newsletter ni una caja de cosas al azar. Es correspondencia de verdad, preparada a mano en el estudio y cerrada con lacre.</p>
         <ul class="contenido">
           <li class="contenido__item revela">
-            <svg class="icono" viewBox="0 0 48 48" aria-hidden="true"><rect x="9" y="7" width="30" height="34" rx="2"/><rect x="14" y="12" width="20" height="18"/><path d="M14 27l6-6 5 5 3-3 6 6"/></svg>
+            <div class="pieza pieza--foto" aria-hidden="true">
+              <div class="polaroid"><img src="assets/img/ilustracion-mariposas.jpg" alt="" loading="lazy"></div>
+            </div>
+            <span class="contenido__tag">ilustración a5</span>
             <h3>La ilustración del mes</h3>
             <p>Algo que todavía no ha visto nadie. Para enmarcar, o para guardar entre las páginas de un libro.</p>
           </li>
           <li class="contenido__item revela">
-            <svg class="icono" viewBox="0 0 48 48" aria-hidden="true"><path d="M8 14h32v22H8z"/><path d="M8 14l16 12 16-12"/></svg>
+            <div class="pieza pieza--carta" aria-hidden="true" data-clona=".objeto--carta .objeto__in"></div>
+            <span class="contenido__tag">tu carta</span>
             <h3>Una carta desde el otro lado</h3>
             <p>Lo que ha pasado allí este mes, contado por quien estaba.</p>
           </li>
           <li class="contenido__item revela">
-            <svg class="icono" viewBox="0 0 48 48" aria-hidden="true"><path d="M10 10h28v28H10z" stroke-dasharray="3 3"/><circle cx="24" cy="22" r="6"/><path d="M16 33h16"/></svg>
+            <div class="pieza pieza--papeleria" aria-hidden="true">
+              <div class="pieza__tarjeta" data-clona=".objeto--tarjeta .objeto__in"></div>
+              <span class="pieza__pegatina"></span>
+            </div>
+            <span class="contenido__tag">papelería</span>
             <h3>Papelería que se usa</h3>
             <p>Postales, pegatinas y pequeñas piezas para escribir, decorar o regalar.</p>
           </li>
           <li class="contenido__item revela">
-            <svg class="icono" viewBox="0 0 48 48" aria-hidden="true"><path d="M10 18h28v20H10z"/><path d="M24 18v20M10 26h28"/><path d="M24 18c-4-8-12-6-8 0M24 18c4-8 12-6 8 0"/></svg>
+            <div class="pieza pieza--paquete" aria-hidden="true">
+              <span class="paquete"><span class="paquete__lacre" data-clona=".lacre svg"></span></span>
+            </div>
+            <span class="contenido__tag">sorpresa</span>
             <h3>Una cosa que no esperabas</h3>
             <p>Cambia cada mes. No preguntes.</p>
           </li>
@@ -258,19 +269,40 @@
             <p class="autora__bio">Botánica y boticaria. Sabe qué planta cura qué cosa, y cuáles es mejor no tocar.</p>
           </article>
         </div>
-        <p class="nota revela">Detrás de cada una hay una ilustradora de verdad. Si quieres conocerlas sin disfraz, <a href="#contacto">aquí están sus portfolios</a>.</p>
+        <p class="nota revela">Detrás de cada una hay una ilustradora de verdad. Si quieres conocerlas sin disfraz, <a href="nosotras.html">aquí están sus portfolios</a>.</p>
       </div>
     </section>
 
-    <div class="franja" role="note"><p>• cada sobre se cierra a mano, con lacre •</p></div>
+    <div class="franja" role="note" data-mensajes='["cada sobre se cierra a mano, con lacre", "el sello corre de nuestra cuenta (en España)", "si te apuntas antes del día 15, entras en el sobre de este mes", "dibujado, impreso y doblado en el estudio"]'><p aria-live="polite">• cada sobre se cierra a mano, con lacre •</p></div>
 
     <!-- 4 · El camino de una carta -->
     <section class="seccion seccion--rosa camino" id="camino">
       <div class="seccion__caja">
         <h2 class="titulo revela"><span class="titulo__script">E</span>l camino de una carta</h2>
         <div class="camino__mapa">
-          <svg class="camino__senda" viewBox="0 0 900 120" preserveAspectRatio="none" aria-hidden="true">
-            <path id="senda" d="M20 70 C 160 10, 260 120, 450 60 S 760 10, 880 66"/>
+          <svg class="camino__senda" viewBox="0 0 900 210" aria-hidden="true">
+            <!-- colinas -->
+            <g class="mapa__colina"><path d="M560 190 Q610 120 660 190"/><path d="M630 190 Q690 100 750 190"/><path d="M600 160l8-6M688 140l8-6M700 160l8-6"/></g>
+            <!-- bosque -->
+            <g class="mapa__arbol"><path d="M250 120v18M280 106v18M312 124v18M470 182v16M505 172v16"/><circle cx="250" cy="106" r="16"/><circle cx="280" cy="92" r="18"/><circle cx="312" cy="110" r="15"/><circle cx="470" cy="168" r="14"/><circle cx="505" cy="158" r="15"/></g>
+            <!-- el estudio -->
+            <g class="mapa__casa"><path class="mapa__tejado" d="M32 118 L64 90 L96 118Z"/><rect x="38" y="118" width="52" height="40"/><rect class="mapa__puerta" x="58" y="134" width="12" height="24"/><path d="M80 100v-14h8v20"/></g>
+            <g class="mapa__humo"><circle cx="84" cy="78" r="4"/><circle cx="90" cy="68" r="5"/><circle cx="98" cy="57" r="6"/></g>
+            <text class="mapa__rotulo" x="64" y="182" text-anchor="middle">el estudio</text>
+            <!-- el buzón -->
+            <g class="mapa__buzon"><path d="M846 186v-46"/><rect x="826" y="112" width="40" height="28" rx="12"/><path class="mapa__bandera" d="M866 120v-16h12v8h-12"/></g>
+            <text class="mapa__rotulo" x="846" y="206" text-anchor="middle">tu buzón</text>
+            <!-- rosa de los vientos -->
+            <g class="mapa__rosa"><path d="M770 22v32M754 38h32"/><path class="mapa__aguja" d="M770 18l4 20-4 20-4-20z"/><text x="770" y="14" text-anchor="middle">N</text></g>
+            <!-- pajaritos -->
+            <g class="mapa__pajaros">
+              <path class="pajaro" style="--d:0s" d="M380 40q6-7 12 0q6-7 12 0"/>
+              <path class="pajaro" style="--d:.4s" d="M414 28q5-6 10 0q5-6 10 0"/>
+              <path class="pajaro" style="--d:.9s" d="M640 50q6-7 12 0q6-7 12 0"/>
+              <path class="pajaro" style="--d:.2s" d="M180 36q5-6 10 0q5-6 10 0"/>
+            </g>
+            <!-- el camino -->
+            <path id="senda" class="mapa__senda" d="M96 140 C 170 70, 220 180, 370 130 S 540 50, 640 110 S 770 170, 826 128"/>
           </svg>
           <span class="camino__sobrecito" aria-hidden="true"></span>
         </div>
@@ -343,7 +375,7 @@
       <div class="seccion__caja">
         <h2 class="titulo revela"><span class="titulo__script">M</span>ás allá del buzón</h2>
         <div class="rincones">
-          <a class="rincon revela" href="#tienda">
+          <a class="rincon revela" href="tienda.html">
             <span class="rincon__img"><img src="assets/img/ilustracion-bosque.jpg" alt="" loading="lazy"></span>
             <h3>La tienda</h3>
             <p>Lo de las dos en un mismo sitio. Filtra por artista o por personaje.</p>
@@ -365,7 +397,7 @@
       </div>
     </section>
 
-    <div class="franja" role="note"><p>• sin permanencia · te quedas el tiempo que quieras •</p></div>
+    <div class="franja" role="note" data-mensajes='["sin permanencia · te quedas el tiempo que quieras", "te vas cuando quieras, aunque te echaremos de menos", "las primeras 50 socias fundadoras mantienen su precio", "regala tres meses de cartas por 36 €"]'><p aria-live="polite">• sin permanencia · te quedas el tiempo que quieras •</p></div>
 
     <!-- 7 · Preguntas al cartero -->
     <section class="seccion seccion--te" id="preguntas">

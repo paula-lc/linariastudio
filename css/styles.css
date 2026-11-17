@@ -93,55 +93,27 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   display: inline-block;
   transition: translate .5s var(--muelle), color .3s;
 }
-.nav__link { isolation: isolate; }
-.enredadera {
-  position: absolute;
-  left: 50%; top: 62%;
-  width: 150px;
-  aspect-ratio: 546 / 220;
-  translate: -50% 0;
-  z-index: -1;
-  pointer-events: none;
+/* hover del menú: solo un subrayado que se dibuja de izquierda a derecha */
+.nav__link::after {
+  content: "";
+  position: absolute; left: 0; right: 0; bottom: -4px;
+  height: 2px;
+  background: var(--viridian);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .45s var(--sale);
 }
-.enredadera img { position: absolute; inset: 0; width: 100%; height: 100%; }
-.enredadera__tallo { clip-path: inset(0 100% 0 0); transition: clip-path .4s var(--sale); }
-.enredadera__flores {
-  clip-path: inset(0 100% 0 0);
-  opacity: 0; scale: .8;
-  transition: clip-path .3s var(--sale), opacity .25s, scale .3s var(--sale);
-}
-.nav__link:hover .enredadera__tallo, .nav__link:focus-visible .enredadera__tallo {
-  clip-path: inset(-10% -10% -10% -10%);
-  transition: clip-path 1s cubic-bezier(.3, .7, .3, 1);
-}
-.nav__link:hover .enredadera__flores, .nav__link:focus-visible .enredadera__flores {
-  clip-path: inset(-10% -10% -10% -10%);
-  opacity: 1; scale: 1;
-  transition: clip-path 1s cubic-bezier(.3, .7, .3, 1) .2s, opacity .3s .2s, scale .9s var(--muelle) .2s;
-}
+.nav__link:hover::after, .nav__link:focus-visible::after { transform: scaleX(1); }
 
 .logo {
   display: block;
   width: 266px;
-  transform-origin: 50% 6%;
-  animation: cuelga 1.6s var(--sale) .1s both;
+  animation: logoEntra 1s var(--sale) .1s both;
+  transition: scale .6s var(--suave);
 }
-.logo:hover { animation: balancea 1.4s ease-in-out; }
-@keyframes cuelga {
-  0% { transform: translateY(-40px) rotate(-7deg); opacity: 0; }
-  35% { transform: translateY(0) rotate(5deg); opacity: 1; }
-  55% { transform: rotate(-3deg); }
-  72% { transform: rotate(1.6deg); }
-  86% { transform: rotate(-.6deg); }
-  100% { transform: rotate(0); }
-}
-@keyframes balancea {
-  0%, 100% { transform: rotate(0); }
-  20% { transform: rotate(3deg); }
-  45% { transform: rotate(-2.2deg); }
-  68% { transform: rotate(1.1deg); }
-  85% { transform: rotate(-.4deg); }
-}
+/* sin animación en bucle: al pasar el ratón solo crece un poco */
+.logo:hover { scale: 1.03; }
+@keyframes logoEntra { from { opacity: 0; transform: translateY(-8px); } }
 
 /* Idioma */
 .idioma { position: relative; display: flex; align-items: center; gap: 1px; }
@@ -967,16 +939,17 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .titulo::after { margin-left: 14px; }
 .titulo.is-visto::before, .titulo.is-visto::after { clip-path: inset(-10% -10% -10% -10%); }
 
-/* separadores: una enredadera que crece al llegar */
-.separador { display: flex; justify-content: center; padding-block: 8px; background: var(--te); }
+/* separadores: una guirnalda de enredadera de lado a lado que crece al llegar */
+.separador { display: block; padding-block: 6px; background: var(--te); overflow: hidden; }
 .separador__vid {
-  width: min(460px, 78%);
-  aspect-ratio: 546 / 220;
-  background: url("../assets/img/enredadera-flores.svg") center / contain no-repeat, url("../assets/img/enredadera-tallo.svg") center / contain no-repeat;
+  display: block;
+  width: 100%;
+  height: 64px;
+  background: url("../assets/img/enredadera-tira.svg") 0 50% / auto 100% repeat-x;
   clip-path: inset(0 100% 0 0);
-  transition: clip-path 1.8s cubic-bezier(.3, .7, .3, 1);
+  transition: clip-path 2.2s cubic-bezier(.3, .7, .3, 1);
 }
-.separador:nth-of-type(even) .separador__vid { scale: -1 1; }
+.separador:nth-of-type(even) .separador__vid { background-position: 30% 50%; }
 .separador.is-visto .separador__vid { clip-path: inset(-10% -10% -10% -10%); }
 
 /* franjas con mensaje */
@@ -1148,3 +1121,100 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .seccion__caja--estrecha .titulo::before { margin-right: 10px; }
 .seccion__caja--estrecha .titulo::after { margin-left: 10px; }
 }
+
+/* ==========================================================
+   Lo que cabe en un sobre: las piezas reales, sin cajas
+   ========================================================== */
+.contenido { gap: 34px 26px; }
+.contenido__item, .contenido__item:hover {
+  background: none; border: 0; padding: 0; box-shadow: none; rotate: 0deg; translate: none;
+  display: grid; justify-items: center; text-align: center; align-content: start;
+}
+.contenido__item::after { display: none; }
+.contenido__item h3 { margin: 10px 0 4px; font-weight: 400; text-transform: uppercase; font-size: 16px; letter-spacing: .03em; color: var(--viridian); }
+.contenido__item p { max-width: 220px; color: var(--viridian-hondo); }
+.contenido__tag {
+  margin-top: -14px; position: relative; z-index: 2;
+  background: var(--crema); color: var(--viridian);
+  font-size: 12px; padding: 3px 9px 4px;
+}
+.pieza {
+  height: 170px; width: 100%;
+  display: grid; place-items: center;
+  rotate: var(--g, -4deg);
+  transition: rotate .8s var(--muelle), translate .8s var(--muelle), scale .8s var(--muelle);
+}
+.contenido__item:nth-child(2) .pieza { --g: 5deg; }
+.contenido__item:nth-child(3) .pieza { --g: -6deg; }
+.contenido__item:nth-child(4) .pieza { --g: 3deg; }
+.contenido__item:hover .pieza { rotate: 0deg; translate: 0 -8px; scale: 1.05; }
+
+.pieza--foto .polaroid { width: 132px; height: 150px; }
+.pieza--carta > div { width: 120px; height: 136px; }
+.pieza--papeleria { position: relative; }
+.pieza__tarjeta > div { width: 130px; height: 70px; }
+.pieza__pegatina {
+  position: absolute; right: 18%; top: 22%;
+  width: 54px; height: 54px; border-radius: 50%;
+  background: var(--hada); border: 3px solid #fff;
+  box-shadow: 2px 3px 6px rgba(130, 45, 81, .25);
+  rotate: 12deg;
+}
+.pieza__pegatina::after { content: "★"; position: absolute; inset: 0; display: grid; place-items: center; color: var(--magenta); font-size: 22px; }
+
+.paquete {
+  position: relative; display: block;
+  width: 118px; height: 96px;
+  background: var(--kraft);
+  border-radius: 4px;
+  box-shadow: 3px 5px 10px rgba(80, 60, 30, .28);
+  background-image:
+    linear-gradient(90deg, transparent calc(50% - 2px), #F6F4E4 calc(50% - 2px) calc(50% + 2px), transparent calc(50% + 2px)),
+    linear-gradient(0deg, transparent calc(50% - 2px), #F6F4E4 calc(50% - 2px) calc(50% + 2px), transparent calc(50% + 2px));
+}
+.paquete__lacre { position: absolute; left: 50%; top: 50%; width: 34px; height: 34px; margin: -17px 0 0 -17px; }
+.paquete__lacre svg { width: 100%; height: 100%; overflow: visible; filter: drop-shadow(1px 2px 1.5px rgba(80, 20, 40, .35)); }
+.paquete__lacre path { fill: var(--magenta); }
+.paquete__lacre .lacre__corazon { fill: none; stroke: #b4547d; stroke-width: 1.6; }
+.contenido__item:hover .paquete { animation: sacude .6s ease-in-out; }
+@keyframes sacude { 25% { rotate: -4deg; } 50% { rotate: 3deg; } 75% { rotate: -1.5deg; } }
+
+/* Páginas aparte (provisionales) */
+.pronto { min-height: 46vh; padding-block: 56px 40px; }
+.pronto .titulo::before, .pronto .titulo::after { clip-path: inset(-10% -10% -10% -10%); }
+.pronto__nota { text-align: center; font-family: var(--script); font-size: 30px; color: var(--magenta); margin: 0 0 22px; }
+.pronto .boton-lineas { opacity: 1; translate: none; margin: 0; }
+a.cesta__btn { display: inline-block; color: inherit; }
+
+/* Franjas con mensajes que van cambiando */
+.franja p { transition: opacity .45s var(--sale), translate .7s var(--muelle); }
+.franja p.is-sale { opacity: 0; translate: 0 -10px; transition: opacity .35s var(--sale), translate .35s var(--sale); }
+.franja p.is-entra { opacity: 0; translate: 0 10px; transition: none; }
+
+/* El camino de una carta: un mapita con contraste */
+.camino__mapa {
+  background: var(--papel);
+  border: 2px solid var(--viridian);
+  padding: 18px 20px 10px;
+}
+.camino__senda path, .camino__senda rect, .camino__senda circle { fill: none; stroke: var(--viridian-hondo); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; opacity: 1; stroke-dasharray: none; }
+.camino__senda .mapa__senda { stroke: var(--magenta); stroke-width: 2.6; stroke-dasharray: 3 8; }
+.mapa__arbol circle { fill: #9cc4a3; }
+.mapa__colina path:not(:last-child) { fill: #e3ebc2; }
+.camino__senda .mapa__tejado { fill: var(--ciclamen); stroke: var(--magenta); }
+.mapa__casa rect:not(.mapa__puerta) { fill: #fff; }
+.camino__senda .mapa__puerta { fill: var(--kraft); }
+.mapa__buzon rect { fill: var(--viridian); }
+.camino__senda .mapa__bandera { fill: var(--magenta); stroke: var(--magenta); }
+.camino__senda .mapa__aguja { fill: var(--magenta); stroke: none; }
+.mapa__rosa text, .mapa__rotulo { font-family: var(--script); font-size: 20px; fill: var(--viridian-hondo); stroke: none; }
+.mapa__rosa text { font-family: var(--sans); font-size: 10px; }
+.mapa__humo circle { fill: #fff; stroke: #c9cfb0; stroke-width: 1.2; animation: humo 3.2s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+.mapa__humo circle:nth-child(2) { animation-delay: .5s; }
+.mapa__humo circle:nth-child(3) { animation-delay: 1s; }
+@keyframes humo { 0%, 100% { opacity: .5; translate: 0 0; } 50% { opacity: 1; translate: 2px -3px; } }
+.camino__senda .pajaro { stroke: var(--viridian-hondo); stroke-width: 1.8; transform-box: fill-box; transform-origin: center; animation: aletea .9s ease-in-out infinite, planea 7s ease-in-out infinite; animation-delay: var(--d), var(--d); }
+@keyframes aletea { 50% { scale: 1 .45; } }
+@keyframes planea { 0%, 100% { translate: 0 0; } 50% { translate: 14px -5px; } }
+.camino__sobrecito { z-index: 2; margin-left: -19px; }
+@media (max-width: 860px) { .camino__mapa { display: block; padding: 10px; } .mapa__rotulo { font-size: 26px; } }
