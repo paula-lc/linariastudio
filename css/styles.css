@@ -1619,3 +1619,13 @@ a.cesta__btn { display: inline-block; color: inherit; }
 /* la carta dirigida a quien lee, asomando detrás */
 .mesa__pieza--carta { --g: 3deg; left: 30%; top: -1%; width: 30%; aspect-ratio: 126 / 142; z-index: 0; }
 .mesa__pieza--carta > div { width: 100%; height: 100%; }
+
+/* El camino: sin pista larga ni pantalla fija; la historia avanza mientras el mapa cruza la pantalla */
+.camino__pista { height: auto; }
+.camino__fijo { position: static; height: auto; min-height: 0; padding-block: 56px 64px; gap: 18px; overflow: visible; }
+.historia__mapa { max-height: none; }
+@media (max-width: 760px) { .camino__pista { height: auto; } }
+
+/* Únete: la receta es la sección entera, un solo título */
+.unete { padding-block: 56px 72px; }
+.plan.receta { margin-top: 0; }

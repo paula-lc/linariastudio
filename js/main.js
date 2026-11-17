@@ -309,9 +309,10 @@
     let pedido = false, pasoActual = -1;
     const avanza = () => {
       pedido = false;
-      const r = pista.getBoundingClientRect();
-      const recorrido = Math.max(1, r.height - innerHeight);
-      const p = reduce ? 1 : Math.max(0, Math.min(1, -r.top / recorrido));
+      // de cuando el mapa entra por abajo (85 % de la pantalla) a cuando su centro sube al 30 %
+      const r = $('.historia__mapa').getBoundingClientRect();
+      const centro = r.top + r.height / 2;
+      const p = reduce ? 1 : Math.max(0, Math.min(1, (innerHeight * .85 - centro) / (innerHeight * .55)));
       // 0–0.14 te apuntas · 0.14–0.3 se prepara en el castillo · 0.3–0.9 vuela · 0.9–1 llega
       const t = Math.max(0, Math.min(1, (p - .3) / .6));
       const pt = ruta.getPointAtLength(t * largo);
