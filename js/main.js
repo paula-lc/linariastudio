@@ -345,7 +345,9 @@
       manual = true;
       if (anim) cancelAnimationFrame(anim);
       if (reduce) return pinta(destino);
-      const desde = pActual, dur = 600 + Math.abs(destino - desde) * 1800, t0 = performance.now();
+      // siempre desde el principio: la chispa sale de la casa y la historia avanza hasta el paso pulsado
+      const desde = 0, dur = 1400 + destino * 3200, t0 = performance.now();
+      pinta(0);
       const suave = x => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
       const paso = now => {
         const k = Math.min(1, (now - t0) / dur);
