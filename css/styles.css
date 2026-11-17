@@ -1615,3 +1615,7 @@ a.cesta__btn { display: inline-block; color: inherit; }
 /* las piezas que se arrastran pasan por encima del texto de la pista */
 .escena { z-index: 2; }
 .apertura__pista { z-index: 1; pointer-events: none; }
+
+/* la carta dirigida a quien lee, asomando detrás */
+.mesa__pieza--carta { --g: 3deg; left: 30%; top: -1%; width: 30%; aspect-ratio: 126 / 142; z-index: 0; }
+.mesa__pieza--carta > div { width: 100%; height: 100%; }
