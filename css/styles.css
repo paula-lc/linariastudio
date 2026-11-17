@@ -1629,3 +1629,7 @@ a.cesta__btn { display: inline-block; color: inherit; }
 /* Únete: la receta es la sección entera, un solo título */
 .unete { padding-block: 56px 72px; }
 .plan.receta { margin-top: 0; }
+
+/* Lo que cabe en un sobre: mismo interlineado que el titular de la portada */
+.lema--seccion { line-height: 1.12; }
+.lema--seccion .lema__script { line-height: 0; }
