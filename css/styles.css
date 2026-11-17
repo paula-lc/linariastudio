@@ -1922,3 +1922,76 @@ html.lenis, html.lenis body { height: auto; }
 .papel-mesa .mesa__pieza--pegatina1.is-foco, .papel-mesa .mesa__pieza--pegatina2.is-foco { scale: 1.6; }
 .papel-mesa .mesa__tag { cursor: pointer; }
 .papel-mesa .mesa__tag.is-foco { z-index: 21; }
+
+/* ==========================================================
+   Quién te escribe: documentos de identidad antiguos
+   ========================================================== */
+.identidades {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 40px;
+  max-width: 1020px; margin: 34px auto 0;
+}
+.ident {
+  --papel-v: #e9dcc0; --mancha: rgba(150, 110, 60, .18); --tinta-v: #4a3b2a; --sello-v: #6d4f8e; --num-v: #4a3b2a;
+  position: relative;
+  container-type: inline-size;
+  rotate: -1.6deg;
+  transition: rotate .7s var(--muelle), translate .7s var(--muelle), filter .4s;
+  filter: drop-shadow(0 12px 18px rgba(60, 50, 30, .28));
+}
+.ident--driade { --papel-v: #e7b6b0; --mancha: rgba(150, 60, 70, .2); --sello-v: #6a4c95; --num-v: #b3262e; rotate: 1.4deg; margin-top: 26px; }
+.ident:hover { rotate: 0deg; translate: 0 -6px; filter: drop-shadow(0 20px 26px rgba(60, 50, 30, .32)); }
+.ident__marco {
+  position: relative;
+  padding: 5cqw 5.5cqw 4cqw;
+  border-radius: 1.6cqw;
+  color: var(--tinta-v);
+  background:
+    radial-gradient(40% 30% at 18% 22%, var(--mancha), transparent 70%),
+    radial-gradient(35% 28% at 82% 78%, var(--mancha), transparent 70%),
+    radial-gradient(120% 90% at 50% 50%, transparent 55%, rgba(110, 80, 40, .28)),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .27 0 0 0 0 .18 0 0 0 .22 0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E"),
+    var(--papel-v);
+  box-shadow: inset 0 0 0 1.2cqw var(--papel-v), inset 0 0 0 1.45cqw rgba(74, 59, 42, .55), inset 0 0 0 1.8cqw var(--papel-v), inset 0 0 0 1.95cqw rgba(74, 59, 42, .4);
+  font-family: "Cormorant Garamond", Georgia, serif;
+  overflow: hidden;
+}
+.ident__cabeza { text-align: center; margin-bottom: 1cqw; }
+.ident__reino { margin: 0; font-size: 3.2cqw; letter-spacing: .14em; text-transform: uppercase; font-weight: 600; }
+.ident__ministerio { margin: .3cqw 0 0; font-size: 2.3cqw; letter-spacing: .12em; text-transform: uppercase; }
+.ident__num { position: absolute; top: 5.4cqw; right: 6cqw; margin: 0; font-size: 2.8cqw; font-weight: 600; }
+.ident__num span { color: var(--num-v); font-size: 4cqw; letter-spacing: .06em; }
+.ident__cuerpo { display: grid; grid-template-columns: 30% 1fr; gap: 4cqw; align-items: start; margin-top: 2.4cqw; }
+.ident--driade .ident__cuerpo { grid-template-columns: 1fr 30%; }
+.ident--driade .ident__foto { order: 2; }
+.ident__foto {
+  margin: 0;
+  padding: 1.2cqw;
+  background: #f4ead6;
+  box-shadow: 0 .4cqw 1cqw rgba(60, 40, 20, .3);
+  rotate: -2deg;
+}
+.ident--driade .ident__foto { rotate: 2.5deg; }
+.ident__foto svg { display: block; width: 100%; height: auto; filter: sepia(.35) contrast(1.05); }
+.ident__titulo { margin: 0 0 1.6cqw; font-size: 4.6cqw; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; line-height: 1.05; }
+.ident__titulo small { display: block; font-size: 2.6cqw; letter-spacing: .1em; font-weight: 500; opacity: .8; }
+.ident__datos dl { margin: 0; display: grid; gap: .7cqw; }
+.ident__campo { display: grid; grid-template-columns: 26cqw 1fr; align-items: baseline; gap: 1.4cqw; border-bottom: 1px dotted rgba(74, 59, 42, .5); padding-bottom: .4cqw; }
+.ident__campo dt { font-size: 2.6cqw; letter-spacing: .06em; font-variant: small-caps; }
+.ident__campo dd { margin: 0; font-family: "Homemade Apple", "Great Vibes", cursive; font-size: 2.6cqw; line-height: 1.5; color: #23304a; }
+.ident__firma { margin: 3cqw 0 0; text-align: right; }
+.ident__firma span { display: block; font-family: "Homemade Apple", cursive; font-size: 5cqw; color: #23304a; transform: rotate(-4deg); }
+.ident__firma small { font-size: 2.2cqw; letter-spacing: .08em; text-transform: uppercase; }
+.ident__sello {
+  position: absolute; width: 24cqw; color: var(--sello-v);
+  left: 23cqw; top: 46cqw; rotate: -14deg; opacity: .55;
+  mix-blend-mode: multiply; pointer-events: none;
+  transition: scale .6s var(--muelle), opacity .4s;
+}
+.ident--driade .ident__sello { left: auto; right: 22cqw; top: 44cqw; rotate: 12deg; }
+.ident__sello text { fill: currentColor; font-family: "Cormorant Garamond", serif; font-weight: 600; }
+.ident:hover .ident__sello { scale: 1.06; opacity: .7; }
+@media (max-width: 760px) { .identidades { grid-template-columns: 1fr; gap: 28px; } .ident--driade { margin-top: 0; } }
+
+/* el sello pisa la esquina de la foto, como en los documentos antiguos */
+.ident__sello { left: 6cqw; top: 40cqw; width: 22cqw; }
+.ident--driade .ident__sello { left: auto; right: 6cqw; top: 42cqw; }

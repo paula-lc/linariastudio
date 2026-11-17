@@ -8,7 +8,7 @@
   <meta name="description" content="Cada mes, un sobre ilustrado a mano por dos artistas, con prints, postales y pegatinas. Suscripción de 13 €/mes con envío incluido.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Inter:wght@400;500&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Homemade+Apple&family=Inter:wght@400;500&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/styles.css">
   <script type="module" src="./src/main.js"></script>
 </head>
@@ -295,20 +295,71 @@
     <section class="seccion seccion--te" id="quien">
       <div class="seccion__caja">
         <h2 class="titulo revela"><span class="titulo__script">Q</span>uién te escribe</h2>
-        <div class="autoras">
-          <article class="autora revela">
-            <div class="autora__marco autora__marco--luna" aria-hidden="true">
-              <svg viewBox="0 0 120 120"><path d="M74 22a40 40 0 1 0 26 58 32 32 0 1 1-26-58z"/><circle cx="34" cy="30" r="2"/><circle cx="96" cy="40" r="1.5"/><circle cx="28" cy="88" r="1.5"/></svg>
+        <div class="identidades">
+          <article class="ident ident--bruja revela" aria-label="Carta de identidad de la bruja Morna">
+            <div class="ident__marco">
+              <header class="ident__cabeza">
+                <p class="ident__reino">Reino de Linaria</p>
+                <p class="ident__ministerio">Ministerio de Correo Lento</p>
+              </header>
+              <p class="ident__num">Nº <span>473829</span></p>
+              <div class="ident__cuerpo">
+                <figure class="ident__foto"><svg viewBox="0 0 100 128" aria-hidden="true">
+                  <rect width="100" height="128" fill="url(#sepiaB)"/>
+                  <defs><linearGradient id="sepiaB" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#cbb79a"/><stop offset="1" stop-color="#8f7a5e"/></linearGradient></defs>
+                  <path d="M14 128c2-24 16-36 36-36s34 12 36 36z" fill="#3b3128"/>
+                  <ellipse cx="50" cy="70" rx="15" ry="18" fill="#5a4a3b"/>
+                  <path d="M33 88c4-18 8-28 17-28s13 10 17 28c-6-4-11-6-17-6s-11 2-17 6z" fill="#2f271f"/>
+                  <path d="M18 56c10-4 54-4 64 0-6 3-58 3-64 0z" fill="#2b231c"/>
+                  <path d="M34 55c4-18 9-34 22-46 2 6 0 10-4 12 6 10 8 22 10 34z" fill="#2b231c"/>
+                  <circle cx="72" cy="22" r="1.4" fill="#f3e6c8"/><circle cx="20" cy="30" r="1" fill="#f3e6c8"/>
+                </svg></figure>
+                <div class="ident__datos">
+                  <h3 class="ident__titulo">Carta de identidad<small>de bruja</small></h3>
+                  <dl><div class="ident__campo"><dt>Nombre</dt><dd>Morna</dd></div><div class="ident__campo"><dt>Especie</dt><dd>Bruja</dd></div><div class="ident__campo"><dt>Edad</dt><dd>trescientos y pico (dice 29)</dd></div><div class="ident__campo"><dt>Magia</dt><dd>Hechizos de tinta y noches sin luna</dd></div><div class="ident__campo"><dt>Soporte favorito</dt><dd>Tinta china y acuarela</dd></div><div class="ident__campo"><dt>Domicilio</dt><dd>La torre más alta del castillo</dd></div><div class="ident__campo"><dt>Señas</dt><dd>Hollín en los dedos</dd></div></dl>
+                </div>
+              </div>
+              <p class="ident__firma"><span>Morna</span><small>Firma de la titular</small></p>
+              <svg class="ident__sello" viewBox="0 0 120 120" aria-hidden="true">
+                <defs><path id="curvaB" d="M60 60 m-44 0 a44 44 0 1 1 88 0 a44 44 0 1 1 -88 0"/></defs>
+                <circle cx="60" cy="60" r="56" fill="none" stroke="currentColor" stroke-width="2.6"/>
+                <circle cx="60" cy="60" r="33" fill="none" stroke="currentColor" stroke-width="1.6"/>
+                <text font-size="11.5" letter-spacing="2.2"><textPath href="#curvaB">MINISTERIO DE CORREO LENTO · LINARIA ·</textPath></text>
+                <path fill="currentColor" d="M60 44l4 11 11 1-9 7 3 11-9-6-9 6 3-11-9-7 11-1z"/>
+              </svg>
             </div>
-            <h3>La bruja <em>Morna</em></h3>
-            <p class="autora__bio">Escribe de noche, con tinta y un poco de hollín. Su presentación llegará en el próximo correo.</p>
           </article>
-          <article class="autora revela">
-            <div class="autora__marco autora__marco--hoja" aria-hidden="true">
-              <svg viewBox="0 0 120 120"><path d="M60 100V44"/><path d="M60 70c-18 0-28-12-28-26 16 0 28 10 28 26z"/><path d="M60 58c16 0 26-12 26-24-15 0-26 9-26 24z"/><path d="M60 44c-6-8-6-18 0-26 6 8 6 18 0 26z"/></svg>
+          <article class="ident ident--driade revela" aria-label="Permiso de boticaria de la dríade Melisa">
+            <div class="ident__marco">
+              <header class="ident__cabeza">
+                <p class="ident__reino">Reino de Linaria</p>
+                <p class="ident__ministerio">Ministerio de Correo Lento</p>
+              </header>
+              <p class="ident__num">Nº <span>26731</span></p>
+              <div class="ident__cuerpo">
+                <figure class="ident__foto"><svg viewBox="0 0 100 128" aria-hidden="true">
+                  <defs><linearGradient id="sepiaD" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d6c2a8"/><stop offset="1" stop-color="#9b8166"/></linearGradient></defs>
+                  <rect width="100" height="128" fill="url(#sepiaD)"/>
+                  <path d="M14 128c2-24 16-36 36-36s34 12 36 36z" fill="#46392c"/>
+                  <path d="M28 100c-6-30 2-62 22-62s28 32 22 62c-4-8-6-24-8-36H36c-2 12-4 28-8 36z" fill="#3a2f24"/>
+                  <ellipse cx="50" cy="62" rx="14" ry="17" fill="#6a5745"/>
+                  <g fill="#5f6e4a"><path d="M34 44c-8-2-10-8-8-12 6 1 9 6 8 12z"/><path d="M44 38c-4-6-2-12 2-14 3 5 2 10-2 14z"/><path d="M56 38c4-6 2-12-2-14-3 5-2 10 2 14z"/><path d="M66 44c8-2 10-8 8-12-6 1-9 6-8 12z"/></g>
+                  <g fill="#e9d6c8"><circle cx="40" cy="41" r="2.2"/><circle cx="60" cy="41" r="2.2"/><circle cx="50" cy="37" r="2.4"/></g>
+                </svg></figure>
+                <div class="ident__datos">
+                  <h3 class="ident__titulo">Permiso de boticaria<small>de dríade</small></h3>
+                  <dl><div class="ident__campo"><dt>Nombre</dt><dd>Melisa</dd></div><div class="ident__campo"><dt>Especie</dt><dd>Dríade</dd></div><div class="ident__campo"><dt>Edad</dt><dd>la de su roble</dd></div><div class="ident__campo"><dt>Magia</dt><dd>Botánica: remedios, infusiones y alguna cosa más</dd></div><div class="ident__campo"><dt>Soporte favorito</dt><dd>Lápices de colores y gouache</dd></div><div class="ident__campo"><dt>Domicilio</dt><dd>El bosque encantado, tercer roble</dd></div><div class="ident__campo"><dt>Señas</dt><dd>Hojas en el pelo, siempre</dd></div></dl>
+                </div>
+              </div>
+              <p class="ident__firma"><span>Melisa</span><small>Firma de la titular</small></p>
+              <svg class="ident__sello" viewBox="0 0 120 120" aria-hidden="true">
+                <defs><path id="curvaD" d="M60 60 m-44 0 a44 44 0 1 1 88 0 a44 44 0 1 1 -88 0"/></defs>
+                <circle cx="60" cy="60" r="56" fill="none" stroke="currentColor" stroke-width="2.6"/>
+                <circle cx="60" cy="60" r="33" fill="none" stroke="currentColor" stroke-width="1.6"/>
+                <text font-size="11.5" letter-spacing="2.2"><textPath href="#curvaD">REGISTRO DE BOTICARIAS · LINARIA ·</textPath></text>
+                <path fill="currentColor" d="M60 44l4 11 11 1-9 7 3 11-9-6-9 6 3-11-9-7 11-1z"/>
+              </svg>
             </div>
-            <h3>La dríade <em>Melisa</em></h3>
-            <p class="autora__bio">Botánica y boticaria. Sabe qué planta cura qué cosa, y cuáles es mejor no tocar.</p>
           </article>
         </div>
         <p class="nota revela">Detrás de cada una hay una ilustradora de verdad. Si quieres conocerlas sin disfraz, <a href="nosotras.html">aquí están sus portfolios</a>.</p>
