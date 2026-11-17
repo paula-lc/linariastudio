@@ -78,6 +78,7 @@ async function arrancar() {
 
   // progreso: el scroll fija el objetivo y el dibujo lo sigue con suavidad
   let objetivo = 0, progreso = 0, giro = 0, ultimo = performance.now();
+  let visible = false, raf = 0, quieto = 0;
   const trigger = fijarSeccion(pin, SCROLL.duracion, p => { objetivo = p; despierta(); });
   ScrollTrigger.addEventListener('refresh', medir);
 
@@ -122,7 +123,6 @@ async function arrancar() {
   };
 
   // solo se dibuja mientras la sección está a la vista
-  let visible = false, raf = 0, quieto = 0;
   const bucle = ahora => {
     const dt = Math.min(0.05, (ahora - ultimo) / 1000);
     ultimo = ahora;

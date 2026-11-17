@@ -8,8 +8,8 @@ export const ALTO = 848;
 
 // Duración del scroll fijado (en alturas de pantalla) y tramos de la animación (0 → 1).
 export const SCROLL = {
-  duracion: 3,        // la sección se queda fijada durante 300vh
-  finApertura: 0.6,   // 0 → 0.6: la bola se abre
+  duracion: 2,        // la sección se queda fijada durante 200vh (el despliegue empieza ya al asomar, 1vh antes)
+  finApertura: 0.6,   // 0 → 0.6: la bola se abre (empieza en cuanto la sección asoma por abajo)
   inicioFundido: 0.85, // 0.85 → 1: fundido de WebGL a HTML
 };
 

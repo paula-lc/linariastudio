@@ -17,15 +17,22 @@ export function iniciarScroll({ suave }) {
   return lenis;
 }
 
-// Fija la sección y devuelve el progreso 0 → 1 mientras se recorren `alturas` pantallas.
+// Fija la sección durante `alturas` pantallas, pero el progreso (0 → 1) empieza antes:
+// en cuanto la sección asoma por abajo al hacer scroll, la bola ya empieza a abrirse.
 export function fijarSeccion(pin, alturas, alCambiar) {
-  return ScrollTrigger.create({
+  ScrollTrigger.create({
     trigger: pin,
     start: 'top top',
     end: () => '+=' + Math.round(window.innerHeight * alturas),
     pin: true,
     pinSpacing: true,
     anticipatePin: 1,
+    invalidateOnRefresh: true,
+  });
+  return ScrollTrigger.create({
+    trigger: pin,
+    start: 'top bottom',
+    end: () => '+=' + Math.round(window.innerHeight * (1 + alturas)),
     invalidateOnRefresh: true,
     onUpdate: self => alCambiar(self.progress),
   });
