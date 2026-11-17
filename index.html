@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="claude:viewport-fit-sides" content="cover">
+  <title>Linaria Studio · Mail Club de ilustración y papelería</title>
+  <meta name="description" content="Cada mes, un sobre ilustrado a mano por dos artistas, con prints, postales y pegatinas. Suscripción de 13 €/mes con envío incluido.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="js/main.js" defer></script>
+</head>
+<body>
+
+  <a class="skip" href="#contenido">Saltar al contenido</a>
+
+  <!-- Barra de aviso -->
+  <div class="aviso" role="note">
+    <p>• recibe tu carta con gastos de envío incluidos •</p>
+  </div>
+
+  <!-- Cabecera -->
+  <header class="cabecera">
+    <nav class="nav nav--izq" aria-label="Principal">
+      <a class="nav__link" href="#mas-alla">tienda</a>
+      <a class="nav__link" href="#meses">meses pasados</a>
+    </nav>
+
+    <a class="logo" href="#top" aria-label="Linaria Studio, inicio">
+      <img src="assets/img/logo.png" alt="" width="640" height="307">
+    </a>
+
+    <nav class="nav nav--der" aria-label="Secundaria">
+      <a class="nav__link" href="#quien">nosotras</a>
+      <div class="idioma" role="group" aria-label="Idioma">
+        <button class="idioma__btn is-activo" type="button" data-lang="es" aria-pressed="true">ES</button><span aria-hidden="true">/</span><button class="idioma__btn" type="button" data-lang="ca" aria-pressed="false">CAT</button>
+        <span class="idioma__aviso" role="status" aria-live="polite"></span>
+      </div>
+      <div class="cesta">
+        <button class="cesta__btn" type="button" aria-expanded="false" aria-controls="indice">
+          CESTA (<span class="cesta__num">0</span>)
+        </button>
+
+        <!-- La cesta es un índice de libro -->
+        <div class="indice" id="indice" role="dialog" aria-label="Tu cesta" hidden>
+          <button class="indice__cerrar" type="button" aria-label="Cerrar la cesta">
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4 4l12 12M16 4L4 16"/></svg>
+          </button>
+          <p class="indice__titulo">Índice</p>
+          <ol class="indice__lista"></ol>
+          <div class="indice__vacio">
+            <p class="indice__cap">Capítulo I</p>
+            <p class="indice__nota">Una página en blanco. Aquí se guarda lo que elijas.</p>
+          </div>
+          <div class="indice__pie">
+            <p class="indice__total"><span>Total</span><span class="indice__puntos" aria-hidden="true"></span><span class="indice__suma">0 €</span></p>
+            <a class="indice__pagar" href="#pagar">Pasar página</a>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main id="contenido">
+
+    <!-- 1 · Apertura: el sobre -->
+    <section class="apertura" id="top">
+      <div class="apertura__sobre">
+        <div class="escena" data-estado="cerrado">
+
+          <!-- Objetos que salen del sobre -->
+          <div class="objeto objeto--rama1" data-x="70" data-y="0" data-w="70" data-h="78" data-r="-6" data-d="0.32" aria-hidden="true">
+            <div class="objeto__in"><svg class="rama" viewBox="0 0 70 78"><use href="#rama"/></svg></div>
+          </div>
+          <div class="objeto objeto--carta" data-x="122" data-y="34" data-w="126" data-h="142" data-r="8" data-d="0.06" data-tag="carta">
+            <div class="objeto__in carta" aria-hidden="true">
+              <svg viewBox="0 0 126 142">
+                <defs>
+                  <linearGradient id="pliegue" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0" stop-color="#000" stop-opacity=".07"/><stop offset=".5" stop-color="#fff" stop-opacity=".5"/><stop offset="1" stop-color="#000" stop-opacity="0"/>
+                  </linearGradient>
+                </defs>
+                <path class="carta__papel" d="M2 3 Q30 1 63 2.5 T124 2 L124.5 139 Q90 140.5 63 139.5 T1.5 140 Z"/>
+                <rect x="2" y="44" width="122" height="6" fill="url(#pliegue)"/>
+                <rect x="2" y="91" width="122" height="6" fill="url(#pliegue)"/>
+                <g class="carta__sello"><rect x="96" y="8" width="20" height="24" rx="1"/><path d="M106 26c-5-3-6-7-3-10 2-1 3 0 3 2 0-2 1-3 3-2 3 3 2 7-3 10z"/></g>
+                <text class="carta__tinta" x="10" y="22" font-size="11">Querida tú,</text>
+                <g class="carta__tinta" font-size="7.4">
+                  <text x="12" y="38">ha tardado en llegar porque</text>
+                  <text x="10" y="50">el cartero se perdió dos veces</text>
+                  <text x="10" y="62">en el bosque. Dentro hay unas</text>
+                  <text x="10" y="74">cosas que hicimos pensando</text>
+                  <text x="10" y="86">en alguien como tú.</text>
+                  <text x="12" y="102">Ábrela despacio.</text>
+                  <text x="10" y="114">Algunas cosas se escapan.</text>
+                </g>
+                <text class="carta__firma" x="116" y="132" font-size="9.5" text-anchor="end">la bruja y la dríade</text>
+              </svg>
+            </div>
+          </div>
+          <div class="objeto objeto--actividad" data-x="54" data-y="72" data-w="96" data-h="110" data-r="-2" data-d="0.12" data-tag="actividad">
+            <div class="objeto__in carta carta--actividad" aria-hidden="true">
+              <svg viewBox="0 0 96 110">
+                <path class="carta__papel" d="M2 2 H94 V108 H2 Z"/>
+                <g class="carta__agujeros"><circle cx="8" cy="20" r="2"/><circle cx="8" cy="55" r="2"/><circle cx="8" cy="90" r="2"/></g>
+                <text class="carta__titulo" x="52" y="15" text-anchor="middle">ACTIVIDAD DEL MES</text>
+                <path class="carta__raya" d="M22 19 H82"/>
+                <g class="carta__dibujo">
+                  <path d="M38 62c0-14 8-22 18-22s18 8 18 22z"/>
+                  <path d="M50 62v18h12V62"/>
+                  <circle cx="48" cy="52" r="2.6"/><circle cx="60" cy="48" r="3"/><circle cx="66" cy="56" r="2"/>
+                </g>
+                <g class="carta__puntos"><circle cx="24" cy="36" r=".9"/><circle cx="30" cy="30" r=".9"/><circle cx="20" cy="46" r=".9"/><circle cx="84" cy="34" r=".9"/><circle cx="80" cy="44" r=".9"/></g>
+                <text class="carta__tinta" x="18" y="98" font-size="8">colorea la seta</text>
+                <path class="carta__check" d="M74 92h7v7h-7z"/>
+              </svg>
+            </div>
+          </div>
+          <div class="objeto objeto--tarjeta" data-x="160" data-y="104" data-w="88" data-h="48" data-r="-10" data-d="0.18" data-tag="tarjeta">
+            <div class="objeto__in tarjeta" aria-hidden="true">
+              <span class="tarjeta__sello"></span>
+              <span class="tarjeta__estrellas">★★★</span>
+            </div>
+          </div>
+          <div class="objeto objeto--rama2" data-x="258" data-y="100" data-w="82" data-h="70" data-r="12" data-d="0.38" aria-hidden="true">
+            <div class="objeto__in"><svg class="rama" viewBox="0 0 70 78"><use href="#rama"/></svg></div>
+          </div>
+          <div class="objeto objeto--foto1" data-x="26" data-y="92" data-w="132" data-h="160" data-r="-12" data-d="0.22" data-tag="ilustracion">
+            <div class="objeto__in polaroid">
+              <img src="assets/img/ilustracion-baile.jpg" alt="Ilustración A5: una pareja de seres del bosque bailando bajo un marco verde" draggable="false">
+            </div>
+          </div>
+          <div class="objeto objeto--foto2" data-x="122" data-y="132" data-w="152" data-h="150" data-r="10" data-d="0.28" data-tag="pegatina">
+            <div class="objeto__in polaroid">
+              <img src="assets/img/ilustracion-hadas.jpg" alt="Pegatina: tres hadas abrazadas con vestidos de lentejuelas" draggable="false">
+            </div>
+          </div>
+
+          <!-- Etiquetas -->
+          <button class="etiqueta" type="button" data-tag="carta" style="--tx:210px;--ty:36px">
+            <span class="etiqueta__nombre">tu carta</span>
+            <span class="etiqueta__nota"><span>Noticias desde el otro lado del bosque. Este mes, alguien ha escondido el otoño.</span></span>
+          </button>
+          <button class="etiqueta" type="button" data-tag="actividad" style="--tx:4px;--ty:70px">
+            <span class="etiqueta__nombre">actividad del mes</span>
+            <span class="etiqueta__nota"><span>Algo para hacer con las manos, una tarde de lluvia.</span></span>
+          </button>
+          <button class="etiqueta" type="button" data-tag="tarjeta" style="--tx:228px;--ty:94px">
+            <span class="etiqueta__nombre">tarjeta de persona<br>y puntos</span>
+            <span class="etiqueta__nota"><span>Quién eres en este mundo. Y cuántas estrellas llevas.</span></span>
+          </button>
+          <button class="etiqueta" type="button" data-tag="pegatina" style="--tx:228px;--ty:178px">
+            <span class="etiqueta__nombre">pegatina</span>
+            <span class="etiqueta__nota"><span>Se pegan en todo. Avisadas estáis.</span></span>
+          </button>
+          <button class="etiqueta" type="button" data-tag="ilustracion" style="--tx:2px;--ty:198px">
+            <span class="etiqueta__nombre">ilustración a5</span>
+            <span class="etiqueta__nota"><span>La pintó la bruja una noche sin luna.</span></span>
+          </button>
+
+          <!-- El sobre: tres capas para que los objetos queden entre el fondo y el bolsillo -->
+          <div class="capa capa--fondo" aria-hidden="true"><div class="capa__in"><span class="sobre__fondo"></span></div></div>
+          <div class="capa capa--solapa" aria-hidden="true">
+            <div class="capa__in">
+              <span class="solapa">
+                <svg class="solapa__cara" viewBox="0 0 200 86"><path d="M0 0 H200 L108 78 Q100 85 92 78Z"/></svg>
+                <svg class="solapa__dorso" viewBox="0 0 200 86"><path d="M0 0 H200 L108 78 Q100 85 92 78Z"/></svg>
+                <span class="lacre">
+                  <svg viewBox="0 0 40 40"><path d="M20 3c5 0 6 3 10 4s7 4 6 9 2 7 0 11-6 5-9 8-8 3-12 0-8-2-10-7-3-7-1-11 2-8 7-10 4-4 9-4z"/><path class="lacre__corazon" d="M20 28s-8-5-8-10a4.2 4.2 0 0 1 8-2 4.2 4.2 0 0 1 8 2c0 5-8 10-8 10z"/></svg>
+                </span>
+              </span>
+            </div>
+          </div>
+          <button class="capa capa--frente sobre" type="button" aria-expanded="false" aria-label="Abrir el sobre">
+            <span class="capa__in">
+              <svg class="sobre__frente" viewBox="0 0 200 134" aria-hidden="true">
+                <path class="sobre__lado" d="M0 6 L94 74 Q100 79 106 74 L200 6 V128 Q200 134 194 134 H6 Q0 134 0 128Z"/>
+                <path class="sobre__pliegue" d="M2 132 L84 70 M198 132 L116 70"/>
+                <text class="sobre__para" x="150" y="118" text-anchor="middle">Para ti.</text>
+              </svg>
+            </span>
+          </button>
+        </div>
+
+        <p class="apertura__pista" aria-live="polite">
+          <span class="pista pista--cerrado">Ábrelo con cuidado.</span>
+          <span class="pista pista--abierto">Así es un sobre de Linaria. Cada mes, uno distinto.</span>
+        </p>
+      </div>
+
+      <span class="apertura__linea" aria-hidden="true"></span>
+
+      <div class="apertura__texto">
+        <h1 class="lema" aria-label="Dos artistas, un mismo mundo">
+          <span class="lema__fila" aria-hidden="true">
+            <span class="lema__script lema__d">D</span><span class="lema__palabra">os</span>&nbsp;<span class="lema__palabra">artistas</span>
+          </span>
+          <span class="lema__fila" aria-hidden="true">
+            <span class="lema__palabra">un</span>&nbsp;<span class="lema__palabra">mismo</span>&nbsp;<span class="lema__palabra lema__magenta">m<span class="lema__script lema__u">U</span>ndo</span>
+          </span>
+        </h1>
+        <p class="apertura__sub">La bruja y la dríade te escriben a casa: ilustraciones, papelería y alguna cosa que no sabemos explicar.</p>
+        <a class="boton-lineas" href="#unete">Quiero mi sobre</a>
+        <p class="apertura__precio">13 € al mes · el sello corre de nuestra cuenta</p>
+        <button class="apertura__dentro" type="button">¿Qué hay dentro?</button>
+      </div>
+    </section>
+
+    <!-- 2 · Lo que cabe en un sobre -->
+    <section class="seccion seccion--viridian" id="meses">
+      <div class="seccion__caja">
+        <h2 class="titulo revela"><span class="titulo__script">L</span>o que cabe en un sobre</h2>
+        <p class="intro revela">No es una newsletter ni una caja de cosas al azar. Es correspondencia de verdad, preparada a mano en el estudio y cerrada con lacre.</p>
+        <ul class="contenido">
+          <li class="contenido__item revela">
+            <svg class="icono" viewBox="0 0 48 48" aria-hidden="true"><rect x="9" y="7" width="30" height="34" rx="2"/><rect x="14" y="12" width="20" height="18"/><path d="M14 27l6-6 5 5 3-3 6 6"/></svg>
+            <h3>La ilustración del mes</h3>
+            <p>Algo que todavía no ha visto nadie. Para enmarcar, o para guardar entre las páginas de un libro.</p>
+          </li>
+          <li class="contenido__item revela">
+            <svg class="icono" viewBox="0 0 48 48" aria-hidden="true"><path d="M8 14h32v22H8z"/><path d="M8 14l16 12 16-12"/></svg>
+            <h3>Una carta desde el otro lado</h3>
+            <p>Lo que ha pasado allí este mes, contado por quien estaba.</p>
+          </li>
+          <li class="contenido__item revela">
+            <svg class="icono" viewBox="0 0 48 48" aria-hidden="true"><path d="M10 10h28v28H10z" stroke-dasharray="3 3"/><circle cx="24" cy="22" r="6"/><path d="M16 33h16"/></svg>
+            <h3>Papelería que se usa</h3>
+            <p>Postales, pegatinas y pequeñas piezas para escribir, decorar o regalar.</p>
+          </li>
+          <li class="contenido__item revela">
+            <svg class="icono" viewBox="0 0 48 48" aria-hidden="true"><path d="M10 18h28v20H10z"/><path d="M24 18v20M10 26h28"/><path d="M24 18c-4-8-12-6-8 0M24 18c4-8 12-6 8 0"/></svg>
+            <h3>Una cosa que no esperabas</h3>
+            <p>Cambia cada mes. No preguntes.</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 3 · Quién te escribe -->
+    <section class="seccion seccion--te" id="quien">
+      <div class="seccion__caja">
+        <h2 class="titulo revela"><span class="titulo__script">Q</span>uién te escribe</h2>
+        <div class="autoras">
+          <article class="autora revela">
+            <div class="autora__marco autora__marco--luna" aria-hidden="true">
+              <svg viewBox="0 0 120 120"><path d="M74 22a40 40 0 1 0 26 58 32 32 0 1 1-26-58z"/><circle cx="34" cy="30" r="2"/><circle cx="96" cy="40" r="1.5"/><circle cx="28" cy="88" r="1.5"/></svg>
+            </div>
+            <h3>La bruja <em>Morna</em></h3>
+            <p class="autora__bio">Escribe de noche, con tinta y un poco de hollín. Su presentación llegará en el próximo correo.</p>
+          </article>
+          <article class="autora revela">
+            <div class="autora__marco autora__marco--hoja" aria-hidden="true">
+              <svg viewBox="0 0 120 120"><path d="M60 100V44"/><path d="M60 70c-18 0-28-12-28-26 16 0 28 10 28 26z"/><path d="M60 58c16 0 26-12 26-24-15 0-26 9-26 24z"/><path d="M60 44c-6-8-6-18 0-26 6 8 6 18 0 26z"/></svg>
+            </div>
+            <h3>La dríade <em>Melisa</em></h3>
+            <p class="autora__bio">Botánica y boticaria. Sabe qué planta cura qué cosa, y cuáles es mejor no tocar.</p>
+          </article>
+        </div>
+        <p class="nota revela">Detrás de cada una hay una ilustradora de verdad. Si quieres conocerlas sin disfraz, <a href="#contacto">aquí están sus portfolios</a>.</p>
+      </div>
+    </section>
+
+    <div class="franja" role="note"><p>• cada sobre se cierra a mano, con lacre •</p></div>
+
+    <!-- 4 · El camino de una carta -->
+    <section class="seccion seccion--rosa camino" id="camino">
+      <div class="seccion__caja">
+        <h2 class="titulo revela"><span class="titulo__script">E</span>l camino de una carta</h2>
+        <div class="camino__mapa">
+          <svg class="camino__senda" viewBox="0 0 900 120" preserveAspectRatio="none" aria-hidden="true">
+            <path id="senda" d="M20 70 C 160 10, 260 120, 450 60 S 760 10, 880 66"/>
+          </svg>
+          <span class="camino__sobrecito" aria-hidden="true"></span>
+        </div>
+        <ol class="pasos">
+          <li class="paso revela"><span class="paso__num">1</span><h3>Te apuntas.</h3><p>Si es antes del día 15, ya entras en el sobre de este mes.</p></li>
+          <li class="paso revela"><span class="paso__num">2</span><h3>Lo preparamos a mano.</h3><p>Dibujamos, imprimimos, doblamos y cerramos cada sobre en el estudio.</p></li>
+          <li class="paso revela"><span class="paso__num">3</span><h3>El cartero hace lo que puede.</h3><p>Sale a finales de mes y llega a tu buzón a principios del siguiente. Sin seguimiento, como las cartas de antes.</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- 5 · Únete -->
+    <section class="seccion seccion--te unete" id="unete">
+      <div class="seccion__caja">
+        <h2 class="titulo revela"><span class="titulo__script">U</span>n sitio en tu buzón</h2>
+
+        <article class="plan revela" data-elegido="no">
+          <p class="plan__nombre">Mail Club Linaria</p>
+          <h3 class="plan__pregunta" id="pregunta-cartas">¿De quién quieres recibir las cartas?</h3>
+          <div class="plan__elige" role="radiogroup" aria-labelledby="pregunta-cartas">
+            <button class="opcion" type="button" role="radio" aria-checked="false" data-plan="bruja">
+              <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M30 9a16 16 0 1 0 10 23 13 13 0 1 1-10-23z"/></svg>
+              <span class="opcion__nombre">La bruja</span>
+              <span class="opcion__precio">13 €/mes</span>
+            </button>
+            <button class="opcion" type="button" role="radio" aria-checked="false" data-plan="driade">
+              <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 42V18"/><path d="M24 30c-8 0-12-5-12-11 7 0 12 4 12 11z"/><path d="M24 24c7 0 11-5 11-10-7 0-11 4-11 10z"/></svg>
+              <span class="opcion__nombre">La dríade</span>
+              <span class="opcion__precio">13 €/mes</span>
+            </button>
+            <button class="opcion" type="button" role="radio" aria-checked="false" data-plan="ambas">
+              <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M20 10a12 12 0 1 0 8 17 10 10 0 1 1-8-17z"/><path d="M34 40V24"/><path d="M34 32c-5 0-8-3-8-7 5 0 8 3 8 7z"/><path d="M34 28c5 0 7-3 7-7-5 0-7 3-7 7z"/></svg>
+              <span class="opcion__nombre">Las dos</span>
+              <span class="opcion__precio">−12 %</span>
+            </button>
+          </div>
+          <div class="plan__detalle">
+          <div class="plan__detalle-in">
+          <p class="plan__precio"><span class="plan__cifra">13</span> € <small>al mes</small></p>
+          <ul class="plan__lista">
+            <li>Un sobre cada mes, cerrado a mano.</li>
+            <li>El sello corre de nuestra cuenta (en España).</li>
+            <li>Te quedas el tiempo que quieras. Te vas cuando quieras, aunque te echaremos de menos.</li>
+          </ul>
+          <button class="boton boton--magenta" type="button" data-anadir="plan">Quiero mi sobre</button>
+          </div>
+          </div>
+        </article>
+
+        <div class="extras">
+          <article class="extra revela">
+            <h3>¿Es para otra persona?</h3>
+            <p>Regala tres meses de cartas. Pago único, sin renovación.</p>
+            <p class="extra__precio">36 €</p>
+            <button class="boton boton--borde" type="button" data-anadir="regalo">Regalar el club</button>
+          </article>
+          <article class="extra revela">
+            <h3>Una carta por encargo</h3>
+            <p>Nos das una palabra, un color y un ingrediente. Un único envío.</p>
+            <p class="extra__precio">65 €</p>
+            <button class="boton boton--borde" type="button" data-anadir="encargo">Encargar mi carta</button>
+          </article>
+        </div>
+        <p class="nota revela"><strong>Socias fundadoras:</strong> las primeras 50 personas se quedan con este precio mientras sigan en el club. Lo apuntamos en el libro blanco.</p>
+      </div>
+    </section>
+
+    <!-- 6 · Más allá del buzón -->
+    <section class="seccion seccion--viridian" id="mas-alla">
+      <div class="seccion__caja">
+        <h2 class="titulo revela"><span class="titulo__script">M</span>ás allá del buzón</h2>
+        <div class="rincones">
+          <a class="rincon revela" href="#tienda">
+            <span class="rincon__img"><img src="assets/img/ilustracion-bosque.jpg" alt="" loading="lazy"></span>
+            <h3>La tienda</h3>
+            <p>Lo de las dos en un mismo sitio. Filtra por artista o por personaje.</p>
+            <span class="rincon__ir">Entrar</span>
+          </a>
+          <a class="rincon revela" href="#contacto">
+            <span class="rincon__img"><img src="assets/img/ilustracion-mariposas.jpg" alt="" loading="lazy"></span>
+            <h3>Venimos a tu evento</h3>
+            <p>Bodas, ferias, librerías o empresas: talleres, actividades y dibujo en directo.</p>
+            <span class="rincon__ir">Pedir presupuesto</span>
+          </a>
+          <a class="rincon revela" href="#contacto">
+            <span class="rincon__img"><img src="assets/img/ilustracion-baile.jpg" alt="" loading="lazy"></span>
+            <h3>Dibujamos para tus páginas</h3>
+            <p>Portadas, ilustración, diseño de publicaciones y material promocional.</p>
+            <span class="rincon__ir">Ver portfolio editorial</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <div class="franja" role="note"><p>• sin permanencia · te quedas el tiempo que quieras •</p></div>
+
+    <!-- 7 · Preguntas al cartero -->
+    <section class="seccion seccion--te" id="preguntas">
+      <div class="seccion__caja seccion__caja--estrecha">
+        <h2 class="titulo revela"><span class="titulo__script">P</span>reguntas al cartero</h2>
+        <div class="faq">
+          <details class="revela"><summary>¿Cuándo llega mi primer sobre?</summary><div class="faq__r"><p>Si te apuntas antes del día 15, recibes el de ese mes. Si no, el del siguiente.</p></div></details>
+          <details class="revela"><summary>¿Puedo irme cuando quiera?</summary><div class="faq__r"><p>Sí, sin permanencia. Si cancelas antes del día 3, no se te cobra el mes siguiente.</p></div></details>
+          <details class="revela"><summary>¿Puedo pausarlo un mes?</summary><div class="faq__r"><p>Sí. Nuestro único compromiso va con anillo o maldición.</p></div></details>
+          <details class="revela"><summary>¿Puedo regalarlo?</summary><div class="faq__r"><p>Sí. Tres meses, pago único, y una nota tuya dentro del primer sobre. O una carta por encargo con tres elementos que elijas tú.</p></div></details>
+          <details class="revela"><summary>¿Lleva seguimiento?</summary><div class="faq__r"><p>No. Va con sello normal, como una carta de toda la vida. Si alguna se pierde por el bosque, escríbenos.</p></div></details>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8 · Cierre y contacto -->
+    <section class="seccion seccion--rosa cierre" id="contacto">
+      <div class="seccion__caja seccion__caja--estrecha">
+        <h2 class="titulo revela"><span class="titulo__script">E</span>l cartero ya conoce el camino</h2>
+        <p class="intro revela">Solo falta tu dirección.</p>
+        <p class="revela centro"><a class="boton-lineas" href="#unete">Quiero mi sobre</a></p>
+
+        <form class="nota-form revela" novalidate>
+          <h3>Déjanos una nota</h3>
+          <p>Para eventos, encargos, ideas raras o solo saludar. Las leemos todas.</p>
+          <label>Nombre<input name="nombre" autocomplete="name" required></label>
+          <label>Email<input name="email" type="email" autocomplete="email" required></label>
+          <label>¿De qué va?
+            <select name="tema"><option>Mail Club</option><option>Evento</option><option>Editorial</option><option>Otra cosa</option></select>
+          </label>
+          <label>Tu nota<textarea name="nota" rows="4" required></textarea></label>
+          <button class="boton boton--magenta" type="submit">Enviar la nota</button>
+          <p class="nota-form__ok" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="pie">
+    <p>Escrito a mano (más o menos) en Barcelona · Linaria Studio</p>
+  </footer>
+
+  <!-- Barra fija en móvil -->
+  <a class="barra-movil" href="#unete">Quiero mi sobre · 13 €/mes</a>
+
+  <!-- Símbolos -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="rama" viewBox="0 0 70 78">
+      <path d="M8 74 C 18 50, 30 40, 34 24 S 52 6, 62 4" fill="none" stroke="#7fa98a" stroke-width="1.6" stroke-linecap="round"/>
+      <path d="M20 54c-8-2-12-8-11-14 7 1 12 6 11 14z M30 36c-7-4-9-10-6-15 6 3 8 9 6 15z M44 16c2-7 8-10 13-8-2 6-7 9-13 8z M36 28c7-1 12 2 13 8-7 1-11-2-13-8z M24 46c7-2 12 0 15 6-7 2-12 0-15-6z" fill="#9cc4a3" stroke="#6c9775" stroke-width=".8"/>
+      <g fill="#f8cae4" stroke="#ea6993" stroke-width=".7"><circle cx="12" cy="62" r="3.2"/><circle cx="50" cy="10" r="3"/><circle cx="40" cy="42" r="2.6"/></g>
+      <g fill="#cfe6f4" stroke="#7fa9c4" stroke-width=".7"><circle cx="28" cy="18" r="2.6"/><circle cx="62" cy="20" r="2.4"/></g>
+      <g fill="#fff6b8" stroke="#d9c25a" stroke-width=".6"><circle cx="18" cy="34" r="2"/><circle cx="56" cy="30" r="1.8"/></g>
+    </symbol>
+  </svg>
+</body>
+</html>
