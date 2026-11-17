@@ -419,21 +419,40 @@
     });
   });
 
-  /* ---------- Nota de contacto ---------- */
-  const form = $('.nota-form');
-  form.addEventListener('submit', e => {
-    e.preventDefault();
-    const ok = $('.nota-form__ok');
-    if (!form.checkValidity()) {
-      form.classList.remove('is-error'); void form.offsetWidth; form.classList.add('is-error');
-      ok.textContent = 'Falta algún dato.';
-      return;
-    }
-    form.classList.remove('is-error', 'is-enviada'); void form.offsetWidth; form.classList.add('is-enviada');
-    // TODO: conectar con el servicio de formularios (Formspree, Netlify Forms…)
-    ok.textContent = 'Versión de prueba: esta nota todavía no se envía.';
-    form.reset();
-  });
+  /* ---------- Postal de contacto ---------- */
+  const postal = $('#postal');
+  if (postal) {
+    const nota = $('#postal-nota'), nombre = $('#postal-nombre'), email = $('#postal-email');
+    const firma = $('.postal__firma'), fecha = $('.postal__fecha'), hecho = $('.postal__hecho'), marco = $('.postal__marco');
+    const MESES = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+    const ponFecha = () => { const d = new Date(); fecha.textContent = `A ${d.getDate()} de ${MESES[d.getMonth()]} de ${d.getFullYear()}`; };
+    ponFecha();
+    // la firma de la carta se escribe sola con el nombre del remite
+    nombre.addEventListener('input', () => { firma.textContent = nombre.value.trim(); });
+    const campos = [[nota, 'error-nota', v => v.trim()], [nombre, 'error-nombre', v => v.trim()], [email, 'error-email', v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim())]];
+    campos.forEach(([el, id]) => el.addEventListener('input', () => { $('#' + id).hidden = true; el.removeAttribute('aria-invalid'); }));
+    postal.addEventListener('submit', e => {
+      e.preventDefault();
+      let primero = null;
+      campos.forEach(([el, id, ok]) => {
+        const bien = !!ok(el.value);
+        $('#' + id).hidden = bien;
+        el.toggleAttribute('aria-invalid', !bien);
+        if (!bien && !primero) primero = el;
+      });
+      if (primero) { primero.focus(); return; }
+      // TODO: conectar con el servicio de formularios (Formspree, Netlify Forms…)
+      $('.postal__gracias').textContent = `Gracias, ${nombre.value.trim()}. Te contestaremos a ${email.value.trim()}.`;
+      marco.hidden = true;
+      hecho.hidden = false;
+      $('.postal__estampa').classList.remove('is-estampa'); void hecho.offsetWidth; $('.postal__estampa').classList.add('is-estampa');
+      $('[data-otra]', postal).focus();
+    });
+    $('[data-otra]', postal).addEventListener('click', () => {
+      postal.reset(); firma.textContent = ''; ponFecha();
+      hecho.hidden = true; marco.hidden = false; nota.focus();
+    });
+  }
 
   /* ---------- Franjas: mensajitos que van cambiando ---------- */
   $$('.franja[data-mensajes]').forEach((f, n) => {

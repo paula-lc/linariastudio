@@ -2063,3 +2063,131 @@ html.lenis, html.lenis body { height: auto; }
 .brote { width: 116px; height: 130px; bottom: 60px; }
 .brote--i { left: 6px; rotate: 30deg; }
 .brote--d { right: 0; rotate: -26deg; }
+
+/* ==========================================================
+   Contacto: una postal antigua
+   ========================================================== */
+.cierre .seccion__caja--estrecha { max-width: 960px; }
+.cierre .intro, .cierre .titulo { max-width: 680px; margin-inline: auto; }
+.postal {
+  --tinta-p: #4E3221; --linea-p: rgba(199, 169, 123, .7);
+  position: relative;
+  margin-top: 56px;
+  padding: 14px;
+  border-radius: 14px;
+  background:
+    radial-gradient(60% 50% at 0% 0%, rgba(255, 255, 255, .7), transparent 70%),
+    radial-gradient(55% 45% at 100% 100%, rgba(199, 169, 123, .22), transparent 70%),
+    #FAF3E3;
+  box-shadow: 0 22px 45px -14px rgba(78, 50, 33, .3), 0 6px 16px -6px rgba(78, 50, 33, .16), inset 0 0 40px rgba(199, 169, 123, .25);
+  color: var(--tinta-p);
+  rotate: -.6deg;
+}
+.postal__marco {
+  display: grid; grid-template-columns: minmax(0, 1.1fr) auto minmax(0, 1fr); gap: 0 36px;
+  padding: 30px 34px 30px;
+  border: 1.5px solid rgba(78, 50, 33, .35);
+  border-radius: 10px;
+  outline: 1px dashed rgba(199, 169, 123, .7); outline-offset: -6px;
+}
+.postal__marco[hidden] { display: none; }
+.postal__titulo {
+  grid-column: 1 / -1;
+  margin: 0 0 18px;
+  font-family: var(--script); font-weight: 400; font-size: 46px; line-height: 1; color: var(--magenta);
+}
+.postal__saludo { display: block; font-family: "Homemade Apple", cursive; font-size: 19px; margin-bottom: 6px; }
+.postal__lineas {
+  display: block; width: 100%;
+  border: 0; resize: vertical; min-height: 228px;
+  font-family: "Caveat", cursive; font-size: 24px; line-height: 38px; color: var(--tinta-p);
+  padding: 2px 4px 0;
+  background: repeating-linear-gradient(transparent 0 37px, var(--linea-p) 37px 38px);
+  caret-color: var(--magenta);
+}
+.postal__lineas:focus { outline: none; background-image: repeating-linear-gradient(transparent 0 37px, rgba(131, 45, 81, .45) 37px 38px); }
+.postal__lineas::placeholder, .postal__campo input::placeholder { color: rgba(78, 50, 33, .45); }
+.postal__despedida { margin: 18px 0 0; font-family: "Homemade Apple", cursive; font-size: 17px; }
+.postal__firma { display: block; min-height: 1.6em; margin-top: 6px; font-family: var(--script); font-size: 38px; line-height: 1.1; color: #23304a; }
+
+.postal__division { width: 1px; background: linear-gradient(transparent, rgba(78, 50, 33, .4) 15%, rgba(78, 50, 33, .4) 85%, transparent); }
+
+.postal__remite { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.postal__sellos { position: relative; align-self: flex-end; width: 150px; height: 112px; margin-bottom: 4px; }
+.postal__sello {
+  position: absolute; right: 0; top: 0; width: 86px; height: 100px; padding: 6px;
+  background: var(--viridian);
+  -webkit-mask: radial-gradient(circle 3.5px at 50% 0, transparent 98%, #000) 0 0 / 10px 50.5% repeat-x, radial-gradient(circle 3.5px at 50% 100%, transparent 98%, #000) 0 100% / 10px 50.5% repeat-x;
+  mask: radial-gradient(circle 3.5px at 50% 0, transparent 98%, #000) 0 0 / 10px 50.5% repeat-x, radial-gradient(circle 3.5px at 50% 100%, transparent 98%, #000) 0 100% / 10px 50.5% repeat-x;
+  rotate: 3deg;
+  filter: drop-shadow(2px 3px 4px rgba(78, 50, 33, .25));
+}
+.postal__sello svg { display: block; width: 100%; height: 100%; }
+.postal__matasellos { position: absolute; left: 0; top: 4px; width: 104px; color: #4E3221; opacity: .78; rotate: -12deg; z-index: 2; mix-blend-mode: multiply; }
+.postal__matasellos text { fill: currentColor; font-family: "Cormorant Garamond", serif; }
+
+.postal__para { margin: 0 0 8px; font-family: "Homemade Apple", cursive; font-size: 16px; }
+.postal__para span { font-family: "Caveat", cursive; font-size: 24px; font-weight: 600; }
+.postal__campo { display: grid; grid-template-columns: auto 1fr; align-items: baseline; gap: 10px; border-bottom: 1.5px solid var(--linea-p); transition: border-color .25s; }
+.postal__campo:focus-within { border-color: var(--magenta); }
+.postal__campo label { font-family: "Cormorant Garamond", serif; font-size: 18px; font-style: italic; white-space: nowrap; }
+.postal__campo input, .postal__campo select {
+  min-width: 0; width: 100%;
+  border: 0; background: transparent;
+  font-family: "Caveat", cursive; font-size: 24px; color: var(--tinta-p);
+  padding: 4px 2px 2px;
+  caret-color: var(--magenta);
+}
+.postal__campo input:focus, .postal__campo select:focus { outline: none; }
+.postal [aria-invalid] { color: var(--magenta); }
+.postal__error { margin: 2px 0 4px; font-family: "Caveat", cursive; font-size: 19px; color: var(--magenta); }
+.postal__error[hidden] { display: none; }
+.postal__fecha { margin: 10px 0 0; font-family: "Caveat", cursive; font-size: 21px; color: rgba(78, 50, 33, .7); text-align: right; }
+
+.postal__enviar { margin-top: auto; padding-top: 18px; display: flex; justify-content: flex-end; }
+.lacre-btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 10px 22px 10px 10px;
+  border-radius: 999px;
+  border: 3px solid #691F42;
+  background: radial-gradient(circle at 35% 30%, #9E3868, #832D51 58%, #561835);
+  color: #FAF3E3;
+  font-family: var(--script); font-size: 26px; line-height: 1;
+  box-shadow: 0 6px 14px rgba(78, 50, 33, .3), inset 0 2px 4px rgba(248, 202, 228, .35), inset 0 -3px 6px rgba(42, 10, 25, .55);
+  transition: translate .5s var(--muelle), scale .5s var(--muelle), box-shadow .3s;
+}
+.lacre-btn:hover { translate: 0 -2px; scale: 1.03; }
+.lacre-btn:active { scale: .97; translate: 0 1px; }
+.lacre-btn__sello { width: 34px; height: 34px; display: grid; place-items: center; border-radius: 50%; border: 1px solid rgba(248, 202, 228, .5); background: rgba(131, 45, 81, .6); transition: rotate .6s var(--muelle); }
+.lacre-btn__sello svg { width: 16px; fill: var(--hada); }
+.lacre-btn:hover .lacre-btn__sello { rotate: 14deg; }
+
+/* confirmación */
+.postal__hecho { display: grid; justify-items: center; gap: 10px; text-align: center; padding: 48px 24px 40px; border: 1.5px solid rgba(78, 50, 33, .35); border-radius: 10px; }
+.postal__hecho[hidden] { display: none; }
+.postal__estampa {
+  margin: 0 0 10px; padding: 8px 22px;
+  border: 4px double var(--magenta); border-radius: 8px;
+  color: var(--magenta);
+  font-family: "Cormorant Garamond", serif; font-weight: 700; font-size: 26px; letter-spacing: .14em; text-transform: uppercase;
+  rotate: -10deg;
+}
+.postal__estampa span { display: block; font-size: 13px; letter-spacing: .3em; }
+.postal__estampa.is-estampa { animation: estampa .6s var(--sale) both; }
+@keyframes estampa { 0% { opacity: 0; scale: 2.3; rotate: -22deg; } 65% { opacity: 1; scale: .94; rotate: -9deg; } 100% { scale: 1; rotate: -10deg; } }
+.postal__gracias { margin: 0; font-family: "Caveat", cursive; font-size: 28px; max-width: 34ch; }
+.postal__aviso { margin: 0 0 10px; font-family: "Cormorant Garamond", serif; font-style: italic; font-size: 17px; color: rgba(78, 50, 33, .75); }
+
+@media (max-width: 760px) {
+  .postal { padding: 8px; rotate: 0deg; }
+  .postal__marco { grid-template-columns: 1fr; padding: 22px 18px; gap: 0; }
+  .postal__titulo { font-size: 38px; margin-bottom: 12px; }
+  .postal__division { height: 1px; width: auto; margin: 22px 0; background: linear-gradient(90deg, transparent, rgba(78, 50, 33, .4) 15%, rgba(78, 50, 33, .4) 85%, transparent); }
+  .postal__remite { order: 3; }
+  .postal__sellos { position: absolute; right: 14px; top: 10px; width: 110px; height: 84px; }
+  .postal__sello { width: 62px; height: 72px; }
+  .postal__matasellos { width: 76px; }
+  .postal__campo { grid-template-columns: 1fr; gap: 0; }
+}
+
+@media (max-width: 760px) { .postal__sellos { position: relative; right: auto; top: auto; align-self: flex-end; } }
