@@ -74,9 +74,6 @@
         <div class="escena" data-estado="cerrado">
 
           <!-- Objetos que salen del sobre -->
-          <div class="objeto objeto--rama1" data-x="70" data-y="0" data-w="70" data-h="78" data-r="-6" data-d="0.32" aria-hidden="true">
-            <div class="objeto__in"><svg class="rama" viewBox="0 0 70 78"><use href="#rama"/></svg></div>
-          </div>
           <div class="objeto objeto--carta" data-x="122" data-y="34" data-w="126" data-h="142" data-r="8" data-d="0.06" data-tag="carta">
             <div class="objeto__in carta" aria-hidden="true">
               <svg viewBox="0 0 126 142">
@@ -143,9 +140,6 @@
               </svg>
             </div>
           </div>
-          <div class="objeto objeto--rama2" data-x="258" data-y="100" data-w="82" data-h="70" data-r="12" data-d="0.38" aria-hidden="true">
-            <div class="objeto__in"><svg class="rama" viewBox="0 0 70 78"><use href="#rama"/></svg></div>
-          </div>
           <div class="objeto objeto--foto1" data-x="26" data-y="92" data-w="132" data-h="160" data-r="-12" data-d="0.22" data-tag="ilustracion">
             <div class="objeto__in polaroid">
               <img src="assets/img/ilustracion-baile.jpg" alt="Ilustración A5: una pareja de seres del bosque bailando bajo un marco verde" draggable="false">
@@ -192,6 +186,11 @@
               </span>
             </div>
           </div>
+          <!-- las ramitas brotan del bolsillo del sobre y se quedan fijas en él -->
+          <div class="capa capa--ramas" aria-hidden="true"><div class="capa__in">
+            <svg class="brote brote--i" viewBox="0 0 70 78"><use href="#rama"/></svg>
+            <svg class="brote brote--d" viewBox="0 0 70 78"><use href="#rama"/></svg>
+          </div></div>
           <button class="capa capa--frente sobre" type="button" aria-expanded="false" aria-label="Abrir el sobre">
             <span class="capa__in">
               <svg class="sobre__frente" viewBox="0 0 200 134" aria-hidden="true">

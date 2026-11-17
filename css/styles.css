@@ -2040,3 +2040,19 @@ html.lenis, html.lenis body { height: auto; }
 /* ritmo vertical más uniforme entre secciones */
 .seccion { padding-block: 80px; }
 @media (max-width: 560px) { .seccion { padding-block: 56px; } }
+
+/* ramitas que salen del sobre: van pegadas a él y no se arrastran */
+.capa--ramas { z-index: 3; pointer-events: none; }
+.brote { position: absolute; bottom: 42px; width: 74px; height: 82px; overflow: visible; transform-origin: 15% 100%; scale: 0; transition: scale .5s var(--sale); }
+.brote--i { left: 6px; rotate: -18deg; }
+.brote--d { right: 0; rotate: 64deg; transform-origin: 15% 100%; }
+.escena[data-estado="abierto"] .brote { scale: 1; transition: scale 1.1s var(--muelle) .45s; }
+.escena[data-estado="abierto"] .brote--d { transition-delay: .6s; }
+.escena[data-estado="asomado"] .brote { scale: .45; transition: scale 1.2s var(--muelle) .5s; }
+/* ramitas a los lados del sobre, abriéndose hacia fuera para que no las tapen las piezas */
+.brote { width: 96px; height: 106px; bottom: 30px; }
+.brote--i { left: -40px; rotate: -12deg; transform: scaleX(-1); transform-origin: 15% 100%; }
+.brote--d { right: -44px; left: auto; rotate: 14deg; }
+.brote { bottom: 34px; }
+.brote--i { left: -44px; rotate: 4deg; }
+.brote--d { right: -48px; rotate: 4deg; }
