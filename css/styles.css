@@ -1633,3 +1633,10 @@ a.cesta__btn { display: inline-block; color: inherit; }
 /* Lo que cabe en un sobre: mismo interlineado que el titular de la portada */
 .lema--seccion { line-height: 1.12; }
 .lema--seccion .lema__script { line-height: 0; }
+
+/* la carta, a escala real con el resto de piezas */
+.mesa__pieza--carta { left: 32%; top: -6%; width: 42%; z-index: 3; --g: 4deg; }
+.mesa__pieza--actividad { left: 62%; top: 12%; width: 34%; }
+.mesa__pieza--ilustracion { left: 0%; top: 14%; width: 42%; }
+.mesa__tag[data-pieza="carta"] { --x: 44% !important; --y: -12% !important; }
+.mesa__tag[data-pieza="actividad"] { --x: 74% !important; --y: 6% !important; }
