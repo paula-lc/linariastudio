@@ -24,8 +24,8 @@
   <!-- Cabecera -->
   <header class="cabecera">
     <nav class="nav nav--izq" aria-label="Principal">
-      <a class="nav__link" href="#mas-alla">tienda</a>
-      <a class="nav__link" href="#meses">meses pasados</a>
+      <a class="nav__link" href="tienda.html">tienda</a>
+      <a class="nav__link" href="meses-pasados.html">meses pasados</a>
     </nav>
 
     <a class="logo" href="#top" aria-label="Linaria Studio, inicio">
@@ -33,7 +33,7 @@
     </a>
 
     <nav class="nav nav--der" aria-label="Secundaria">
-      <a class="nav__link" href="#quien">nosotras</a>
+      <a class="nav__link" href="nosotras.html">nosotras</a>
       <div class="idioma" role="group" aria-label="Idioma">
         <button class="idioma__btn is-activo" type="button" data-lang="es" aria-pressed="true">ES</button><span aria-hidden="true">/</span><button class="idioma__btn" type="button" data-lang="ca" aria-pressed="false">CAT</button>
         <span class="idioma__aviso" role="status" aria-live="polite"></span>
@@ -51,11 +51,12 @@
           <p class="indice__titulo">Índice</p>
           <ol class="indice__lista"></ol>
           <div class="indice__vacio">
-            <p class="indice__cap">Capítulo I</p>
-            <p class="indice__nota">Una página en blanco. Aquí se guarda lo que elijas.</p>
+            <p class="indice__nota">Esta historia está por escribir.</p>
+            <p class="indice__nota indice__nota--script">Escoge tus cartas para sumergirte en el mundo.</p>
           </div>
           <div class="indice__pie">
-            <p class="indice__total"><span>Total</span><span class="indice__puntos" aria-hidden="true"></span><span class="indice__suma">0 €</span></p>
+            <p class="indice__total"><span>Precio final</span><span class="indice__puntos" aria-hidden="true"></span><span class="indice__suma">0 €</span></p>
+            <p class="indice__desglose"></p>
             <a class="indice__pagar" href="#pagar">Pasar página</a>
           </div>
         </div>
@@ -118,10 +119,26 @@
               </svg>
             </div>
           </div>
-          <div class="objeto objeto--tarjeta" data-x="160" data-y="104" data-w="88" data-h="48" data-r="-10" data-d="0.18" data-tag="tarjeta">
-            <div class="objeto__in tarjeta" aria-hidden="true">
-              <span class="tarjeta__sello"></span>
-              <span class="tarjeta__estrellas">★★★</span>
+          <div class="objeto objeto--tarjeta" data-x="150" data-y="96" data-w="110" data-h="70" data-r="-10" data-d="0.18" data-tag="tarjeta">
+            <div class="objeto__in tarjeta-personaje" aria-hidden="true">
+              <svg viewBox="0 0 220 140">
+                <rect class="tp-fondo" x="1" y="1" width="218" height="138" rx="9"/>
+                <rect class="tp-borde" x="7" y="7" width="206" height="126" rx="6"/>
+                <path class="tp-cabecera" d="M7 13a6 6 0 0 1 6-6h194a6 6 0 0 1 6 6v17H7z"/>
+                <text class="tp-titulo" x="16" y="23">TARJETA DE PERSONAJE</text>
+                <text class="tp-firma" x="204" y="25" text-anchor="end">Linaria</text>
+                <ellipse class="tp-marco" cx="52" cy="80" rx="27" ry="34"/>
+                <ellipse class="tp-marco tp-marco--in" cx="52" cy="80" rx="22" ry="29"/>
+                <circle class="tp-silueta" cx="52" cy="72" r="9"/>
+                <path class="tp-silueta" d="M34 104c2-13 10-19 18-19s16 6 18 19z"/>
+                <path class="tp-brillo" d="M70 52l1.6 4 4 1.6-4 1.6-1.6 4-1.6-4-4-1.6 4-1.6z"/>
+                <text class="tp-etq" x="90" y="46">NOMBRE</text>
+                <path class="tp-linea" d="M90 52h112"/>
+                <text class="tp-rango" x="90" y="61" font-size="8">rango</text>
+                <rect class="tp-sello tp-sello--lleno" x="116" y="64" width="14" height="18" rx="1"/><path class="tp-marca" d="M123 77s-5-3-5-6a2.6 2.6 0 0 1 5-1.3 2.6 2.6 0 0 1 5 1.3c0 3-5 6-5 6z"/><rect class="tp-sello tp-sello--lleno" x="135" y="64" width="14" height="18" rx="1"/><path class="tp-marca" d="M142 77s-5-3-5-6a2.6 2.6 0 0 1 5-1.3 2.6 2.6 0 0 1 5 1.3c0 3-5 6-5 6z"/><rect class="tp-sello tp-sello--lleno" x="154" y="64" width="14" height="18" rx="1"/><path class="tp-marca" d="M161 77s-5-3-5-6a2.6 2.6 0 0 1 5-1.3 2.6 2.6 0 0 1 5 1.3c0 3-5 6-5 6z"/><rect class="tp-sello" x="173" y="64" width="14" height="18" rx="1"/><rect class="tp-sello" x="192" y="64" width="14" height="18" rx="1"/><rect class="tp-sello" x="116" y="88" width="14" height="18" rx="1"/><rect class="tp-sello" x="135" y="88" width="14" height="18" rx="1"/><rect class="tp-sello" x="154" y="88" width="14" height="18" rx="1"/><rect class="tp-sello" x="173" y="88" width="14" height="18" rx="1"/><rect class="tp-sello" x="192" y="88" width="14" height="18" rx="1"/>
+                <text class="tp-etq" x="116" y="122">SELLOS · 3 DE 10</text>
+                <text class="tp-estrellas" x="40" y="128">★★★☆☆</text>
+              </svg>
             </div>
           </div>
           <div class="objeto objeto--rama2" data-x="258" data-y="100" data-w="82" data-h="70" data-r="12" data-d="0.38" aria-hidden="true">
@@ -157,7 +174,7 @@
           </button>
           <button class="etiqueta" type="button" data-tag="ilustracion" style="--tx:2px;--ty:198px">
             <span class="etiqueta__nombre">ilustración a5</span>
-            <span class="etiqueta__nota"><span>La pintó la bruja una noche sin luna.</span></span>
+            <span class="etiqueta__nota"><span>La pintó la dríade una noche sin luna.</span></span>
           </button>
 
           <!-- El sobre: tres capas para que los objetos queden entre el fondo y el bolsillo -->
@@ -209,32 +226,36 @@
     </section>
 
     <!-- 2 · Lo que cabe en un sobre -->
-    <section class="seccion seccion--viridian" id="meses">
-      <div class="seccion__caja">
-        <h2 class="titulo revela"><span class="titulo__script">L</span>o que cabe en un sobre</h2>
-        <p class="intro revela">No es una newsletter ni una caja de cosas al azar. Es correspondencia de verdad, preparada a mano en el estudio y cerrada con lacre.</p>
-        <ul class="contenido">
-          <li class="contenido__item revela">
-            <svg class="icono" viewBox="0 0 48 48" aria-hidden="true"><rect x="9" y="7" width="30" height="34" rx="2"/><rect x="14" y="12" width="20" height="18"/><path d="M14 27l6-6 5 5 3-3 6 6"/></svg>
-            <h3>La ilustración del mes</h3>
-            <p>Algo que todavía no ha visto nadie. Para enmarcar, o para guardar entre las páginas de un libro.</p>
-          </li>
-          <li class="contenido__item revela">
-            <svg class="icono" viewBox="0 0 48 48" aria-hidden="true"><path d="M8 14h32v22H8z"/><path d="M8 14l16 12 16-12"/></svg>
-            <h3>Una carta desde el otro lado</h3>
-            <p>Lo que ha pasado allí este mes, contado por quien estaba.</p>
-          </li>
-          <li class="contenido__item revela">
-            <svg class="icono" viewBox="0 0 48 48" aria-hidden="true"><path d="M10 10h28v28H10z" stroke-dasharray="3 3"/><circle cx="24" cy="22" r="6"/><path d="M16 33h16"/></svg>
-            <h3>Papelería que se usa</h3>
-            <p>Postales, pegatinas y pequeñas piezas para escribir, decorar o regalar.</p>
-          </li>
-          <li class="contenido__item revela">
-            <svg class="icono" viewBox="0 0 48 48" aria-hidden="true"><path d="M10 18h28v20H10z"/><path d="M24 18v20M10 26h28"/><path d="M24 18c-4-8-12-6-8 0M24 18c4-8 12-6 8 0"/></svg>
-            <h3>Una cosa que no esperabas</h3>
-            <p>Cambia cada mes. No preguntes.</p>
-          </li>
-        </ul>
+    <section class="seccion seccion--te sobre-contenido" id="meses">
+      <div class="seccion__caja dentro">
+        <div class="dentro__texto">
+          <h2 class="lema lema--seccion revela" aria-label="Lo que cabe en un sobre">
+            <span class="lema__fila" aria-hidden="true"><span class="lema__script">L</span>o que cabe</span>
+            <span class="lema__fila" aria-hidden="true">en un <span class="lema__magenta"><span class="lema__script">S</span>obre</span></span>
+          </h2>
+          <p class="dentro__intro revela">No es una newsletter ni una caja de cosas al azar. Es correspondencia de verdad, escrita para ti, preparada a mano y cerrada con lacre.</p>
+          <dl class="dentro__lista">
+            <div class="revela" data-pieza="carta"><dt>Tu carta</dt><dd>Escrita para ti: historias, hechizos, rincones más misteriosos o noticias de tu personaje en su mundo.</dd></div>
+            <div class="revela" data-pieza="ilustracion"><dt>Ilustración A5</dt><dd>Algo que todavía no ha visto nadie. Para enmarcar, o para guardar entre las páginas de un libro.</dd></div>
+            <div class="revela" data-pieza="actividad"><dt>Actividad del mes</dt><dd>Algo para hacer con las manos, una tarde de lluvia.</dd></div>
+            <div class="revela" data-pieza="pegatina"><dt>Pegatinas</dt><dd>Se pegan en todo. Avisadas estáis.</dd></div>
+            <div class="revela" data-pieza="tarjeta"><dt>Tarjeta de personaje <small>solo en tu primer sobre</small></dt><dd>Cada mes suma un sello. Acumúlalos para subir de rango y conseguir ventajas.</dd></div>
+          </dl>
+        </div>
+
+        <div class="dentro__mesa revela" aria-hidden="true">
+          <div class="mesa__pieza mesa__pieza--carta" data-pieza="carta" data-clona=".objeto--carta .objeto__in"></div>
+          <div class="mesa__pieza mesa__pieza--actividad" data-pieza="actividad" data-clona=".objeto--actividad .objeto__in"></div>
+          <div class="mesa__pieza mesa__pieza--ilustracion" data-pieza="ilustracion"><div class="polaroid"><img src="assets/img/ilustracion-mariposas.jpg" alt="" loading="lazy"></div></div>
+          <div class="mesa__pieza mesa__pieza--tarjeta" data-pieza="tarjeta" data-clona=".objeto--tarjeta .objeto__in"></div>
+          <div class="mesa__pieza mesa__pieza--pegatina1" data-pieza="pegatina"><span class="pegatina pegatina--luna"><svg viewBox="0 0 60 60"><circle cx="30" cy="30" r="28"/><path d="M36 15a16 16 0 1 0 10 24 13 13 0 1 1-10-24z"/><circle class="pg-p" cx="18" cy="20" r="2"/><circle class="pg-p" cx="44" cy="44" r="1.6"/></svg></span></div>
+          <div class="mesa__pieza mesa__pieza--pegatina2" data-pieza="pegatina"><span class="pegatina pegatina--seta"><svg viewBox="0 0 70 64"><path class="pg-borde" d="M8 34C8 16 22 5 35 5s27 11 27 29c0 4-3 6-8 6H45v13c0 5-4 8-10 8s-10-3-10-8V40H16c-5 0-8-2-8-6z"/><path class="pg-sombrero" d="M13 33C13 19 24 10 35 10s22 9 22 23c0 2-2 3-4 3H17c-2 0-4-1-4-3z"/><path class="pg-pie" d="M30 36h10v16c0 3-2 5-5 5s-5-2-5-5z"/><circle class="pg-punto" cx="27" cy="21" r="3.5"/><circle class="pg-punto" cx="42" cy="18" r="3"/><circle class="pg-punto" cx="46" cy="28" r="2.5"/><circle class="pg-punto" cx="22" cy="30" r="2"/></svg></span></div>
+          <span class="mesa__tag" style="--x:2%;--y:6%" data-pieza="ilustracion">ilustración a5</span>
+          <span class="mesa__tag" style="--x:36%;--y:-3%" data-pieza="carta">tu carta</span>
+          <span class="mesa__tag" style="--x:64%;--y:2%" data-pieza="actividad">actividad del mes</span>
+          <span class="mesa__tag" style="--x:70%;--y:46%" data-pieza="pegatina">pegatinas</span>
+          <span class="mesa__tag" style="--x:30%;--y:93%" data-pieza="tarjeta">tarjeta de personaje</span>
+        </div>
       </div>
     </section>
 
@@ -258,83 +279,186 @@
             <p class="autora__bio">Botánica y boticaria. Sabe qué planta cura qué cosa, y cuáles es mejor no tocar.</p>
           </article>
         </div>
-        <p class="nota revela">Detrás de cada una hay una ilustradora de verdad. Si quieres conocerlas sin disfraz, <a href="#contacto">aquí están sus portfolios</a>.</p>
+        <p class="nota revela">Detrás de cada una hay una ilustradora de verdad. Si quieres conocerlas sin disfraz, <a href="nosotras.html">aquí están sus portfolios</a>.</p>
       </div>
     </section>
 
-    <div class="franja" role="note"><p>• cada sobre se cierra a mano, con lacre •</p></div>
+    <div class="franja" role="note" data-mensajes='["cada sobre se cierra a mano, con lacre", "el sello corre de nuestra cuenta (en España)", "si te apuntas antes del día 15, entras en el sobre de este mes", "dibujado, impreso y doblado en el estudio"]'><p aria-live="polite">• cada sobre se cierra a mano, con lacre •</p></div>
 
-    <!-- 4 · El camino de una carta -->
-    <section class="seccion seccion--rosa camino" id="camino">
-      <div class="seccion__caja">
-        <h2 class="titulo revela"><span class="titulo__script">E</span>l camino de una carta</h2>
-        <div class="camino__mapa">
-          <svg class="camino__senda" viewBox="0 0 900 120" preserveAspectRatio="none" aria-hidden="true">
-            <path id="senda" d="M20 70 C 160 10, 260 120, 450 60 S 760 10, 880 66"/>
-          </svg>
-          <span class="camino__sobrecito" aria-hidden="true"></span>
+    <!-- 4 · El camino de una carta: una pequeña historia que avanza con el scroll -->
+    <section class="camino" id="camino">
+      <div class="camino__pista">
+        <div class="camino__fijo">
+          <h2 class="titulo is-visto"><span class="titulo__script">E</span>l camino de una carta</h2>
+          <div class="historia">
+            <svg class="historia__mapa" viewBox="0 0 1000 500" role="img" aria-label="Mapa: un búho recoge el sobre en un castillo, cruza un bosque encantado y lo deja en una casita">
+              <defs>
+                <radialGradient id="luz" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#fff6b8"/><stop offset="1" stop-color="#fff6b8" stop-opacity="0"/></radialGradient>
+              </defs>
+              <!-- suelo y río -->
+              <path class="h-suelo" d="M0 420 Q120 395 250 415 T520 410 T780 418 T1000 405 V500 H0Z"/>
+              <path class="h-rio" d="M560 500 C 540 470, 610 450, 580 418"/>
+              <!-- estrellitas -->
+              <g class="h-estrellas">
+                <path style="--d:0s" d="M40 70l3 8 8 3-8 3-3 8-3-8-8-3 8-3z"/>
+                <path style="--d:.8s" d="M300 40l2 6 6 2-6 2-2 6-2-6-6-2 6-2z"/>
+                <path style="--d:1.6s" d="M470 70l2 6 6 2-6 2-2 6-2-6-6-2 6-2z"/>
+                <path style="--d:.4s" d="M690 30l3 8 8 3-8 3-3 8-3-8-8-3 8-3z"/>
+                <path style="--d:1.2s" d="M960 90l2 6 6 2-6 2-2 6-2-6-6-2 6-2z"/>
+              </g>
+              <!-- el castillo -->
+              <g class="h-castillo">
+                <circle class="h-aura" cx="160" cy="260" r="130" fill="url(#luz)"/>
+                <rect x="88" y="250" width="150" height="160"/>
+                <path d="M88 250v-14h16v14h16v-14h16v14h16v-14h16v14h16v-14h16v14h22v-14h0"/>
+                <rect x="62" y="190" width="52" height="220"/>
+                <rect x="206" y="166" width="58" height="244"/>
+                <path class="h-tejado" d="M54 192 L88 108 L122 192Z"/>
+                <path class="h-tejado" d="M198 168 L235 76 L272 168Z"/>
+                <path class="h-mastil" d="M88 108V82M235 76V48"/>
+                <path class="h-bandera" d="M88 82h18l-6 6 6 6H88z"/>
+                <path class="h-bandera" d="M235 48h20l-6 6 6 6h-20z"/>
+                <path class="h-ventana" d="M80 240a8 8 0 0 1 16 0v18H80z"/>
+                <path class="h-ventana" d="M225 200a10 10 0 0 1 20 0v22h-20z"/>
+                <path class="h-ventana" d="M120 300a7 7 0 0 1 14 0v16h-14z"/>
+                <path class="h-ventana" d="M190 300a7 7 0 0 1 14 0v16h-14z"/>
+                <path class="h-puerta" d="M146 410v-40a17 17 0 0 1 34 0v40z"/>
+                <text class="h-rotulo" x="160" y="455" text-anchor="middle">el castillo</text>
+              </g>
+              <!-- el bosque encantado -->
+              <g class="h-bosque">
+                <g class="arbol" style="--d:0s; transform-origin:330px 412px"><path class="ar-tronco" d="M324 412 q4-3 4-17 l0-16 h4 l0 16 q0 14 4 17z"/><path class="ar-rama" d="M330 391 l-7-8 M332 388 l8-9"/><circle class="ar-sombra" cx="333" cy="366" r="30"/><circle class="ar-copa ar-copa--a" cx="316" cy="368" r="20"/><circle class="ar-copa ar-copa--a" cx="344" cy="367" r="21"/><circle class="ar-copa ar-copa--a" cx="330" cy="354" r="23"/><path class="ar-luz" d="M315 350 q9-10 21-9"/><g class="ar-hojas"><circle cx="321" cy="367" r="1.6"/><circle cx="340" cy="360" r="1.6"/><circle cx="332" cy="374" r="1.4"/></g></g><g class="arbol" style="--d:0.6s; transform-origin:372px 414px"><path class="ar-tronco" d="M368 414 l1-16 h6 l1 16z"/><path class="ar-pino" d="M372 361 L411 400 q-19 6 -39 0 q-19 6 -39 0 Z"/><path class="ar-pino" d="M372 334 L403 372 q-15 6 -31 0 q-15 6 -31 0 Z"/><path class="ar-pino" d="M372 310 L394 348 q-11 6 -22 0 q-11 6 -22 0 Z"/><circle class="ar-estrella" cx="372" cy="310" r="2.4"/></g><g class="arbol" style="--d:1.2s; transform-origin:420px 410px"><path class="ar-tronco" d="M414 410 q4-3 4-22 l0-20 h4 l0 20 q0 19 4 22z"/><path class="ar-rama" d="M420 383 l-7-8 M422 379 l8-9"/><circle class="ar-sombra" cx="423" cy="350" r="38"/><circle class="ar-copa ar-copa--b" cx="403" cy="355" r="26"/><circle class="ar-copa ar-copa--b" cx="438" cy="353" r="27"/><circle class="ar-copa ar-copa--b" cx="420" cy="336" r="30"/><path class="ar-luz" d="M401 332 q11-13 27-11"/><g class="ar-hojas"><circle cx="409" cy="353" r="1.6"/><circle cx="433" cy="344" r="1.6"/><circle cx="422" cy="363" r="1.4"/></g></g><g class="arbol" style="--d:0.3s; transform-origin:475px 412px"><path class="ar-tronco" d="M469 412 q4-3 4-14 l0-12 h4 l0 12 q0 11 4 14z"/><path class="ar-rama" d="M475 395 l-7-8 M477 393 l8-9"/><circle class="ar-sombra" cx="478" cy="376" r="24"/><circle class="ar-copa ar-copa--a" cx="464" cy="377" r="16"/><circle class="ar-copa ar-copa--a" cx="487" cy="376" r="17"/><circle class="ar-copa ar-copa--a" cx="475" cy="365" r="19"/><path class="ar-luz" d="M463 363 q7-8 17-7"/><g class="ar-hojas"><circle cx="468" cy="376" r="1.6"/><circle cx="483" cy="370" r="1.6"/><circle cx="476" cy="382" r="1.4"/></g></g><g class="arbol" style="--d:0.9s; transform-origin:540px 414px"><path class="ar-tronco" d="M536 414 l1-16 h6 l1 16z"/><path class="ar-pino" d="M540 356 L584 400 q-22 6 -44 0 q-22 6 -44 0 Z"/><path class="ar-pino" d="M540 325 L575 369 q-17 6 -35 0 q-17 6 -35 0 Z"/><path class="ar-pino" d="M540 298 L565 342 q-13 6 -25 0 q-13 6 -25 0 Z"/><circle class="ar-estrella" cx="540" cy="298" r="2.4"/></g><g class="arbol" style="--d:0.4s; transform-origin:645px 410px"><path class="ar-tronco" d="M639 410 q4-3 4-20 l0-18 h4 l0 18 q0 17 4 20z"/><path class="ar-rama" d="M645 386 l-7-8 M647 383 l8-9"/><circle class="ar-sombra" cx="648" cy="357" r="34"/><circle class="ar-copa ar-copa--b" cx="630" cy="361" r="23"/><circle class="ar-copa ar-copa--b" cx="661" cy="359" r="24"/><circle class="ar-copa ar-copa--b" cx="645" cy="344" r="27"/><path class="ar-luz" d="M628 340 q10-12 24-10"/><g class="ar-hojas"><circle cx="635" cy="359" r="1.6"/><circle cx="657" cy="350" r="1.6"/><circle cx="647" cy="368" r="1.4"/></g></g><g class="arbol" style="--d:1.4s; transform-origin:700px 414px"><path class="ar-tronco" d="M696 414 l1-16 h6 l1 16z"/><path class="ar-pino" d="M700 365 L735 400 q-18 6 -35 0 q-18 6 -35 0 Z"/><path class="ar-pino" d="M700 340 L728 375 q-14 6 -28 0 q-14 6 -28 0 Z"/><path class="ar-pino" d="M700 318 L720 353 q-10 6 -20 0 q-10 6 -20 0 Z"/><circle class="ar-estrella" cx="700" cy="318" r="2.4"/></g><g class="arbol" style="--d:0.8s; transform-origin:748px 412px"><path class="ar-tronco" d="M742 412 q4-3 4-13 l0-11 h4 l0 11 q0 10 4 13z"/><path class="ar-rama" d="M748 396 l-7-8 M750 394 l8-9"/><circle class="ar-sombra" cx="751" cy="380" r="22"/><circle class="ar-copa ar-copa--a" cx="738" cy="380" r="15"/><circle class="ar-copa ar-copa--a" cx="759" cy="379" r="15"/><circle class="ar-copa ar-copa--a" cx="748" cy="369" r="17"/><path class="ar-luz" d="M737 367 q7-8 15-7"/><g class="ar-hojas"><circle cx="741" cy="379" r="1.6"/><circle cx="756" cy="373" r="1.6"/><circle cx="749" cy="384" r="1.4"/></g></g>
+                <g class="h-seta"><path d="M360 416v-10M352 406a8 6 0 0 1 16 0z"/><path d="M610 418v-12M600 406a10 7 0 0 1 20 0z"/></g>
+                <g class="h-luciernagas">
+                  <circle style="--d:0s" cx="360" cy="300" r="3"/><circle style="--d:.6s" cx="430" cy="280" r="2.5"/>
+                  <circle style="--d:1.1s" cx="500" cy="320" r="3"/><circle style="--d:.3s" cx="590" cy="300" r="2.5"/>
+                  <circle style="--d:1.5s" cx="670" cy="280" r="3"/><circle style="--d:.9s" cx="750" cy="320" r="2.5"/>
+                </g>
+                <text class="h-rotulo" x="520" y="455" text-anchor="middle">el bosque encantado</text>
+              </g>
+              <!-- la casita -->
+              <g class="h-casa">
+                <rect class="h-chimenea" x="880" y="232" width="20" height="56"/>
+                <rect class="h-muro" x="796" y="300" width="124" height="110" rx="4"/>
+                <path class="h-tejado" d="M778 308 Q858 200 938 308Z"/>
+                <path class="h-corazon" d="M830 352s-14-9-14-18a7 7 0 0 1 14-3 7 7 0 0 1 14 3c0 9-14 18-14 18z"/>
+                <path class="h-puerta h-puerta--casa" d="M866 410v-34a14 14 0 0 1 28 0v34z"/>
+                <g class="h-flores"><circle cx="806" cy="406" r="5"/><circle cx="818" cy="402" r="4"/><circle cx="906" cy="404" r="5"/></g>
+                <g class="h-buzon"><path d="M960 410v-56"/><rect x="942" y="326" width="36" height="28" rx="12"/><path class="h-bandera" d="M978 334v-14h12v7h-12"/></g>
+                <g class="h-humo"><circle cx="890" cy="220" r="7"/><circle cx="890" cy="220" r="9"/><circle cx="890" cy="220" r="11"/></g>
+                <text class="h-rotulo" x="868" y="455" text-anchor="middle">tu casa</text>
+              </g>
+              <!-- paso 1: la señal que sale de tu casa hacia el castillo -->
+              <path id="senal" class="h-senal" d="M830 330 C 790 170, 560 30, 360 80 S 250 160, 240 196"/>
+              <g id="chispa" class="h-chispa" transform="translate(830 330)"><circle r="16" fill="url(#luz)"/><circle class="h-chispa__nucleo" r="4"/><path class="h-chispa__rayos" d="M0-10v-5M0 10v5M-10 0h-5M10 0h5"/></g>
+              <!-- la ruta del búho -->
+              <path id="ruta" class="h-ruta" d="M235 210 C 330 70, 430 120, 520 170 S 700 90, 790 170 S 930 250, 960 318"/>
+              <!-- el búho, con el sobre -->
+              <g id="buho" class="buho" transform="translate(235 210)">
+                <g class="buho__in">
+                  <path class="buho__pata" d="M-5 16v8M5 16v8"/>
+                  <g class="buho__sobre"><rect x="-15" y="22" width="30" height="20" rx="2"/><path d="M-15 22l15 11 15-11"/><circle cx="0" cy="32" r="3.4"/></g>
+                  <path class="buho__ala buho__ala--i" d="M-13 -4 Q-34 -6 -38 12 Q-26 8 -13 12Z"/>
+                  <path class="buho__ala buho__ala--d" d="M13 -4 Q34 -6 38 12 Q26 8 13 12Z"/>
+                  <ellipse class="buho__cuerpo" cx="0" cy="0" rx="16" ry="20"/>
+                  <ellipse class="buho__tripa" cx="0" cy="6" rx="10" ry="12"/>
+                  <path class="buho__cuerpo" d="M-13 -13 L-15 -25 L-5 -17Z M13 -13 L15 -25 L5 -17Z"/>
+                  <circle class="buho__ojo" cx="-6" cy="-7" r="6"/><circle class="buho__ojo" cx="6" cy="-7" r="6"/>
+                  <circle class="buho__pupila" cx="-6" cy="-7" r="2.6"/><circle class="buho__pupila" cx="6" cy="-7" r="2.6"/>
+                  <path class="buho__pico" d="M-3 -2 L3 -2 L0 3Z"/>
+                </g>
+              </g>
+            </svg>
+          </div>
+          <ol class="historia__pasos">
+            <li data-paso="0"><span class="paso__num">1</span><div><h3>Te apuntas.</h3><p>Desde tu casa sale una chispa hacia el castillo. Si es antes del día 15, entras en el sobre de este mes.</p></div></li>
+            <li data-paso="1"><span class="paso__num">2</span><div><h3>Lo preparamos a mano.</h3><p>Dibujamos, imprimimos, doblamos y cerramos cada sobre en el castillo.</p></div></li>
+            <li data-paso="2"><span class="paso__num">3</span><div><h3>El búho hace lo que puede.</h3><p>Sale a finales de mes y cruza el bosque. Sin seguimiento, como las cartas de antes.</p></div></li>
+            <li data-paso="3"><span class="paso__num">4</span><div><h3>Llega a tu casa.</h3><p>A principios del mes siguiente, directo a tu buzón.</p></div></li>
+          </ol>
         </div>
-        <ol class="pasos">
-          <li class="paso revela"><span class="paso__num">1</span><h3>Te apuntas.</h3><p>Si es antes del día 15, ya entras en el sobre de este mes.</p></li>
-          <li class="paso revela"><span class="paso__num">2</span><h3>Lo preparamos a mano.</h3><p>Dibujamos, imprimimos, doblamos y cerramos cada sobre en el estudio.</p></li>
-          <li class="paso revela"><span class="paso__num">3</span><h3>El cartero hace lo que puede.</h3><p>Sale a finales de mes y llega a tu buzón a principios del siguiente. Sin seguimiento, como las cartas de antes.</p></li>
-        </ol>
       </div>
     </section>
 
     <!-- 5 · Únete -->
     <section class="seccion seccion--te unete" id="unete">
       <div class="seccion__caja">
-        <h2 class="titulo revela"><span class="titulo__script">U</span>n sitio en tu buzón</h2>
 
-        <article class="plan revela" data-elegido="no">
-          <p class="plan__nombre">Mail Club Linaria</p>
-          <h3 class="plan__pregunta" id="pregunta-cartas">¿De quién quieres recibir las cartas?</h3>
-          <div class="plan__elige" role="radiogroup" aria-labelledby="pregunta-cartas">
-            <button class="opcion" type="button" role="radio" aria-checked="false" data-plan="bruja">
-              <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M30 9a16 16 0 1 0 10 23 13 13 0 1 1-10-23z"/></svg>
-              <span class="opcion__nombre">La bruja</span>
-              <span class="opcion__precio">13 €/mes</span>
-            </button>
-            <button class="opcion" type="button" role="radio" aria-checked="false" data-plan="driade">
-              <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 42V18"/><path d="M24 30c-8 0-12-5-12-11 7 0 12 4 12 11z"/><path d="M24 24c7 0 11-5 11-10-7 0-11 4-11 10z"/></svg>
-              <span class="opcion__nombre">La dríade</span>
-              <span class="opcion__precio">13 €/mes</span>
-            </button>
-            <button class="opcion" type="button" role="radio" aria-checked="false" data-plan="ambas">
-              <svg viewBox="0 0 48 48" aria-hidden="true"><path d="M20 10a12 12 0 1 0 8 17 10 10 0 1 1-8-17z"/><path d="M34 40V24"/><path d="M34 32c-5 0-8-3-8-7 5 0 8 3 8 7z"/><path d="M34 28c5 0 7-3 7-7-5 0-7 3-7 7z"/></svg>
-              <span class="opcion__nombre">Las dos</span>
-              <span class="opcion__precio">−12 %</span>
-            </button>
+        <article class="plan receta revela" data-elegido="no" data-plan="">
+          <span class="receta__esquina receta__esquina--a" aria-hidden="true"></span>
+          <span class="receta__esquina receta__esquina--b" aria-hidden="true"></span>
+          <header class="receta__cabeza">
+            <p class="receta__num">Receta nº 13 · Mail Club Linaria</p>
+            <h2 class="receta__titulo">Poción para recibir cartas</h2>
+            <p class="receta__sub">Rinde un sobre al mes. Reposo: unos treinta días.</p>
+          </header>
+
+          <div class="receta__cuerpo">
+            <div class="receta__texto">
+              <h4 class="receta__apartado">Ingredientes</h4>
+              <p class="receta__pregunta" id="pregunta-cartas">¿De quién quieres recibir las cartas? Puedes elegir una o las dos.</p>
+              <div class="plan__elige receta__ingredientes" role="group" aria-labelledby="pregunta-cartas">
+                <button class="ingrediente" type="button" role="checkbox" aria-checked="false" data-quien="bruja">
+                  <span class="ingrediente__sello" aria-hidden="true"><svg viewBox="0 0 40 40"><path class="sello__hueco" d="M20 4a16 16 0 1 1 0 32a16 16 0 1 1 0-32z"/><g class="sello__lacre"><path d="M20 3c5 0 6 3 10 4s7 4 6 9 2 7 0 11-6 5-9 8-8 3-12 0-8-2-10-7-3-7-1-11 2-8 7-10 4-4 9-4z"/><path class="sello__corazon" d="M20 28s-8-5-8-10a4.2 4.2 0 0 1 8-2 4.2 4.2 0 0 1 8 2c0 5-8 10-8 10z"/></g></svg></span><span class="ingrediente__nombre">una carta de la bruja</span><span class="ingrediente__puntos" aria-hidden="true"></span><span class="ingrediente__precio">13 €</span>
+                </button>
+                <button class="ingrediente" type="button" role="checkbox" aria-checked="false" data-quien="driade">
+                  <span class="ingrediente__sello" aria-hidden="true"><svg viewBox="0 0 40 40"><path class="sello__hueco" d="M20 4a16 16 0 1 1 0 32a16 16 0 1 1 0-32z"/><g class="sello__lacre"><path d="M20 3c5 0 6 3 10 4s7 4 6 9 2 7 0 11-6 5-9 8-8 3-12 0-8-2-10-7-3-7-1-11 2-8 7-10 4-4 9-4z"/><path class="sello__corazon" d="M20 28s-8-5-8-10a4.2 4.2 0 0 1 8-2 4.2 4.2 0 0 1 8 2c0 5-8 10-8 10z"/></g></svg></span><span class="ingrediente__nombre">una carta de la dríade</span><span class="ingrediente__puntos" aria-hidden="true"></span><span class="ingrediente__precio">13 €</span>
+                </button>
+              </div>
+              <p class="receta__consejo">Si eliges las dos, se mezclan con un 12 % de descuento.</p>
+
+              <h4 class="receta__apartado">Preparación</h4>
+              <ol class="receta__pasos">
+                <li>Elige quién te escribe: una, o las dos.</li>
+                <li>Añade un sello. Corre de nuestra cuenta (en España).</li>
+                <li>Cierra con lacre y deja reposar un mes.</li>
+                <li>Repite cada mes. Te vas cuando quieras, aunque te echaremos de menos.</li>
+              </ol>
+            </div>
+
+            <div class="receta__matraz">
+              <svg class="matraz" viewBox="0 0 160 210" aria-hidden="true">
+                <defs>
+                  <clipPath id="forma-matraz"><path d="M66 58 V84 L26 164 Q18 194 48 194 H112 Q142 194 134 164 L94 84 V58 Z"/></clipPath>
+                  <linearGradient id="mezcla" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#832D51"/><stop offset="1" stop-color="#6C9775"/></linearGradient>
+                </defs>
+                <g clip-path="url(#forma-matraz)">
+                  <rect class="matraz__liquido" x="0" y="0" width="160" height="210"/>
+                  <g class="matraz__burbujas"><circle cx="62" cy="186" r="4"/><circle cx="84" cy="190" r="3"/><circle cx="100" cy="184" r="5"/><circle cx="74" cy="192" r="2.5"/></g>
+                </g>
+                <path class="matraz__vidrio" d="M66 58 V84 L26 164 Q18 194 48 194 H112 Q142 194 134 164 L94 84 V58"/>
+                <path class="matraz__brillo" d="M44 162 Q40 176 50 182"/>
+                <rect class="matraz__corcho" x="62" y="40" width="36" height="20" rx="3"/>
+                <path class="matraz__cuerda" d="M60 60 H100"/>
+                <g class="matraz__etiqueta"><rect x="54" y="128" width="52" height="26" rx="2"/><text x="80" y="146" text-anchor="middle">Linaria</text></g>
+              </svg>
+              <p class="receta__espera">Elige un ingrediente para empezar.</p>
+              <div class="plan__detalle">
+                <div class="plan__detalle-in">
+                  <p class="plan__precio"><span class="plan__cifra">13</span> € <small>al mes</small></p>
+                  <p class="receta__descuento">−12 % por recibir las dos</p>
+                  <button class="boton" type="button" data-anadir="plan">Quiero mi sobre</button>
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="plan__detalle">
-          <div class="plan__detalle-in">
-          <p class="plan__precio"><span class="plan__cifra">13</span> € <small>al mes</small></p>
-          <ul class="plan__lista">
-            <li>Un sobre cada mes, cerrado a mano.</li>
-            <li>El sello corre de nuestra cuenta (en España).</li>
-            <li>Te quedas el tiempo que quieras. Te vas cuando quieras, aunque te echaremos de menos.</li>
-          </ul>
-          <button class="boton boton--magenta" type="button" data-anadir="plan">Quiero mi sobre</button>
-          </div>
-          </div>
+
+          <footer class="receta__variantes">
+            <div class="variante">
+              <p class="variante__titulo">Variante para regalar</p>
+              <p>Tres meses de cartas. Pago único, sin renovación.</p>
+              <p class="variante__precio">36 €</p>
+              <button class="boton" type="button" data-anadir="regalo">Regalar el club</button>
+            </div>
+            <div class="variante">
+              <p class="variante__titulo">Variante por encargo</p>
+              <p>Una palabra, un color y un ingrediente. Un único envío.</p>
+              <p class="variante__precio">65 €</p>
+              <button class="boton" type="button" data-anadir="encargo">Encargar mi carta</button>
+            </div>
+          </footer>
+          <p class="receta__nota">Nota al margen: las primeras 50 socias fundadoras se quedan con este precio mientras sigan en el club. Lo apuntamos en el libro blanco.</p>
         </article>
-
-        <div class="extras">
-          <article class="extra revela">
-            <h3>¿Es para otra persona?</h3>
-            <p>Regala tres meses de cartas. Pago único, sin renovación.</p>
-            <p class="extra__precio">36 €</p>
-            <button class="boton boton--borde" type="button" data-anadir="regalo">Regalar el club</button>
-          </article>
-          <article class="extra revela">
-            <h3>Una carta por encargo</h3>
-            <p>Nos das una palabra, un color y un ingrediente. Un único envío.</p>
-            <p class="extra__precio">65 €</p>
-            <button class="boton boton--borde" type="button" data-anadir="encargo">Encargar mi carta</button>
-          </article>
-        </div>
-        <p class="nota revela"><strong>Socias fundadoras:</strong> las primeras 50 personas se quedan con este precio mientras sigan en el club. Lo apuntamos en el libro blanco.</p>
       </div>
     </section>
 
@@ -343,7 +467,7 @@
       <div class="seccion__caja">
         <h2 class="titulo revela"><span class="titulo__script">M</span>ás allá del buzón</h2>
         <div class="rincones">
-          <a class="rincon revela" href="#tienda">
+          <a class="rincon revela" href="tienda.html">
             <span class="rincon__img"><img src="assets/img/ilustracion-bosque.jpg" alt="" loading="lazy"></span>
             <h3>La tienda</h3>
             <p>Lo de las dos en un mismo sitio. Filtra por artista o por personaje.</p>
@@ -365,7 +489,7 @@
       </div>
     </section>
 
-    <div class="franja" role="note"><p>• sin permanencia · te quedas el tiempo que quieras •</p></div>
+    <div class="franja" role="note" data-mensajes='["sin permanencia · te quedas el tiempo que quieras", "te vas cuando quieras, aunque te echaremos de menos", "las primeras 50 socias fundadoras mantienen su precio", "regala tres meses de cartas por 36 €"]'><p aria-live="polite">• sin permanencia · te quedas el tiempo que quieras •</p></div>
 
     <!-- 7 · Preguntas al cartero -->
     <section class="seccion seccion--te" id="preguntas">

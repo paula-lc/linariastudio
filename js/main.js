@@ -5,8 +5,9 @@
   const $$ = (s, c = document) => [...c.querySelectorAll(s)];
 
   /* ---------- Entrada ---------- */
+  // las piezas de "Lo que cabe en un sobre" reutilizan las del sobre de la portada
+  $$('[data-clona]').forEach(d => { const o = $(d.dataset.clona); if (o) d.append(o.cloneNode(true)); });
   $$('.lema__palabra, .lema__script').forEach((el, i) => el.style.setProperty('--w', i));
-  $$('.nav__link').forEach(a => a.insertAdjacentHTML('beforeend', '<span class="enredadera" aria-hidden="true"><img class="enredadera__tallo" src="assets/img/enredadera-tallo.svg" alt=""><img class="enredadera__flores" src="assets/img/enredadera-flores.svg" alt=""></span>'));
   requestAnimationFrame(() => requestAnimationFrame(() => document.body.classList.add('listo')));
 
   /* ---------- El sobre ---------- */
@@ -50,10 +51,13 @@
     asomo = true;
     estado('asomado');
   };
-  if (reduce) estado('abierto');
-  else {
-    addEventListener('scroll', () => scrollY > 30 && asomar(), { passive: true });
-    setTimeout(asomar, 6000);
+  // Al cargar, el sobre siempre está cerrado. Solo se entreabre cuando la persona
+  // empieza a moverse por la página (no con el scroll que restaura el navegador).
+  escena.dataset.estado = 'cerrado';
+  if (!reduce) {
+    const alMoverse = () => { if (performance.now() > 1500) asomar(); };
+    ['wheel', 'touchmove', 'keydown'].forEach(ev => addEventListener(ev, alMoverse, { passive: true }));
+    setTimeout(asomar, 8000);
   }
 
   // Etiquetas <-> objetos
@@ -133,6 +137,14 @@
   ajusta();
   addEventListener('resize', ajusta);
 
+  /* ---------- Lo que cabe en un sobre: texto y piezas se señalan entre sí ---------- */
+  const piezas = $$('.sobre-contenido [data-pieza]');
+  const enfoca = k => piezas.forEach(el => el.classList.toggle('is-foco', el.dataset.pieza === k));
+  piezas.forEach(el => {
+    el.addEventListener('pointerenter', () => enfoca(el.dataset.pieza));
+    el.addEventListener('pointerleave', () => enfoca(''));
+  });
+
   /* ---------- Idioma ---------- */
   const aviso = $('.idioma__aviso');
   $('[data-lang="ca"]').addEventListener('click', () => {
@@ -152,14 +164,22 @@
     regalo: { id: 'regalo', nombre: 'Regalo · 3 meses', precio: 36, unico: true },
     encargo: { id: 'encargo', nombre: 'Carta por encargo', precio: 65, unico: true },
   };
-  let plan = 'bruja';
+  let plan = '';
   const cifra = $('.plan__cifra');
   const euros = n => n.toLocaleString('es-ES', { minimumFractionDigits: n % 1 ? 2 : 0, maximumFractionDigits: 2 });
-  $$('.plan__elige [role="radio"]').forEach((b, i, todos) => {
+  // se puede elegir una carta o las dos; con las dos se aplica el descuento
+  const elegidas = new Set();
+  $$('.plan__elige [role="checkbox"]').forEach(b => {
     b.addEventListener('click', () => {
-      todos.forEach(x => x.setAttribute('aria-checked', x === b));
-      $('.plan').dataset.elegido = 'si';
-      plan = b.dataset.plan;
+      const q = b.dataset.quien;
+      elegidas.has(q) ? elegidas.delete(q) : elegidas.add(q);
+      b.setAttribute('aria-checked', elegidas.has(q));
+      plan = elegidas.size === 2 ? 'ambas' : ([...elegidas][0] || '');
+      const pl = $('.plan');
+      pl.dataset.elegido = plan ? 'si' : 'no';
+      pl.dataset.plan = plan;
+      if (!plan) return;
+      pl.classList.remove('is-remueve'); void pl.offsetWidth; pl.classList.add('is-remueve');
       const nuevo = euros(PLANES[plan].precio);
       if (cifra.textContent !== nuevo) {
         cifra.textContent = nuevo;
@@ -185,7 +205,12 @@
         <p class="indice__linea"><span class="nombre">${it.nombre}${it.cant > 1 ? ' ×' + it.cant : ''}</span><span class="indice__puntos"></span><span class="precio">${euros(it.precio * it.cant)} €${it.unico ? '' : '/mes'}</span><button class="indice__quitar" type="button" aria-label="Quitar ${it.nombre}">×</button></p>
       </li>`).join('');
     const total = cesta.reduce((s, it) => s + it.precio * it.cant, 0);
-    $('.indice__suma').textContent = euros(total) + ' €';
+    const alMes = cesta.filter(it => !it.unico).reduce((s, it) => s + it.precio * it.cant, 0);
+    const unaVez = total - alMes;
+    $('.indice__suma').textContent = euros(+total.toFixed(2)) + ' €';
+    $('.indice__desglose').textContent = alMes && unaVez
+      ? `${euros(+alMes.toFixed(2))} € al mes + ${euros(+unaVez.toFixed(2))} € de pago único`
+      : alMes ? 'al mes, envío incluido' : unaVez ? 'pago único, envío incluido' : '';
     num.textContent = cesta.reduce((s, it) => s + it.cant, 0);
     indice.classList.toggle('tiene', cesta.length > 0);
   };
@@ -236,6 +261,7 @@
   };
 
   $$('[data-anadir]').forEach(b => b.addEventListener('click', () => {
+    if (b.dataset.anadir === 'plan' && !plan) return;
     const p = b.dataset.anadir === 'plan' ? PLANES[plan] : EXTRAS[b.dataset.anadir];
     const ya = cesta.find(it => it.id === p.id);
     if (ya) { if (p.unico) ya.cant++; }
@@ -273,25 +299,87 @@
   });
   if (reduce) $$('.revela').forEach(el => el.classList.add('is-visto'));
 
-  /* ---------- El camino de una carta ---------- */
-  const senda = $('#senda'), sobrecito = $('.camino__sobrecito'), mapa = $('.camino__mapa');
-  if (senda && sobrecito) {
-    const largo = senda.getTotalLength();
-    let pedido = false;
-    const mueve = () => {
-      pedido = false;
-      if (!mapa.offsetParent) return;
-      const r = mapa.getBoundingClientRect();
-      const p = Math.max(0, Math.min(1, (innerHeight * .85 - r.top) / (innerHeight * .6)));
-      const k = mapa.clientWidth / 900;
-      const pt = senda.getPointAtLength(p * largo);
-      const pt2 = senda.getPointAtLength(Math.min(largo, p * largo + 2));
-      const ang = Math.atan2(pt2.y - pt.y, pt2.x - pt.x) * 180 / Math.PI;
-      sobrecito.style.transform = `translate(${pt.x * k}px, ${pt.y * k}px) rotate(${ang * .6}deg)`;
+  /* ---------- El camino de una carta: el búho cruza el mapa con el scroll ---------- */
+  const camino = $('#camino'), pista = $('.camino__pista'), ruta = $('#ruta'), buho = $('#buho');
+  if (camino && ruta && buho) {
+    const largo = ruta.getTotalLength();
+    const senal = $('#senal'), chispa = $('#chispa');
+    const largoSenal = senal ? senal.getTotalLength() : 0;
+    const pasos = $$('.historia__pasos li');
+    let pedido = false, pasoActual = -1, pActual = 0, manual = false, anim = null;
+    const pinta = p => {
+      pActual = p;
+      // 0–0.14 te apuntas · 0.14–0.3 se prepara en el castillo · 0.3–0.9 vuela · 0.9–1 llega
+      const t = Math.max(0, Math.min(1, (p - .3) / .6));
+      const pt = ruta.getPointAtLength(t * largo);
+      const pt2 = ruta.getPointAtLength(Math.min(largo, t * largo + 3));
+      const ang = t > 0 && t < 1 ? Math.atan2(pt2.y - pt.y, pt2.x - pt.x) * 180 / Math.PI * .35 : 0;
+      let dy = 0;
+      if (p >= .14 && p < .3) dy = -Math.abs(Math.sin((p - .14) / .16 * Math.PI * 2)) * 10; // salta de impaciencia en la torre
+      if (p >= .9) dy = Math.sin(Math.min(1, (p - .9) / .1) * Math.PI) * -12;              // aterriza junto al buzón
+      buho.setAttribute('transform', `translate(${pt.x.toFixed(1)} ${(pt.y + dy).toFixed(1)}) rotate(${ang.toFixed(1)}) scale(1.25)`);
+      camino.classList.toggle('is-vuela', t > 0 && t < 1);
+      // la chispa: recorre la señal durante el primer paso
+      if (senal) {
+        const sp = Math.max(0, Math.min(1, p / .13));
+        senal.style.strokeDasharray = largoSenal;
+        senal.style.strokeDashoffset = largoSenal * (1 - sp);
+        const q = senal.getPointAtLength(sp * largoSenal);
+        chispa.setAttribute('transform', `translate(${q.x.toFixed(1)} ${q.y.toFixed(1)})`);
+      }
+      const paso = p < .14 ? 0 : p < .3 ? 1 : p < .9 ? 2 : 3;
+      if (paso !== pasoActual) {
+        pasoActual = paso;
+        camino.dataset.paso = paso;
+        pasos.forEach((li, i) => { li.classList.toggle('is-activo', i === paso); li.setAttribute('aria-pressed', i === paso); });
+      }
     };
-    addEventListener('scroll', () => { if (!pedido) { pedido = true; requestAnimationFrame(mueve); } }, { passive: true });
-    addEventListener('resize', mueve);
-    mueve();
+    // con el scroll: de cuando el mapa entra por abajo a cuando su centro sube al 30 %
+    const avanza = () => {
+      pedido = false;
+      if (manual) return;
+      const r = $('.historia__mapa').getBoundingClientRect();
+      const centro = r.top + r.height / 2;
+      pinta(reduce ? 1 : Math.max(0, Math.min(1, (innerHeight * .85 - centro) / (innerHeight * .55))));
+    };
+    // con un clic en un paso: la historia viaja hasta ese momento
+    // con un clic en un paso: se reproduce entero el tramo de ese paso
+    const TRAMOS = [[0, .139], [.14, .299], [.3, .899], [.9, 1]];
+    const viaja = i => {
+      manual = true;
+      if (anim) cancelAnimationFrame(anim);
+      const [desde, hasta] = TRAMOS[i];
+      if (reduce) return pinta(hasta);
+      const dur = 1500 + (hasta - desde) * 4000, t0 = performance.now();
+      const suave = x => x < .5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2;
+      pinta(desde);
+      const paso = now => {
+        const k = Math.min(1, (now - t0) / dur);
+        pinta(desde + (hasta - desde) * suave(k));
+        if (k < 1) anim = requestAnimationFrame(paso);
+      };
+      anim = requestAnimationFrame(paso);
+    };
+    pasos.forEach((li, i) => {
+      li.tabIndex = 0;
+      li.setAttribute('role', 'button');
+      li.addEventListener('click', () => viaja(i));
+      li.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); viaja(i); } });
+    });
+    // al volver a hacer scroll, la historia vuelve a seguirlo
+    ['wheel', 'touchmove'].forEach(ev => addEventListener(ev, () => { if (manual) { manual = false; if (anim) cancelAnimationFrame(anim); } }, { passive: true }));
+    addEventListener('scroll', () => { if (!pedido) { pedido = true; requestAnimationFrame(avanza); } }, { passive: true });
+    addEventListener('resize', avanza);
+    avanza();
+  }
+
+  /* ---------- Las guirnaldas avanzan un poco con el scroll ---------- */
+  if (!reduce) {
+    const seps = $$('.separador__vid');
+    let pend = false;
+    const deriva = () => { pend = false; seps.forEach((v, i) => v.style.setProperty('--desp', (scrollY * (i % 2 ? -.12 : .12)).toFixed(1) + 'px')); };
+    addEventListener('scroll', () => { if (!pend) { pend = true; requestAnimationFrame(deriva); } }, { passive: true });
+    deriva();
   }
 
   /* ---------- Preguntas: abrir y cerrar con muelle ---------- */
@@ -328,6 +416,28 @@
     // TODO: conectar con el servicio de formularios (Formspree, Netlify Forms…)
     ok.textContent = 'Versión de prueba: esta nota todavía no se envía.';
     form.reset();
+  });
+
+  /* ---------- Franjas: mensajitos que van cambiando ---------- */
+  $$('.franja[data-mensajes]').forEach((f, n) => {
+    let ms; try { ms = JSON.parse(f.dataset.mensajes); } catch (_) { return; }
+    const p = f.querySelector('p');
+    let i = 0, pausa = false;
+    f.addEventListener('pointerenter', () => { pausa = true; });
+    f.addEventListener('pointerleave', () => { pausa = false; });
+    const cambia = () => {
+      if (pausa || document.hidden) return;
+      i = (i + 1) % ms.length;
+      if (reduce) { p.textContent = '• ' + ms[i] + ' •'; return; }
+      p.classList.add('is-sale');
+      setTimeout(() => {
+        p.textContent = '• ' + ms[i] + ' •';
+        p.classList.remove('is-sale'); p.classList.add('is-entra');
+        void p.offsetWidth;
+        p.classList.remove('is-entra');
+      }, 380);
+    };
+    setTimeout(() => setInterval(cambia, 4200), n * 1300);
   });
 
   /* ---------- Barra fija en móvil ---------- */

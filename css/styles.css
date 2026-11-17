@@ -93,55 +93,27 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   display: inline-block;
   transition: translate .5s var(--muelle), color .3s;
 }
-.nav__link { isolation: isolate; }
-.enredadera {
-  position: absolute;
-  left: 50%; top: 62%;
-  width: 150px;
-  aspect-ratio: 546 / 220;
-  translate: -50% 0;
-  z-index: -1;
-  pointer-events: none;
+/* hover del menú: solo un subrayado que se dibuja de izquierda a derecha */
+.nav__link::after {
+  content: "";
+  position: absolute; left: 0; right: 0; bottom: -4px;
+  height: 2px;
+  background: var(--viridian);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .45s var(--sale);
 }
-.enredadera img { position: absolute; inset: 0; width: 100%; height: 100%; }
-.enredadera__tallo { clip-path: inset(0 100% 0 0); transition: clip-path .4s var(--sale); }
-.enredadera__flores {
-  clip-path: inset(0 100% 0 0);
-  opacity: 0; scale: .8;
-  transition: clip-path .3s var(--sale), opacity .25s, scale .3s var(--sale);
-}
-.nav__link:hover .enredadera__tallo, .nav__link:focus-visible .enredadera__tallo {
-  clip-path: inset(-10% -10% -10% -10%);
-  transition: clip-path 1s cubic-bezier(.3, .7, .3, 1);
-}
-.nav__link:hover .enredadera__flores, .nav__link:focus-visible .enredadera__flores {
-  clip-path: inset(-10% -10% -10% -10%);
-  opacity: 1; scale: 1;
-  transition: clip-path 1s cubic-bezier(.3, .7, .3, 1) .2s, opacity .3s .2s, scale .9s var(--muelle) .2s;
-}
+.nav__link:hover::after, .nav__link:focus-visible::after { transform: scaleX(1); }
 
 .logo {
   display: block;
   width: 266px;
-  transform-origin: 50% 6%;
-  animation: cuelga 1.6s var(--sale) .1s both;
+  animation: logoEntra 1s var(--sale) .1s both;
+  transition: scale .6s var(--suave);
 }
-.logo:hover { animation: balancea 1.4s ease-in-out; }
-@keyframes cuelga {
-  0% { transform: translateY(-40px) rotate(-7deg); opacity: 0; }
-  35% { transform: translateY(0) rotate(5deg); opacity: 1; }
-  55% { transform: rotate(-3deg); }
-  72% { transform: rotate(1.6deg); }
-  86% { transform: rotate(-.6deg); }
-  100% { transform: rotate(0); }
-}
-@keyframes balancea {
-  0%, 100% { transform: rotate(0); }
-  20% { transform: rotate(3deg); }
-  45% { transform: rotate(-2.2deg); }
-  68% { transform: rotate(1.1deg); }
-  85% { transform: rotate(-.4deg); }
-}
+/* sin animación en bucle: al pasar el ratón solo crece un poco */
+.logo:hover { scale: 1.03; }
+@keyframes logoEntra { from { opacity: 0; transform: translateY(-8px); } }
 
 /* Idioma */
 .idioma { position: relative; display: flex; align-items: center; gap: 1px; }
@@ -967,16 +939,17 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .titulo::after { margin-left: 14px; }
 .titulo.is-visto::before, .titulo.is-visto::after { clip-path: inset(-10% -10% -10% -10%); }
 
-/* separadores: una enredadera que crece al llegar */
-.separador { display: flex; justify-content: center; padding-block: 8px; background: var(--te); }
+/* separadores: una guirnalda de enredadera de lado a lado que crece al llegar */
+.separador { display: block; padding-block: 6px; background: var(--te); overflow: hidden; }
 .separador__vid {
-  width: min(460px, 78%);
-  aspect-ratio: 546 / 220;
-  background: url("../assets/img/enredadera-flores.svg") center / contain no-repeat, url("../assets/img/enredadera-tallo.svg") center / contain no-repeat;
+  display: block;
+  width: 100%;
+  height: 64px;
+  background: url("../assets/img/enredadera-tira.svg") 0 50% / auto 100% repeat-x;
   clip-path: inset(0 100% 0 0);
-  transition: clip-path 1.8s cubic-bezier(.3, .7, .3, 1);
+  transition: clip-path 2.2s cubic-bezier(.3, .7, .3, 1);
 }
-.separador:nth-of-type(even) .separador__vid { scale: -1 1; }
+.separador:nth-of-type(even) .separador__vid { background-position: 30% 50%; }
 .separador.is-visto .separador__vid { clip-path: inset(-10% -10% -10% -10%); }
 
 /* franjas con mensaje */
@@ -1148,3 +1121,569 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .seccion__caja--estrecha .titulo::before { margin-right: 10px; }
 .seccion__caja--estrecha .titulo::after { margin-left: 10px; }
 }
+
+/* ==========================================================
+   Lo que cabe en un sobre: las piezas reales, sin cajas
+   ========================================================== */
+.contenido { gap: 34px 26px; }
+.contenido__item, .contenido__item:hover {
+  background: none; border: 0; padding: 0; box-shadow: none; rotate: 0deg; translate: none;
+  display: grid; justify-items: center; text-align: center; align-content: start;
+}
+.contenido__item::after { display: none; }
+.contenido__item h3 { margin: 10px 0 4px; font-weight: 400; text-transform: uppercase; font-size: 16px; letter-spacing: .03em; color: var(--viridian); }
+.contenido__item p { max-width: 220px; color: var(--viridian-hondo); }
+.contenido__tag {
+  margin-top: -14px; position: relative; z-index: 2;
+  background: var(--crema); color: var(--viridian);
+  font-size: 12px; padding: 3px 9px 4px;
+}
+.pieza {
+  height: 170px; width: 100%;
+  display: grid; place-items: center;
+  rotate: var(--g, -4deg);
+  transition: rotate .8s var(--muelle), translate .8s var(--muelle), scale .8s var(--muelle);
+}
+.contenido__item:nth-child(2) .pieza { --g: 5deg; }
+.contenido__item:nth-child(3) .pieza { --g: -6deg; }
+.contenido__item:nth-child(4) .pieza { --g: 3deg; }
+.contenido__item:hover .pieza { rotate: 0deg; translate: 0 -8px; scale: 1.05; }
+
+.pieza--foto .polaroid { width: 132px; height: 150px; }
+.pieza--carta > div { width: 120px; height: 136px; }
+.pieza--papeleria { position: relative; }
+.pieza__tarjeta > div { width: 130px; height: 70px; }
+.pieza__pegatina {
+  position: absolute; right: 18%; top: 22%;
+  width: 54px; height: 54px; border-radius: 50%;
+  background: var(--hada); border: 3px solid #fff;
+  box-shadow: 2px 3px 6px rgba(130, 45, 81, .25);
+  rotate: 12deg;
+}
+.pieza__pegatina::after { content: "★"; position: absolute; inset: 0; display: grid; place-items: center; color: var(--magenta); font-size: 22px; }
+
+.paquete {
+  position: relative; display: block;
+  width: 118px; height: 96px;
+  background: var(--kraft);
+  border-radius: 4px;
+  box-shadow: 3px 5px 10px rgba(80, 60, 30, .28);
+  background-image:
+    linear-gradient(90deg, transparent calc(50% - 2px), #F6F4E4 calc(50% - 2px) calc(50% + 2px), transparent calc(50% + 2px)),
+    linear-gradient(0deg, transparent calc(50% - 2px), #F6F4E4 calc(50% - 2px) calc(50% + 2px), transparent calc(50% + 2px));
+}
+.paquete__lacre { position: absolute; left: 50%; top: 50%; width: 34px; height: 34px; margin: -17px 0 0 -17px; }
+.paquete__lacre svg { width: 100%; height: 100%; overflow: visible; filter: drop-shadow(1px 2px 1.5px rgba(80, 20, 40, .35)); }
+.paquete__lacre path { fill: var(--magenta); }
+.paquete__lacre .lacre__corazon { fill: none; stroke: #b4547d; stroke-width: 1.6; }
+.contenido__item:hover .paquete { animation: sacude .6s ease-in-out; }
+@keyframes sacude { 25% { rotate: -4deg; } 50% { rotate: 3deg; } 75% { rotate: -1.5deg; } }
+
+/* Páginas aparte (provisionales) */
+.pronto { min-height: 46vh; padding-block: 56px 40px; }
+.pronto .titulo::before, .pronto .titulo::after { clip-path: inset(-10% -10% -10% -10%); }
+.pronto__nota { text-align: center; font-family: var(--script); font-size: 30px; color: var(--magenta); margin: 0 0 22px; }
+.pronto .boton-lineas { opacity: 1; translate: none; margin: 0; }
+a.cesta__btn { display: inline-block; color: inherit; }
+
+/* Franjas con mensajes que van cambiando */
+.franja p { transition: opacity .45s var(--sale), translate .7s var(--muelle); }
+.franja p.is-sale { opacity: 0; translate: 0 -10px; transition: opacity .35s var(--sale), translate .35s var(--sale); }
+.franja p.is-entra { opacity: 0; translate: 0 10px; transition: none; }
+
+/* El camino de una carta: un mapita con contraste */
+.camino__mapa {
+  background: var(--papel);
+  border: 2px solid var(--viridian);
+  padding: 18px 20px 10px;
+}
+.camino__senda path, .camino__senda rect, .camino__senda circle { fill: none; stroke: var(--viridian-hondo); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; opacity: 1; stroke-dasharray: none; }
+.camino__senda .mapa__senda { stroke: var(--magenta); stroke-width: 2.6; stroke-dasharray: 3 8; }
+.mapa__arbol circle { fill: #9cc4a3; }
+.mapa__colina path:not(:last-child) { fill: #e3ebc2; }
+.camino__senda .mapa__tejado { fill: var(--ciclamen); stroke: var(--magenta); }
+.mapa__casa rect:not(.mapa__puerta) { fill: #fff; }
+.camino__senda .mapa__puerta { fill: var(--kraft); }
+.mapa__buzon rect { fill: var(--viridian); }
+.camino__senda .mapa__bandera { fill: var(--magenta); stroke: var(--magenta); }
+.camino__senda .mapa__aguja { fill: var(--magenta); stroke: none; }
+.mapa__rosa text, .mapa__rotulo { font-family: var(--script); font-size: 20px; fill: var(--viridian-hondo); stroke: none; }
+.mapa__rosa text { font-family: var(--sans); font-size: 10px; }
+.mapa__humo circle { fill: #fff; stroke: #c9cfb0; stroke-width: 1.2; animation: humo 3.2s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+.mapa__humo circle:nth-child(2) { animation-delay: .5s; }
+.mapa__humo circle:nth-child(3) { animation-delay: 1s; }
+@keyframes humo { 0%, 100% { opacity: .5; translate: 0 0; } 50% { opacity: 1; translate: 2px -3px; } }
+.camino__senda .pajaro { stroke: var(--viridian-hondo); stroke-width: 1.8; transform-box: fill-box; transform-origin: center; animation: aletea .9s ease-in-out infinite, planea 7s ease-in-out infinite; animation-delay: var(--d), var(--d); }
+@keyframes aletea { 50% { scale: 1 .45; } }
+@keyframes planea { 0%, 100% { translate: 0 0; } 50% { translate: 14px -5px; } }
+.camino__sobrecito { z-index: 2; margin-left: -19px; }
+@media (max-width: 860px) { .camino__mapa { display: block; padding: 10px; } .mapa__rotulo { font-size: 26px; } }
+
+/* ==========================================================
+   Únete: una página de recetario de pociones
+   ========================================================== */
+.plan.receta {
+  max-width: 880px;
+  margin: 30px auto 0;
+  padding: 52px 56px 40px;
+  text-align: left;
+  background:
+    radial-gradient(120% 90% at 0% 0%, rgba(215, 180, 127, .14), transparent 45%),
+    radial-gradient(120% 90% at 100% 100%, rgba(215, 180, 127, .16), transparent 45%),
+    var(--papel);
+  border: 2px solid var(--viridian);
+  box-shadow: inset 0 0 0 8px var(--papel), inset 0 0 0 9px var(--viridian);
+  font-family: var(--libro);
+  color: #3f4a3a;
+}
+.receta__esquina {
+  position: absolute; width: 120px; aspect-ratio: 546 / 220; pointer-events: none;
+  background: url("../assets/img/enredadera-flores.svg") center / contain no-repeat, url("../assets/img/enredadera-tallo.svg") center / contain no-repeat;
+}
+.receta__esquina--a { top: -22px; right: -26px; rotate: 18deg; }
+.receta__esquina--b { bottom: -20px; left: -28px; rotate: 198deg; }
+
+.receta__cabeza { text-align: center; margin-bottom: 28px; }
+.receta__num { margin: 0; font-family: var(--sans); font-size: 12px; letter-spacing: .22em; text-transform: uppercase; color: var(--viridian); }
+.receta__titulo { margin: 6px 0 2px; font-family: var(--script); font-weight: 400; font-size: 52px; line-height: 1.05; color: var(--magenta); }
+.receta__sub { margin: 0; font-style: italic; font-size: 18px; color: var(--viridian-hondo); }
+.receta__cabeza::after { content: "❦"; display: block; margin-top: 10px; color: var(--viridian); font-size: 20px; }
+
+.receta__cuerpo { display: grid; grid-template-columns: 1.25fr 1fr; gap: 40px; align-items: start; }
+.receta__apartado {
+  display: flex; align-items: center; gap: 12px;
+  margin: 0 0 10px;
+  font-family: var(--sans); font-weight: 400; font-size: 13px; letter-spacing: .22em; text-transform: uppercase;
+  color: var(--viridian);
+}
+.receta__apartado::after { content: ""; flex: 1; height: 1px; background: #b9c38a; }
+.receta__texto .receta__apartado:not(:first-child) { margin-top: 28px; }
+.receta__pregunta { margin: 0 0 10px; font-style: italic; font-size: 19px; color: var(--viridian-hondo); }
+
+.receta .plan__elige { display: grid; grid-template-columns: 1fr; gap: 2px; }
+.ingrediente {
+  display: flex; align-items: baseline; gap: 10px;
+  width: 100%;
+  padding: 8px 4px;
+  font-family: var(--libro); font-size: 21px; text-align: left;
+  color: #3f4a3a;
+  border-radius: 0;
+  transition: color .3s, translate .5s var(--muelle);
+}
+.ingrediente:hover { translate: 4px 0; color: var(--magenta); }
+.ingrediente__gota {
+  flex: none; position: relative; top: 2px;
+  width: 15px; height: 15px; border-radius: 50%;
+  border: 1.5px solid var(--viridian);
+  transition: background .3s, border-color .3s;
+}
+.ingrediente__gota::after {
+  content: ""; position: absolute; inset: 2px; border-radius: 50%;
+  background: var(--magenta); scale: 0;
+  transition: scale .6s var(--muelle);
+}
+.ingrediente__puntos { flex: 1; border-bottom: 1.5px dotted #a9b07f; translate: 0 -5px; min-width: 20px; }
+.ingrediente__precio { font-weight: 600; color: var(--magenta); white-space: nowrap; }
+.ingrediente[aria-checked="true"] { color: var(--magenta); }
+.ingrediente[aria-checked="true"] .ingrediente__gota { border-color: var(--magenta); }
+.ingrediente[aria-checked="true"] .ingrediente__gota::after { scale: 1; }
+
+.receta__pasos { margin: 0; padding: 0; list-style: none; counter-reset: paso; display: grid; gap: 8px; }
+.receta__pasos li { counter-increment: paso; display: grid; grid-template-columns: 34px 1fr; font-size: 19px; line-height: 1.35; }
+.receta__pasos li::before { content: counter(paso, upper-roman) "."; font-weight: 600; color: var(--magenta); }
+
+/* el matraz */
+.receta__matraz { display: grid; justify-items: center; text-align: center; }
+.matraz { width: 180px; height: auto; overflow: visible; }
+.matraz__vidrio { fill: rgba(255, 255, 255, .35); stroke: var(--viridian-hondo); stroke-width: 2.4; stroke-linejoin: round; }
+.matraz__brillo { fill: none; stroke: #fff; stroke-width: 3; stroke-linecap: round; opacity: .8; }
+.matraz__corcho { fill: var(--kraft); stroke: var(--kraft-hondo); stroke-width: 1.5; }
+.matraz__cuerda { stroke: var(--magenta); stroke-width: 2; }
+.matraz__etiqueta rect { fill: var(--papel); stroke: var(--viridian); stroke-width: 1.2; }
+.matraz__etiqueta text { font-family: var(--script); font-size: 15px; fill: var(--magenta); }
+.matraz__liquido {
+  fill: #e6e9cf;
+  transform-box: view-box;
+  translate: 0 170px;
+  transition: translate 1.4s var(--muelle), fill .8s;
+}
+.receta[data-elegido="si"] .matraz__liquido { translate: 0 104px; }
+.receta[data-plan="bruja"] .matraz__liquido { fill: #a8577a; }
+.receta[data-plan="driade"] .matraz__liquido { fill: #8fb89a; }
+.receta[data-plan="ambas"] .matraz__liquido { fill: url(#mezcla); }
+.matraz__burbujas circle { fill: rgba(255, 255, 255, .75); opacity: 0; }
+.receta[data-elegido="si"] .matraz__burbujas circle { animation: burbuja 2.6s ease-in infinite; }
+.receta[data-elegido="si"] .matraz__burbujas circle:nth-child(2) { animation-delay: .7s; }
+.receta[data-elegido="si"] .matraz__burbujas circle:nth-child(3) { animation-delay: 1.3s; }
+.receta[data-elegido="si"] .matraz__burbujas circle:nth-child(4) { animation-delay: 1.9s; }
+@keyframes burbuja { 0% { opacity: 0; translate: 0 0; } 20% { opacity: 1; } 100% { opacity: 0; translate: 0 -78px; } }
+.receta.is-remueve .matraz { animation: remueve .8s ease-in-out; transform-origin: 50% 90%; }
+@keyframes remueve { 25% { rotate: -5deg; } 55% { rotate: 4deg; } 80% { rotate: -1.5deg; } }
+
+.receta__espera { margin: 6px 0 0; font-style: italic; font-size: 18px; color: var(--viridian-hondo); transition: opacity .3s; }
+.receta[data-elegido="si"] .receta__espera { display: none; }
+.receta .plan__precio { margin: 8px 0 12px; }
+.receta .plan__detalle-in { text-align: center; }
+
+.receta__variantes {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 34px;
+  margin-top: 36px; padding-top: 24px;
+  border-top: 1px solid #b9c38a;
+}
+.variante p { margin: 0 0 4px; font-size: 18px; }
+.variante__titulo { font-family: var(--sans); font-size: 12px !important; letter-spacing: .2em; text-transform: uppercase; color: var(--viridian); }
+.variante__precio { font-family: var(--script); font-size: 38px !important; color: var(--magenta); line-height: 1.1; }
+.variante .boton { font-size: 15px; margin-top: 6px; }
+.receta__nota { margin: 28px 0 0; text-align: center; font-family: var(--script); font-size: 22px; color: var(--viridian-hondo); }
+
+@media (max-width: 760px) {
+  .plan.receta { padding: 36px 20px 30px; }
+  .receta__cuerpo, .receta__variantes { grid-template-columns: 1fr; }
+  .receta__titulo { font-size: 40px; }
+  .ingrediente { font-size: 19px; }
+  .receta__esquina { width: 80px; }
+}
+
+/* barra móvil: franja fija verde, como la de aviso */
+@media (max-width: 560px) {
+  .barra-movil {
+    left: 0; right: 0; bottom: 0;
+    border-radius: 0;
+    background: var(--viridian);
+    box-shadow: none;
+    padding-block: 14px calc(14px + env(safe-area-inset-bottom, 0px));
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+  }
+}
+
+/* ==========================================================
+   El camino de una carta: historia con búho, sobre crema
+   ========================================================== */
+.camino { background: var(--papel); padding: 0; }
+.camino__pista { position: relative; height: 300vh; }
+.camino__fijo {
+  position: sticky; top: 0;
+  height: 100vh; min-height: 520px;
+  display: flex; flex-direction: column; justify-content: center; gap: 14px;
+  padding-block: 24px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  overflow: hidden;
+}
+.camino__fijo .titulo { margin: 0; }
+.historia { width: min(1000px, 100%); margin: 0 auto; }
+.historia__mapa { display: block; width: 100%; height: auto; max-height: 58vh; overflow: visible; }
+
+.h-suelo { fill: #eef2d8; }
+.h-rio { fill: none; stroke: #bcdcec; stroke-width: 10; stroke-linecap: round; }
+.h-estrellas path { fill: #f0ce99; animation: titila 2.6s ease-in-out infinite; animation-delay: var(--d); transform-box: fill-box; transform-origin: center; }
+@keyframes titila { 0%, 100% { opacity: .35; scale: .8; } 50% { opacity: 1; scale: 1.15; } }
+
+.h-castillo rect, .h-castillo > path:not(.h-tejado):not(.h-bandera):not(.h-ventana):not(.h-puerta):not(.h-mastil) { fill: #fffdf6; stroke: var(--viridian-hondo); stroke-width: 2; stroke-linejoin: round; }
+.h-castillo > path:nth-of-type(1) { fill: none !important; }
+.h-tejado { fill: var(--ciclamen); stroke: var(--magenta); stroke-width: 2; stroke-linejoin: round; }
+.h-mastil { stroke: var(--viridian-hondo); stroke-width: 2; }
+.h-bandera { fill: var(--magenta); animation: ondea-bandera 2.4s ease-in-out infinite; transform-box: fill-box; transform-origin: left center; }
+@keyframes ondea-bandera { 50% { scale: .8 1; } }
+.h-ventana { fill: #fdf0aa; stroke: var(--viridian-hondo); stroke-width: 1.5; }
+.camino[data-paso="1"] .h-castillo .h-ventana { animation: vela 1.2s ease-in-out infinite alternate; }
+@keyframes vela { to { fill: #f9d36b; } }
+.h-puerta { fill: var(--kraft); stroke: var(--kraft-hondo); stroke-width: 1.5; }
+.h-aura { opacity: .7; }
+
+.h-tronco { stroke: #a88b62; stroke-width: 6; stroke-linecap: round; }
+.h-copa { fill: #a6c9a6; stroke: var(--viridian-hondo); stroke-width: 2; }
+.h-copa--b { fill: #8fb89a; }
+.h-copa--c { fill: #b5d3a8; }
+.h-seta path:nth-child(odd) { stroke: #e9dcc0; stroke-width: 4; stroke-linecap: round; }
+.h-seta path:nth-child(even) { fill: var(--ciclamen); stroke: var(--magenta); stroke-width: 1.5; }
+.h-luciernagas circle { fill: #fff3a0; filter: drop-shadow(0 0 4px #ffe680); animation: luciernaga 3s ease-in-out infinite; animation-delay: var(--d); transform-box: fill-box; transform-origin: center; }
+@keyframes luciernaga { 0%, 100% { opacity: .2; translate: 0 0; } 50% { opacity: 1; translate: 5px -8px; } }
+
+.h-muro { fill: #fff8ee; stroke: var(--viridian-hondo); stroke-width: 2; }
+.h-chimenea { fill: var(--kraft); stroke: var(--kraft-hondo); stroke-width: 1.5; }
+.h-corazon { fill: #fdf0aa; stroke: var(--magenta); stroke-width: 2; transition: fill .6s; }
+.camino[data-paso="3"] .h-corazon { fill: #f9b7cf; animation: late 1.4s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+.h-puerta--casa { fill: var(--viridian); stroke: var(--viridian-hondo); }
+.h-flores circle { fill: var(--hada); stroke: var(--ciclamen); stroke-width: 1.5; }
+.h-buzon path:first-child { stroke: var(--viridian-hondo); stroke-width: 3; }
+.h-buzon rect { fill: var(--viridian); stroke: var(--viridian-hondo); stroke-width: 1.5; }
+.h-humo circle { fill: #fff; stroke: #d4d9bd; stroke-width: 1.5; transform-box: fill-box; transform-origin: center; animation: humo-sube 3.6s ease-out infinite; opacity: 0; }
+.h-humo circle:nth-child(2) { animation-delay: 1.2s; }
+.h-humo circle:nth-child(3) { animation-delay: 2.4s; }
+@keyframes humo-sube {
+  0% { opacity: 0; translate: 0 0; scale: .5; }
+  20% { opacity: .95; }
+  100% { opacity: 0; translate: 18px -70px; scale: 1.6; }
+}
+.h-rotulo { font-family: var(--script); font-size: 26px; fill: var(--viridian-hondo); }
+.h-ruta { fill: none; stroke: var(--magenta); stroke-width: 2.4; stroke-dasharray: 3 9; stroke-linecap: round; opacity: .55; }
+
+/* el búho */
+.buho__in { transform-box: fill-box; }
+.buho__cuerpo { fill: #a77b56; stroke: #6f4f33; stroke-width: 1.4; }
+.buho__tripa { fill: #f3e2c4; }
+.buho__ojo { fill: #fff; stroke: #6f4f33; stroke-width: 1.2; }
+.buho__pupila { fill: #3b3b33; }
+.buho__pico { fill: #e9a23b; }
+.buho__pata { stroke: #e9a23b; stroke-width: 2; stroke-linecap: round; }
+.buho__sobre rect { fill: var(--kraft); stroke: var(--kraft-hondo); stroke-width: 1.2; }
+.buho__sobre path { fill: none; stroke: var(--kraft-hondo); stroke-width: 1; }
+.buho__sobre circle { fill: var(--magenta); }
+.buho__ala { fill: #8d6444; stroke: #6f4f33; stroke-width: 1.2; transform-box: fill-box; }
+.buho__ala--i { transform-origin: 100% 30%; }
+.buho__ala--d { transform-origin: 0% 30%; }
+.camino.is-vuela .buho__ala--i { animation: aleteo-i .38s ease-in-out infinite alternate; }
+.camino.is-vuela .buho__ala--d { animation: aleteo-d .38s ease-in-out infinite alternate; }
+@keyframes aleteo-i { from { rotate: 18deg; } to { rotate: -38deg; } }
+@keyframes aleteo-d { from { rotate: -18deg; } to { rotate: 38deg; } }
+.camino:not(.is-vuela) .buho__in { animation: posado 2.4s ease-in-out infinite; }
+@keyframes posado { 50% { translate: 0 -2px; } }
+
+/* los pasos de la historia */
+.historia__pasos {
+  list-style: none; margin: 0 auto; padding: 0;
+  width: min(1000px, 100%);
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px;
+}
+.historia__pasos li {
+  display: grid; grid-template-columns: auto 1fr; gap: 10px; align-items: start;
+  opacity: .38;
+  transition: opacity .5s, translate .7s var(--muelle);
+}
+.historia__pasos li.is-activo { opacity: 1; translate: 0 -4px; }
+.historia__pasos .paso__num { width: 38px; height: 38px; font-size: 24px; }
+.historia__pasos li.is-activo .paso__num { background: var(--magenta); border-color: var(--magenta); color: #fff; }
+.historia__pasos h3 { margin: 4px 0 2px; font-size: 16px; color: var(--viridian-hondo); }
+.historia__pasos p { margin: 0; font-size: 14px; line-height: 1.4; color: var(--viridian-hondo); }
+
+@media (max-width: 760px) {
+  .camino__pista { height: 260vh; }
+  .historia__pasos { grid-template-columns: 1fr; }
+  .historia__pasos li { display: none; }
+  .historia__pasos li.is-activo { display: grid; }
+  .h-rotulo { font-size: 34px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .camino__pista { height: auto; }
+  .camino__fijo { position: static; height: auto; }
+  .historia__pasos li { opacity: 1; display: grid !important; }
+}
+
+/* ==========================================================
+   Ingredientes: sellos de lacre en vez de casillas
+   ========================================================== */
+.ingrediente__gota { display: none; }
+.ingrediente__sello { flex: none; position: relative; top: 5px; width: 26px; height: 26px; }
+.ingrediente__sello svg { width: 100%; height: 100%; overflow: visible; }
+.sello__hueco { fill: none; stroke: #b9a27a; stroke-width: 1.6; stroke-dasharray: 3 3; }
+.sello__lacre { opacity: 0; scale: 1.8; rotate: -25deg; transform-box: fill-box; transform-origin: center; transition: opacity .15s, scale .55s var(--muelle), rotate .55s var(--muelle); }
+.sello__lacre path:first-child { fill: var(--magenta); filter: drop-shadow(1px 2px 1.5px rgba(80, 20, 40, .35)); }
+.sello__corazon { fill: none; stroke: #c06a91; stroke-width: 1.8; }
+.ingrediente[aria-checked="true"] .sello__lacre { opacity: 1; scale: 1; rotate: 0deg; }
+.ingrediente:hover .sello__hueco { stroke: var(--magenta); }
+.receta__consejo { margin: 6px 0 0; font-family: var(--script); font-size: 22px; color: var(--magenta); }
+.receta__descuento { display: none; margin: -8px 0 12px; font-style: italic; font-size: 17px; color: var(--magenta); }
+.receta[data-plan="ambas"] .receta__descuento { display: block; }
+
+/* lema: más interlineado para que "un" no toque la D */
+.lema { line-height: 1.12; }
+.lema__fila:last-child { margin-top: .14em; }
+
+/* ==========================================================
+   Tarjeta de personaje
+   ========================================================== */
+.tarjeta-personaje { filter: drop-shadow(2px 4px 5px rgba(130, 45, 81, .22)); }
+.tarjeta-personaje svg { display: block; width: 100%; height: 100%; overflow: visible; }
+.tp-fondo { fill: #fde9f2; stroke: var(--ciclamen); stroke-width: 2; }
+.tp-borde { fill: none; stroke: #f3a5c3; stroke-width: 1; stroke-dasharray: 3 2.5; }
+.tp-cabecera { fill: var(--ciclamen); }
+.tp-titulo { font-family: var(--sans); font-size: 8px; letter-spacing: .16em; fill: #fff; }
+.tp-firma { font-family: var(--script); font-size: 15px; fill: #fff; }
+.tp-marco { fill: var(--papel); stroke: var(--magenta); stroke-width: 1.6; }
+.tp-marco--in { fill: none; stroke: #f3a5c3; stroke-width: 1; stroke-dasharray: 2 2; }
+.tp-silueta { fill: var(--hada); stroke: var(--ciclamen); stroke-width: 1.2; }
+.tp-brillo { fill: #f0ce99; }
+.tp-etq { font-family: var(--sans); font-size: 6.5px; letter-spacing: .14em; fill: var(--magenta); }
+.tp-linea { stroke: #e7a5c0; stroke-width: 1; }
+.tp-rango { font-family: var(--libro); font-style: italic; fill: var(--magenta); }
+.tp-sello { fill: #fffafc; stroke: #e7a5c0; stroke-width: 1; stroke-dasharray: 1.6 1.4; }
+.tp-sello--lleno { fill: var(--papel); stroke: var(--magenta); }
+.tp-marca { fill: var(--magenta); }
+.tp-estrellas { font-size: 11px; letter-spacing: 1px; fill: var(--magenta); text-anchor: middle; }
+.tp-rango::after { content: ""; }
+
+/* ==========================================================
+   Lo que cabe en un sobre: tipografía a la izquierda, piezas a la derecha
+   ========================================================== */
+.sobre-contenido { padding-block: 72px 80px; }
+.dentro { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: 48px; align-items: center; }
+.lema--seccion { font-size: 44px; color: var(--viridian); margin-bottom: 22px; }
+.lema--seccion .lema__fila:last-child { padding-left: 46px; }
+.lema--seccion .lema__script, .lema--seccion .lema__palabra { opacity: 1; translate: none; clip-path: none; animation: none; }
+.lema--seccion .lema__script:first-child { font-size: 2.3em; vertical-align: -.12em; margin: 0 .02em 0 -.08em; }
+.lema--seccion .lema__magenta .lema__script { font-size: 2em; vertical-align: -.1em; margin-right: -.02em; }
+.dentro__intro { max-width: 420px; margin: 0 0 26px; font-size: 16px; color: var(--viridian-hondo); }
+.dentro__lista { margin: 0; display: grid; gap: 0; border-top: 1px solid var(--viridian); }
+.dentro__lista > div {
+  display: grid; grid-template-columns: 180px 1fr; gap: 16px;
+  padding: 12px 4px;
+  border-bottom: 1px solid var(--viridian);
+  cursor: default;
+  transition: background .3s, padding .5s var(--muelle);
+}
+.dentro__lista dt { font-size: 14px; letter-spacing: .06em; text-transform: uppercase; color: var(--viridian); }
+.dentro__lista dt small { display: block; margin-top: 2px; font-family: var(--script); font-size: 18px; letter-spacing: 0; text-transform: none; color: var(--magenta); }
+.dentro__lista dd { margin: 0; font-size: 15px; color: var(--viridian-hondo); }
+.dentro__lista > div.is-foco { background: var(--crema); padding-left: 12px; }
+.dentro__lista > div.is-foco dt { color: var(--magenta); }
+
+.dentro__mesa { position: relative; aspect-ratio: 1 / .95; max-width: 520px; width: 100%; justify-self: center; }
+.mesa__pieza {
+  position: absolute;
+  rotate: var(--g);
+  transition: rotate .8s var(--muelle), scale .8s var(--muelle), translate .8s var(--muelle);
+}
+.mesa__pieza.is-foco { rotate: 0deg; scale: 1.06; translate: 0 -8px; z-index: 6; }
+.mesa__pieza--actividad { --g: 7deg; left: 50%; top: 6%; width: 36%; aspect-ratio: 96 / 110; z-index: 1; }
+.mesa__pieza--actividad > div { width: 100%; height: 100%; }
+.mesa__pieza--ilustracion { --g: -7deg; left: 4%; top: 12%; width: 46%; z-index: 2; }
+.mesa__pieza--ilustracion .polaroid { aspect-ratio: 1 / 1.15; }
+.mesa__pieza--tarjeta { --g: -4deg; left: 26%; top: 56%; width: 56%; aspect-ratio: 220 / 140; z-index: 4; }
+.mesa__pieza--tarjeta > div { width: 100%; height: 100%; }
+.mesa__pieza--pegatina1 { --g: 12deg; left: 76%; top: 34%; width: 19%; z-index: 5; }
+.mesa__pieza--pegatina2 { --g: -10deg; left: 2%; top: 68%; width: 20%; z-index: 5; }
+.pegatina svg { display: block; width: 100%; height: auto; overflow: visible; filter: drop-shadow(2px 3px 3px rgba(80, 60, 40, .25)); }
+.pegatina--luna circle:first-child { fill: var(--magenta); stroke: #fff; stroke-width: 4; }
+.pegatina--luna path { fill: #fdf0aa; }
+.pegatina--luna .pg-p { fill: #fdf0aa; }
+.pg-borde { fill: #fff; }
+.pg-sombrero { fill: var(--ciclamen); }
+.pg-pie { fill: #f6ead2; }
+.pg-punto { fill: #fff; }
+.mesa__tag {
+  position: absolute; left: var(--x); top: var(--y); z-index: 8;
+  background: var(--crema); color: var(--viridian);
+  font-size: 12px; padding: 3px 8px 4px;
+  transition: scale .5s var(--muelle), background .3s, color .3s;
+}
+.mesa__tag.is-foco { scale: 1.08; background: var(--magenta); color: #fff; }
+
+@media (max-width: 860px) {
+  .dentro { grid-template-columns: 1fr; gap: 36px; }
+  .lema--seccion { font-size: 34px; }
+  .dentro__lista > div { grid-template-columns: 1fr; gap: 4px; }
+}
+
+/* Cesta: solo hay contenido si hay cosas; si no, un texto por defecto */
+.indice { min-height: 0; }
+.indice.tiene .indice__lista { display: block; }
+.indice:not(.tiene) .indice__lista { display: none; }
+.indice__vacio { text-align: center; padding: 6px 0 4px; }
+.indice__vacio .indice__nota { font-size: 14px; color: #55554a; margin: 0; }
+.indice__vacio .indice__nota--script { margin-top: 6px; font-family: var(--script); font-style: normal; font-size: 20px; line-height: 1.2; color: var(--magenta); }
+.indice__total { font-size: 16px; color: var(--magenta); margin-bottom: 4px; }
+.indice__desglose { margin: 0 0 12px; font-size: 12px; font-style: italic; color: #6c6c5c; text-align: right; }
+.indice__desglose:empty { display: none; }
+
+.lema--seccion { line-height: 1.02; }
+
+/* Paso 1: la chispa viaja de tu casa al castillo */
+.h-senal { fill: none; stroke: #f0c46a; stroke-width: 3; stroke-linecap: round; filter: drop-shadow(0 0 4px #ffe680); transition: opacity .5s; }
+.h-chispa { transition: opacity .5s; }
+.h-chispa__nucleo { fill: #fff6c8; stroke: #f0c46a; stroke-width: 1.5; }
+.h-chispa__rayos { stroke: #f0c46a; stroke-width: 1.6; stroke-linecap: round; animation: destella 1s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+@keyframes destella { 50% { scale: 1.35; opacity: .5; } }
+.camino:not([data-paso="0"]) .h-senal, .camino:not([data-paso="0"]) .h-chispa { opacity: 0; }
+.camino[data-paso="0"] .h-corazon { fill: #fff3a0; filter: drop-shadow(0 0 6px #ffe680); }
+.camino[data-paso="1"] .h-aura { opacity: 1; animation: aura 1.6s ease-in-out infinite alternate; }
+@keyframes aura { to { opacity: .55; } }
+
+/* Cesta: textos más grandes y legibles */
+.indice { width: 270px; padding: 30px 22px 22px; }
+.indice__titulo { font-size: 15px; }
+.indice__vacio .indice__nota { font-size: 18px; line-height: 1.35; color: #3f4a3a; }
+.indice__vacio .indice__nota--script { font-size: 27px; line-height: 1.15; margin-top: 10px; }
+.indice__cap { font-size: 15px; }
+.indice__linea { font-size: 15px; color: #3f4a3a; }
+.indice__total { font-size: 19px; }
+.indice__desglose { font-size: 14px; }
+.indice__pagar { font-size: 15px; }
+.indice__vacio .indice__nota.indice__nota--script { color: var(--magenta); }
+
+/* las piezas que se arrastran pasan por encima del texto de la pista */
+.escena { z-index: 2; }
+.apertura__pista { z-index: 1; pointer-events: none; }
+
+/* la carta dirigida a quien lee, asomando detrás */
+.mesa__pieza--carta { --g: 3deg; left: 30%; top: -1%; width: 30%; aspect-ratio: 126 / 142; z-index: 0; }
+.mesa__pieza--carta > div { width: 100%; height: 100%; }
+
+/* El camino: sin pista larga ni pantalla fija; la historia avanza mientras el mapa cruza la pantalla */
+.camino__pista { height: auto; }
+.camino__fijo { position: static; height: auto; min-height: 0; padding-block: 56px 64px; gap: 18px; overflow: visible; }
+.historia__mapa { max-height: none; }
+@media (max-width: 760px) { .camino__pista { height: auto; } }
+
+/* Únete: la receta es la sección entera, un solo título */
+.unete { padding-block: 56px 72px; }
+.plan.receta { margin-top: 0; }
+
+/* Lo que cabe en un sobre: mismo interlineado que el titular de la portada */
+.lema--seccion { line-height: 1.12; }
+.lema--seccion .lema__script { line-height: 0; }
+
+/* la carta, a escala real con el resto de piezas */
+.mesa__pieza--carta { left: 32%; top: -6%; width: 42%; z-index: 3; --g: 4deg; }
+.mesa__pieza--actividad { left: 62%; top: 12%; width: 34%; }
+.mesa__pieza--ilustracion { left: 0%; top: 14%; width: 42%; }
+.mesa__tag[data-pieza="carta"] { --x: 44% !important; --y: -12% !important; }
+.mesa__tag[data-pieza="actividad"] { --x: 74% !important; --y: 6% !important; }
+
+/* botones con líneas: al pasar el ratón, texto y líneas cambian juntos a magenta */
+.boton-lineas::before, .boton-lineas::after, .boton::before, .boton::after, .indice__pagar::before, .indice__pagar::after { transition: background .35s; }
+.boton-lineas:hover::before, .boton-lineas:hover::after, .boton:hover::before, .boton:hover::after, .indice__pagar:hover::before, .indice__pagar:hover::after, .cierre .boton-lineas:hover::before, .cierre .boton-lineas:hover::after { background: var(--magenta); }
+
+/* los pasos de la historia se pueden pulsar */
+.historia__pasos li { cursor: pointer; border-radius: 4px; padding: 6px; }
+.historia__pasos li:hover { opacity: .8; }
+.historia__pasos li.is-activo:hover { opacity: 1; }
+.historia__pasos li:hover .paso__num { scale: 1.12; rotate: -10deg; }
+
+/* ==========================================================
+   Transiciones de color suaves y enredaderas vivas
+   ========================================================== */
+/* el crema del camino y de la receta nace del verde poco a poco */
+.camino {
+  background: linear-gradient(var(--te), var(--papel) 160px, var(--papel) calc(100% - 160px), var(--te));
+}
+/* los separadores ya no son una franja aparte: se apoyan sobre la costura entre secciones */
+.separador { background: transparent; position: relative; z-index: 3; margin-block: -38px; padding-block: 0; pointer-events: none; }
+/* la guirnalda se mece y avanza un poco con el scroll */
+.separador__vid {
+  background-position: calc(var(--desp, 0px)) 50%;
+  animation: guirnalda 7s ease-in-out infinite;
+  transform-origin: 50% 50%;
+}
+.separador:nth-of-type(even) .separador__vid { background-position: calc(30% + var(--desp, 0px)) 50%; animation-delay: -3.5s; }
+@keyframes guirnalda { 0%, 100% { translate: 0 0; } 50% { translate: 0 5px; } }
+/* las ramitas de los títulos se balancean despacio */
+.titulo.is-visto::before { animation: rama-i 6s ease-in-out 1.6s infinite; transform-origin: 100% 50%; }
+.titulo.is-visto::after { animation: rama-d 6s ease-in-out 1.6s infinite; transform-origin: 0% 50%; }
+@keyframes rama-i { 0%, 100% { rotate: 0deg; } 50% { rotate: 5deg; } }
+@keyframes rama-d { 0%, 100% { rotate: 0deg; } 50% { rotate: -5deg; } }
+
+/* árboles del bosque encantado */
+.ar-tronco { fill: #b08d63; stroke: #7d5f3d; stroke-width: 1.4; stroke-linejoin: round; }
+.ar-rama { fill: none; stroke: #7d5f3d; stroke-width: 2; stroke-linecap: round; }
+.ar-sombra { fill: #6f9a7d; opacity: .35; }
+.ar-copa { stroke: var(--viridian-hondo); stroke-width: 1.6; }
+.ar-copa--a { fill: #a9cba7; }
+.ar-copa--b { fill: #8fb89a; }
+.ar-luz { fill: none; stroke: #e6f2d8; stroke-width: 3; stroke-linecap: round; opacity: .8; }
+.ar-hojas circle { fill: var(--hada); stroke: var(--ciclamen); stroke-width: .8; }
+.ar-pino { fill: #9cc4a3; stroke: var(--viridian-hondo); stroke-width: 1.6; stroke-linejoin: round; }
+.ar-estrella { fill: #fdf0aa; stroke: #e0c05a; stroke-width: 1; }
+.arbol { animation: mece-arbol 5s ease-in-out infinite; animation-delay: calc(var(--d) * -1); }
+@keyframes mece-arbol { 0%, 100% { rotate: -1.4deg; } 50% { rotate: 1.4deg; } }
