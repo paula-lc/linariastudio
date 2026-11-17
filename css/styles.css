@@ -93,16 +93,32 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   display: inline-block;
   transition: translate .5s var(--muelle), color .3s;
 }
-.nav__link::after {
-  content: "";
-  position: absolute; left: -2px; right: -2px; bottom: -8px; height: 7px;
-  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 7'%3E%3Cpath d='M0 4 Q5 0 10 4 T20 4 T30 4 T40 4' fill='none' stroke='%23EA6993' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E") repeat-x 0 0 / 20px 7px;
-  clip-path: inset(0 100% 0 0);
-  transition: clip-path .55s var(--sale);
+.nav__link { isolation: isolate; }
+.enredadera {
+  position: absolute;
+  left: 50%; top: 62%;
+  width: 150px;
+  aspect-ratio: 546 / 220;
+  translate: -50% 0;
+  z-index: -1;
+  pointer-events: none;
 }
-.nav__link:hover, .nav__link:focus-visible { translate: 0 -3px; color: var(--viridian-hondo); }
-.nav__link:hover::after, .nav__link:focus-visible::after { clip-path: inset(0 0 0 0); animation: ondea 1.2s linear infinite; }
-@keyframes ondea { to { background-position: 20px 0; } }
+.enredadera img { position: absolute; inset: 0; width: 100%; height: 100%; }
+.enredadera__tallo { clip-path: inset(0 100% 0 0); transition: clip-path .4s var(--sale); }
+.enredadera__flores {
+  clip-path: inset(0 100% 0 0);
+  opacity: 0; scale: .8;
+  transition: clip-path .3s var(--sale), opacity .25s, scale .3s var(--sale);
+}
+.nav__link:hover .enredadera__tallo, .nav__link:focus-visible .enredadera__tallo {
+  clip-path: inset(-10% -10% -10% -10%);
+  transition: clip-path 1s cubic-bezier(.3, .7, .3, 1);
+}
+.nav__link:hover .enredadera__flores, .nav__link:focus-visible .enredadera__flores {
+  clip-path: inset(-10% -10% -10% -10%);
+  opacity: 1; scale: 1;
+  transition: clip-path 1s cubic-bezier(.3, .7, .3, 1) .2s, opacity .3s .2s, scale .9s var(--muelle) .2s;
+}
 
 .logo {
   display: block;
@@ -246,7 +262,8 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   padding-block: 40px 64px;
   padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
 }
-.apertura__sobre { display: flex; flex-direction: column; align-items: center; }
+.apertura__sobre { position: relative; z-index: 3; display: flex; flex-direction: column; align-items: center; }
+.escena { -webkit-user-select: none; user-select: none; }
 .apertura__linea {
   width: 2px; height: 276px;
   background: var(--viridian-hondo);
@@ -345,7 +362,7 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .solapa svg { position: absolute; inset: 0; width: 100%; height: 100%; backface-visibility: hidden; overflow: visible; }
 .solapa__cara path { fill: var(--kraft-claro); stroke: var(--kraft-hondo); stroke-width: .8; }
 .solapa__cara { filter: drop-shadow(0 3px 2px rgba(90, 70, 30, .25)); }
-.solapa__dorso { transform: rotateX(180deg); }
+.solapa__dorso { transform: rotateY(180deg); }
 .solapa__dorso path { fill: #c9a46c; }
 .escena[data-estado="abierto"] .solapa { transform: perspective(600px) rotateX(180deg); }
 .escena[data-estado="asomado"] .solapa { transform: perspective(600px) rotateX(150deg); transition-duration: 1.4s; }
@@ -575,21 +592,17 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   text-decoration: none;
   color: var(--viridian);
   isolation: isolate;
-  transition: color .3s, letter-spacing .7s var(--muelle), scale .5s var(--muelle);
+  transition: color .35s, scale .4s var(--muelle);
 }
 .boton-lineas::before, .boton-lineas::after {
   content: "";
   position: absolute; left: 0; right: 0; height: 2px;
   background: var(--viridian);
-  transition: left .7s var(--muelle), right .7s var(--muelle), background .3s;
 }
 .boton-lineas::before { top: 0; }
 .boton-lineas::after { bottom: 0; }
-.boton-lineas:hover { color: var(--magenta); letter-spacing: .05em; }
-.boton-lineas:hover::before, .boton-lineas:hover::after { left: -14px; right: -14px; background: var(--magenta); }
-.boton-lineas:active { scale: .95; }
-.boton-lineas span.brillo { position: absolute; inset: 2px 0; z-index: -1; background: var(--hada); transform: scaleY(0); transform-origin: bottom; transition: transform .6s var(--muelle); }
-.boton-lineas:hover span.brillo { transform: scaleY(1); }
+.boton-lineas:hover { color: var(--magenta); }
+.boton-lineas:active { scale: .97; }
 
 .apertura__precio { margin: 12px 0 0 8px; font-size: 13px; letter-spacing: .02em; color: var(--viridian-hondo); }
 .apertura__dentro {
@@ -606,7 +619,7 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 }
 .listo .apertura__sub, .listo .boton-lineas, .listo .apertura__precio, .listo .apertura__dentro {
   opacity: 1; translate: 0 0;
-  transition: opacity .6s, translate 1s var(--muelle), color .3s, letter-spacing .7s var(--muelle), scale .5s var(--muelle);
+  transition: opacity .6s, translate 1s var(--muelle), color .35s, scale .4s var(--muelle);
 }
 .listo .apertura__sub { transition-delay: 1.5s, 1.5s, 0s, 0s, 0s; }
 .listo .apertura__texto > .boton-lineas { transition-delay: 1.65s, 1.65s, 0s, 0s, 0s; }

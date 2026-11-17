@@ -6,7 +6,7 @@
 
   /* ---------- Entrada ---------- */
   $$('.lema__palabra, .lema__script').forEach((el, i) => el.style.setProperty('--w', i));
-  $$('.boton-lineas').forEach(b => b.insertAdjacentHTML('afterbegin', '<span class="brillo" aria-hidden="true"></span>'));
+  $$('.nav__link').forEach(a => a.insertAdjacentHTML('beforeend', '<span class="enredadera" aria-hidden="true"><img class="enredadera__tallo" src="assets/img/enredadera-tallo.svg" alt=""><img class="enredadera__flores" src="assets/img/enredadera-flores.svg" alt=""></span>'));
   requestAnimationFrame(() => requestAnimationFrame(() => document.body.classList.add('listo')));
 
   /* ---------- El sobre ---------- */
@@ -60,7 +60,7 @@
   const parejas = tag => [$(`.objeto[data-tag="${tag}"]`, escena), $(`.etiqueta[data-tag="${tag}"]`, escena)];
   const quitarFoco = () => $$('.is-foco', escena).forEach(e => e.classList.remove('is-foco'));
   const foco = tag => { quitarFoco(); parejas(tag).forEach(e => e && e.classList.add('is-foco')); };
-  $$('[data-tag]', escena).forEach(el => {
+  $$('.etiqueta', escena).forEach(el => {
     el.addEventListener('pointerenter', e => e.pointerType === 'mouse' && foco(el.dataset.tag));
     el.addEventListener('pointerleave', e => e.pointerType === 'mouse' && quitarFoco());
   });
@@ -96,11 +96,7 @@
     const mueve = e => {
       if (!ini) return;
       const esc = parseFloat(getComputedStyle(escena).scale) || 1;
-      // que no se salgan demasiado de la escena (y no tapen el titular)
-      const { x, y, w, h } = o.dataset, m = 40;
-      const cx = Math.max(-m - x, Math.min(350 + m - w - x, (e.clientX - ini.x) / esc));
-      const cy = Math.max(-m - y, Math.min(310 + m - h - y, (e.clientY - ini.y) / esc));
-      const dx = cx + 'px', dy = cy + 'px';
+      const dx = (e.clientX - ini.x) / esc + 'px', dy = (e.clientY - ini.y) / esc + 'px';
       inn.style.setProperty('--dx', dx); inn.style.setProperty('--dy', dy);
       if (et) { et.style.setProperty('--dx', dx); et.style.setProperty('--dy', dy); }
       if (Math.hypot(e.clientX - ini.x0, e.clientY - ini.y0) > 4) movido = true;
