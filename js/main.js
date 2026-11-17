@@ -306,13 +306,9 @@
     const senal = $('#senal'), chispa = $('#chispa');
     const largoSenal = senal ? senal.getTotalLength() : 0;
     const pasos = $$('.historia__pasos li');
-    let pedido = false, pasoActual = -1;
-    const avanza = () => {
-      pedido = false;
-      // de cuando el mapa entra por abajo (85 % de la pantalla) a cuando su centro sube al 30 %
-      const r = $('.historia__mapa').getBoundingClientRect();
-      const centro = r.top + r.height / 2;
-      const p = reduce ? 1 : Math.max(0, Math.min(1, (innerHeight * .85 - centro) / (innerHeight * .55)));
+    let pedido = false, pasoActual = -1, pActual = 0, manual = false, anim = null;
+    const pinta = p => {
+      pActual = p;
       // 0–0.14 te apuntas · 0.14–0.3 se prepara en el castillo · 0.3–0.9 vuela · 0.9–1 llega
       const t = Math.max(0, Math.min(1, (p - .3) / .6));
       const pt = ruta.getPointAtLength(t * largo);
@@ -332,12 +328,52 @@
       if (paso !== pasoActual) {
         pasoActual = paso;
         camino.dataset.paso = paso;
-        pasos.forEach((li, i) => { li.classList.toggle('is-activo', reduce || i === paso); li.toggleAttribute('aria-current', i === paso); });
+        pasos.forEach((li, i) => { li.classList.toggle('is-activo', i === paso); li.setAttribute('aria-pressed', i === paso); });
       }
     };
+    // con el scroll: de cuando el mapa entra por abajo a cuando su centro sube al 30 %
+    const avanza = () => {
+      pedido = false;
+      if (manual) return;
+      const r = $('.historia__mapa').getBoundingClientRect();
+      const centro = r.top + r.height / 2;
+      pinta(reduce ? 1 : Math.max(0, Math.min(1, (innerHeight * .85 - centro) / (innerHeight * .55))));
+    };
+    // con un clic en un paso: la historia viaja hasta ese momento
+    const DESTINOS = [.13, .26, .62, 1];
+    const viaja = destino => {
+      manual = true;
+      if (anim) cancelAnimationFrame(anim);
+      if (reduce) return pinta(destino);
+      const desde = pActual, dur = 600 + Math.abs(destino - desde) * 1800, t0 = performance.now();
+      const suave = x => x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+      const paso = now => {
+        const k = Math.min(1, (now - t0) / dur);
+        pinta(desde + (destino - desde) * suave(k));
+        if (k < 1) anim = requestAnimationFrame(paso);
+      };
+      anim = requestAnimationFrame(paso);
+    };
+    pasos.forEach((li, i) => {
+      li.tabIndex = 0;
+      li.setAttribute('role', 'button');
+      li.addEventListener('click', () => viaja(DESTINOS[i]));
+      li.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); viaja(DESTINOS[i]); } });
+    });
+    // al volver a hacer scroll, la historia vuelve a seguirlo
+    ['wheel', 'touchmove'].forEach(ev => addEventListener(ev, () => { if (manual) { manual = false; if (anim) cancelAnimationFrame(anim); } }, { passive: true }));
     addEventListener('scroll', () => { if (!pedido) { pedido = true; requestAnimationFrame(avanza); } }, { passive: true });
     addEventListener('resize', avanza);
     avanza();
+  }
+
+  /* ---------- Las guirnaldas avanzan un poco con el scroll ---------- */
+  if (!reduce) {
+    const seps = $$('.separador__vid');
+    let pend = false;
+    const deriva = () => { pend = false; seps.forEach((v, i) => v.style.setProperty('--desp', (scrollY * (i % 2 ? -.12 : .12)).toFixed(1) + 'px')); };
+    addEventListener('scroll', () => { if (!pend) { pend = true; requestAnimationFrame(deriva); } }, { passive: true });
+    deriva();
   }
 
   /* ---------- Preguntas: abrir y cerrar con muelle ---------- */

@@ -1644,3 +1644,32 @@ a.cesta__btn { display: inline-block; color: inherit; }
 /* botones con líneas: al pasar el ratón, texto y líneas cambian juntos a magenta */
 .boton-lineas::before, .boton-lineas::after, .boton::before, .boton::after, .indice__pagar::before, .indice__pagar::after { transition: background .35s; }
 .boton-lineas:hover::before, .boton-lineas:hover::after, .boton:hover::before, .boton:hover::after, .indice__pagar:hover::before, .indice__pagar:hover::after, .cierre .boton-lineas:hover::before, .cierre .boton-lineas:hover::after { background: var(--magenta); }
+
+/* los pasos de la historia se pueden pulsar */
+.historia__pasos li { cursor: pointer; border-radius: 4px; padding: 6px; }
+.historia__pasos li:hover { opacity: .8; }
+.historia__pasos li.is-activo:hover { opacity: 1; }
+.historia__pasos li:hover .paso__num { scale: 1.12; rotate: -10deg; }
+
+/* ==========================================================
+   Transiciones de color suaves y enredaderas vivas
+   ========================================================== */
+/* el crema del camino y de la receta nace del verde poco a poco */
+.camino {
+  background: linear-gradient(var(--te), var(--papel) 160px, var(--papel) calc(100% - 160px), var(--te));
+}
+/* los separadores ya no son una franja aparte: se apoyan sobre la costura entre secciones */
+.separador { background: transparent; position: relative; z-index: 3; margin-block: -38px; padding-block: 0; pointer-events: none; }
+/* la guirnalda se mece y avanza un poco con el scroll */
+.separador__vid {
+  background-position: calc(var(--desp, 0px)) 50%;
+  animation: guirnalda 7s ease-in-out infinite;
+  transform-origin: 50% 50%;
+}
+.separador:nth-of-type(even) .separador__vid { background-position: calc(30% + var(--desp, 0px)) 50%; animation-delay: -3.5s; }
+@keyframes guirnalda { 0%, 100% { translate: 0 0; } 50% { translate: 0 5px; } }
+/* las ramitas de los títulos se balancean despacio */
+.titulo.is-visto::before { animation: rama-i 6s ease-in-out 1.6s infinite; transform-origin: 100% 50%; }
+.titulo.is-visto::after { animation: rama-d 6s ease-in-out 1.6s infinite; transform-origin: 0% 50%; }
+@keyframes rama-i { 0%, 100% { rotate: 0deg; } 50% { rotate: 5deg; } }
+@keyframes rama-d { 0%, 100% { rotate: 0deg; } 50% { rotate: -5deg; } }
