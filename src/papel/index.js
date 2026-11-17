@@ -15,6 +15,17 @@ const suave = t => t * t * (3 - 2 * t);
 const suaveMas = t => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
 
 export async function iniciarPapel() {
+  try {
+    await arrancar();
+  } catch (error) {
+    console.error('[papel] no se pudo iniciar la animación, se muestra el papel estático:', error);
+    const seccion = document.querySelector('.papel-seccion');
+    if (seccion) { seccion.classList.remove('papel--vivo'); seccion.classList.add('papel--estatico'); }
+    document.querySelectorAll('.papel-html, .papel-mesa').forEach(el => { el.style.opacity = ''; el.style.transform = ''; });
+  }
+}
+
+async function arrancar() {
   const seccion = document.querySelector('.papel-seccion');
   if (!seccion) return;
   const pin = seccion.querySelector('.papel-pin');

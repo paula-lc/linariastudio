@@ -7,11 +7,12 @@ import { ANCHO, ALTO, ARRUGAS, RESIDUALES, LUZ, COLOR_PAPEL } from './ajustes.js
 function texturaSombra() {
   const c = Object.assign(document.createElement('canvas'), { width: 256, height: 256 });
   const x = c.getContext('2d');
-  x.filter = 'blur(22px)';
-  x.fillStyle = 'rgba(38, 58, 34, 1)';
-  x.beginPath();
-  x.roundRect(52, 52, 152, 152, 24);
-  x.fill();
+  // sombra difusa dibujada con shadowBlur (ctx.filter no existe en Safari)
+  x.shadowColor = 'rgba(38, 58, 34, 1)';
+  x.shadowBlur = 40;
+  x.shadowOffsetX = 1000;
+  x.fillStyle = '#000';
+  x.fillRect(64 - 1000, 64, 128, 128);
   const t = new THREE.CanvasTexture(c);
   t.colorSpace = THREE.NoColorSpace;
   return t;

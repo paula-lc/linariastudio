@@ -75,14 +75,29 @@ function normalesDesdeAltura(alt, w, h) {
 
 const lienzo = (w, h) => Object.assign(document.createElement('canvas'), { width: w, height: h });
 
-function cargarSvg(svg) {
-  const xml = new XMLSerializer().serializeToString(svg);
-  return new Promise((ok, mal) => {
-    const img = new Image();
-    img.onload = () => ok(img);
-    img.onerror = mal;
-    img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(xml);
+// Dibuja el SVG del adorno con Path2D, sin pasar por una <img>:
+// en Safari una imagen SVG "ensucia" el canvas y luego no se puede leer ni subir a WebGL.
+function pintarSvg(ctx, svg, x, y, w, h) {
+  const vb = (svg.getAttribute('viewBox') || `0 0 ${w} ${h}`).split(/[\s,]+/).map(Number);
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.scale(w / vb[2], h / vb[3]);
+  ctx.translate(-vb[0], -vb[1]);
+  const attr = (el, n) => { for (let e = el; e && e !== svg.parentNode; e = e.parentNode) { const v = e.getAttribute && e.getAttribute(n); if (v) return v; } return null; };
+  svg.querySelectorAll('path, circle').forEach(el => {
+    let forma;
+    if (el.tagName.toLowerCase() === 'path') forma = new Path2D(el.getAttribute('d'));
+    else { forma = new Path2D(); forma.arc(+el.getAttribute('cx'), +el.getAttribute('cy'), +el.getAttribute('r'), 0, Math.PI * 2); }
+    const relleno = attr(el, 'fill'), trazo = attr(el, 'stroke');
+    if (relleno && relleno !== 'none') { ctx.fillStyle = relleno; ctx.fill(forma); }
+    if (trazo && trazo !== 'none') {
+      ctx.strokeStyle = trazo;
+      ctx.lineWidth = +(attr(el, 'stroke-width') || 1);
+      ctx.lineCap = attr(el, 'stroke-linecap') || 'butt';
+      ctx.stroke(forma);
+    }
   });
+  ctx.restore();
 }
 
 // Mide el póster en el DOM (en unidades de diseño, sin la rotación del papel).
@@ -138,7 +153,7 @@ export async function crearTexturas(raiz) {
   cb.scale(ESCALA, ESCALA);
   for (const p of piezas) {
     if (p.tipo === 'rect') { cb.fillStyle = p.color; cb.fillRect(p.x, p.y, p.w, p.h); }
-    if (p.tipo === 'svg') { const img = await cargarSvg(p.el); cb.drawImage(img, p.x, p.y, p.w, p.h); }
+    if (p.tipo === 'svg') pintarSvg(cb, p.el, p.x, p.y, p.w, p.h);
   }
 
   // 2. textura de la cara delantera para WebGL: papel + texto
@@ -180,6 +195,7 @@ export async function crearTexturas(raiz) {
   cn.putImageData(dn, 0, 0);
   ch.putImageData(dh, 0, 0);
 
-  const fondo = await new Promise(ok => horneado.toBlob(b => ok(URL.createObjectURL(b)), 'image/jpeg', 0.92));
+  // data: URL en vez de blob: (algunos visores no permiten imágenes blob:)
+  const fondo = horneado.toDataURL('image/jpeg', 0.9);
   return { albedo, normales, fondoHTML: fondo };
 }
