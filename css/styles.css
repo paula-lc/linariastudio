@@ -37,6 +37,7 @@
 html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
 body {
   margin: 0;
+  color-scheme: light;
   background: var(--te);
   color: var(--viridian-hondo);
   font-family: var(--sans);
@@ -64,7 +65,8 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   text-align: center;
   font-size: 13px;
   letter-spacing: .01em;
-  padding: 5px 16px;
+  padding-block: 5px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
 }
 .aviso p { margin: 0; animation: aparece 1s var(--sale) both; }
 
@@ -78,7 +80,8 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   gap: 24px;
   max-width: 1040px;
   margin: 0 auto;
-  padding: 24px 16px 0;
+  padding-block: 24px 0;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
 }
 .nav { display: flex; align-items: center; gap: 46px; font-size: 19px; color: var(--viridian); }
 .nav--izq { justify-content: flex-end; margin-top: -18px; }
@@ -240,7 +243,8 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   max-width: 1040px;
   margin: 0 auto;
   min-height: 400px;
-  padding: 40px 16px 64px;
+  padding-block: 40px 64px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
 }
 .apertura__sobre { display: flex; flex-direction: column; align-items: center; }
 .apertura__linea {
@@ -610,7 +614,7 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 /* ==========================================================
    Secciones
    ========================================================== */
-.seccion { padding: 96px 16px; position: relative; }
+.seccion { padding-block: 96px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); position: relative; }
 .seccion__caja { max-width: 1040px; margin: 0 auto; }
 .seccion__caja--estrecha { max-width: 680px; }
 .seccion--viridian { background: var(--viridian); color: #F6F4E4; }
@@ -651,7 +655,7 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 .centro { text-align: center; }
 
 /* revelado al hacer scroll */
-.revela { opacity: 0; translate: 0 34px; scale: .97; }
+.revela.espera { opacity: 0; translate: 0 34px; scale: .97; }
 .revela.is-visto {
   opacity: 1; translate: 0 0; scale: 1;
   transition: opacity .7s var(--sale), translate 1.1s var(--muelle), scale 1.1s var(--muelle);
@@ -882,7 +886,7 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
 @keyframes dobla { 0% { scale: 1; } 30% { scale: .96 .9; rotate: -2deg; } 100% { scale: 1; rotate: -.6deg; } }
 
 /* Pie */
-.pie { background: var(--viridian); color: #F6F4E4; text-align: center; padding: 30px 16px 40px; font-size: 14px; position: relative; }
+.pie { background: var(--viridian); color: #F6F4E4; text-align: center; padding-block: 30px 40px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); font-size: 14px; position: relative; }
 .pie::before {
   content: ""; position: absolute; left: 0; right: 0; top: -15px; height: 16px; background: inherit;
   -webkit-mask: radial-gradient(14px 16px at 50% 100%, #000 98%, transparent) 0 0 / 28px 16px repeat-x;
@@ -907,14 +911,14 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
    Responsive
    ========================================================== */
 @media (max-width: 860px) {
-  .cabecera { grid-template-columns: 1fr; justify-items: center; gap: 10px; padding-top: 16px; }
+  .cabecera { grid-template-columns: 1fr; justify-items: center; gap: 10px; padding-block-start: 16px; }
   .logo { order: -1; width: 220px; }
   .nav { gap: 22px; font-size: 16px; margin-top: 0 !important; justify-content: center !important; flex-wrap: wrap; }
   .nav--izq, .nav--der { width: 100%; }
   .nav--izq { order: 1; }
   .nav--der { order: 2; }
 
-  .apertura { grid-template-columns: 1fr; justify-items: center; padding-top: 20px; }
+  .apertura { grid-template-columns: 1fr; justify-items: center; padding-block-start: 20px; }
   .apertura__linea { width: 120px; height: 2px; margin: 18px 0 26px; transform-origin: left; animation-name: trazaH; }
   @keyframes trazaH { from { transform: scaleX(0); } }
   .apertura__texto { padding-left: 0; text-align: center; }
@@ -931,14 +935,14 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
   body { font-size: 16px; }
   .lema { font-size: 29px; }
   .contenido, .autoras, .extras { grid-template-columns: 1fr; }
-  .seccion { padding: 72px 16px; }
+  .seccion { padding-block: 72px; }
   .nota-form { padding: 26px 18px; }
   .plan { padding: 24px 16px; }
   .indice { right: -8px; }
 
   .barra-movil {
     display: block;
-    position: fixed; left: 12px; right: 12px; bottom: 12px; z-index: 50;
+    position: fixed; left: max(12px, env(safe-area-inset-left, 0px)); right: max(12px, env(safe-area-inset-right, 0px)); bottom: calc(12px + env(safe-area-inset-bottom, 0px)); z-index: 50;
     padding: 14px 16px;
     text-align: center; text-decoration: none;
     background: var(--magenta); color: #fff;
@@ -949,7 +953,7 @@ button { font: inherit; color: inherit; background: none; border: 0; padding: 0;
     transition: translate .8s var(--muelle);
   }
   .barra-movil.is-visible { translate: 0 0; }
-  .pie { padding-bottom: 96px; }
+  .pie { padding-bottom: calc(96px + env(safe-area-inset-bottom, 0px)); }
 }
 
 /* ==========================================================

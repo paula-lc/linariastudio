@@ -242,9 +242,12 @@
     grupos.set(padre, i + 1);
   });
   const io = new IntersectionObserver(entradas => entradas.forEach(en => {
-    if (en.isIntersecting) { en.target.classList.add('is-visto'); io.unobserve(en.target); }
+    if (en.isIntersecting) { en.target.classList.remove('espera'); en.target.classList.add('is-visto'); io.unobserve(en.target); }
   }), { rootMargin: '0px 0px -8% 0px', threshold: .12 });
-  $$('.revela').forEach(el => io.observe(el));
+  // solo se esconde lo que todavía está por debajo de la pantalla
+  if (!reduce) $$('.revela').forEach(el => {
+    if (el.getBoundingClientRect().top > innerHeight) { el.classList.add('espera'); io.observe(el); }
+  });
 
   /* ---------- El camino de una carta ---------- */
   const senda = $('#senda'), sobrecito = $('.camino__sobrecito'), mapa = $('.camino__mapa');
@@ -299,7 +302,7 @@
     }
     form.classList.remove('is-error', 'is-enviada'); void form.offsetWidth; form.classList.add('is-enviada');
     // TODO: conectar con el servicio de formularios (Formspree, Netlify Forms…)
-    ok.textContent = 'Nota doblada. Te contestamos pronto.';
+    ok.textContent = 'Versión de prueba: esta nota todavía no se envía.';
     form.reset();
   });
 
