@@ -26,8 +26,7 @@ export const ARRUGAS = {
 // Arrugas residuales del papel ya abierto (mapa de normales).
 export const RESIDUALES = {
   fuerza: 0.15,   // intensidad del mapa de normales sobre el papel plano
-  relieve: 7.0,   // cuánto relieve tiene el mapa de altura que genera las normales
-  pliegues: 14,   // número de pliegues rectos marcados
+  relieve: 14,    // cuánto relieve se saca del sombreado de la hoja ilustrada (assets/img/papel.webp)
 };
 
 // Luz: la misma en el shader y en el horneado del HTML, para que el fundido no salte.

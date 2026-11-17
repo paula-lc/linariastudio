@@ -3,74 +3,41 @@
 //  El HTML manda: medimos cada línea en el DOM y la dibujamos en el canvas
 //  en el mismo sitio, con la misma fuente. Así WebGL y HTML coinciden.
 // ============================================================
-import { ANCHO, ALTO, RESIDUALES, LUZ, COLOR_PAPEL } from './ajustes.js';
+import { ANCHO, ALTO, RESIDUALES } from './ajustes.js';
+import urlHoja from '../../assets/img/papel.webp';
 
 const ESCALA = 1.5; // resolución de las texturas respecto al diseño (600 × 848)
 
-// --- Ruido 2D (Perlin) con semilla fija, para que el papel sea siempre el mismo ---
-function crearRuido(semilla = 7) {
-  const p = new Uint8Array(512);
-  const base = [...Array(256).keys()];
-  let s = semilla;
-  const azar = () => ((s = (s * 16807) % 2147483647) / 2147483647);
-  for (let i = 255; i > 0; i--) { const j = Math.floor(azar() * (i + 1)); [base[i], base[j]] = [base[j], base[i]]; }
-  for (let i = 0; i < 512; i++) p[i] = base[i & 255];
-  const grad = (h, x, y) => ((h & 1) ? -x : x) + ((h & 2) ? -y : y);
-  const fade = t => t * t * t * (t * (t * 6 - 15) + 10);
-  const ruido = (x, y) => {
-    const X = Math.floor(x) & 255, Y = Math.floor(y) & 255;
-    x -= Math.floor(x); y -= Math.floor(y);
-    const u = fade(x), v = fade(y);
-    const a = p[X] + Y, b = p[X + 1] + Y;
-    const l1 = grad(p[a], x, y) + u * (grad(p[b], x - 1, y) - grad(p[a], x, y));
-    const l2 = grad(p[a + 1], x, y - 1) + u * (grad(p[b + 1], x - 1, y - 1) - grad(p[a + 1], x, y - 1));
-    return l1 + v * (l2 - l1);
-  };
-  return { ruido, azar };
-}
-
-// Mapa de altura: arrugas "ridged" + pliegues rectos marcados, como un papel que estuvo hecho una bola.
-function mapaAltura(w, h) {
-  const { ruido, azar } = crearRuido(11);
-  const alt = new Float32Array(w * h);
-  const pliegues = Array.from({ length: RESIDUALES.pliegues }, () => {
-    const ang = azar() * Math.PI, nx = Math.cos(ang), ny = Math.sin(ang);
-    return { nx, ny, c: (azar() - 0.5) * (w + h) * 0.7 + (nx * w + ny * h) / 2, fuerza: 0.4 + azar() * 0.8, ancho: 6 + azar() * 14 };
-  });
-  for (let y = 0; y < h; y++) {
-    for (let x = 0; x < w; x++) {
-      let v = 0, amp = 0.55, f = 1 / 90;
-      for (let o = 0; o < 4; o++) {
-        const n = 1 - Math.abs(ruido(x * f, y * f));
-        v += n * n * amp;
-        f *= 2.1; amp *= 0.48;
-      }
-      for (const pl of pliegues) {
-        const d = Math.abs(x * pl.nx + y * pl.ny - pl.c);
-        if (d < pl.ancho) v += (1 - d / pl.ancho) * pl.fuerza * 0.35;
-      }
-      alt[y * w + x] = v;
-    }
+// Relieve de las arrugas a partir del sombreado de la propia hoja ilustrada:
+// las zonas claras están "arriba" y las oscuras "abajo". Normales en espacio tangente (v hacia arriba).
+function normalesDesdeHoja(datos, w, h) {
+  const lum = new Float32Array(w * h);
+  for (let i = 0; i < w * h; i++) {
+    const d = datos.data;
+    lum[i] = d[i * 4 + 3] < 128 ? 1 : (d[i * 4] * 0.299 + d[i * 4 + 1] * 0.587 + d[i * 4 + 2] * 0.114) / 255;
   }
-  return alt;
-}
-
-// Normales en espacio tangente (x a la derecha, y hacia arriba como la coordenada v).
-function normalesDesdeAltura(alt, w, h) {
   const nx = new Float32Array(w * h), ny = new Float32Array(w * h);
-  const k = RESIDUALES.relieve;
+  const k = RESIDUALES.relieve, r = 2;
   for (let y = 0; y < h; y++) {
     for (let x = 0; x < w; x++) {
       const i = y * w + x;
-      const dx = alt[y * w + Math.min(w - 1, x + 1)] - alt[y * w + Math.max(0, x - 1)];
-      const dy = alt[Math.min(h - 1, y + 1) * w + x] - alt[Math.max(0, y - 1) * w + x];
-      // en el canvas y crece hacia abajo; en la textura v crece hacia arriba
-      let a = -dx * k, b = dy * k;
+      const dx = lum[y * w + Math.min(w - 1, x + r)] - lum[y * w + Math.max(0, x - r)];
+      const dy = lum[Math.min(h - 1, y + r) * w + x] - lum[Math.max(0, y - r) * w + x];
+      const a = -dx * k, b = dy * k;           // en el canvas y crece hacia abajo; en la textura v hacia arriba
       const l = Math.hypot(a, b, 1);
       nx[i] = a / l; ny[i] = b / l;
     }
   }
   return { nx, ny };
+}
+
+function cargarImagen(src) {
+  return new Promise((ok, mal) => {
+    const img = new Image();
+    img.onload = () => ok(img);
+    img.onerror = mal;
+    img.src = src;
+  });
 }
 
 const lienzo = (w, h) => Object.assign(document.createElement('canvas'), { width: w, height: h });
@@ -146,10 +113,11 @@ export async function crearTexturas(raiz) {
   const piezas = medir(raiz);
 
   // 1. papel liso con los adornos (sin texto)
+  const hoja = await cargarImagen(urlHoja);
   const base = lienzo(W, H);
   const cb = base.getContext('2d');
-  cb.fillStyle = `rgb(${COLOR_PAPEL.join(',')})`;
-  cb.fillRect(0, 0, W, H);
+  cb.drawImage(hoja, 0, 0, W, H);
+  const datosHoja = cb.getImageData(0, 0, W, H);
   cb.scale(ESCALA, ESCALA);
   for (const p of piezas) {
     if (p.tipo === 'rect') { cb.fillStyle = p.color; cb.fillRect(p.x, p.y, p.w, p.h); }
@@ -169,33 +137,17 @@ export async function crearTexturas(raiz) {
     ca.fillText(p.texto, p.x, p.base);
   }
 
-  // 3. arrugas residuales: mapa de normales + versión horneada para el HTML
-  const alt = mapaAltura(W, H);
-  const { nx, ny } = normalesDesdeAltura(alt, W, H);
+  // 3. arrugas residuales: mapa de normales sacado del sombreado de la hoja
+  const { nx, ny } = normalesDesdeHoja(datosHoja, W, H);
   const normales = lienzo(W, H);
   const cn = normales.getContext('2d');
   const dn = cn.createImageData(W, H);
-  const horneado = lienzo(W, H);
-  const ch = horneado.getContext('2d');
-  const dBase = cb.getImageData(0, 0, W, H);
-  const dh = ch.createImageData(W, H);
-  const [lx, ly, lz] = LUZ.dir, S = RESIDUALES.fuerza;
   for (let i = 0; i < W * H; i++) {
     dn.data[i * 4] = (nx[i] * 0.5 + 0.5) * 255;
     dn.data[i * 4 + 1] = (ny[i] * 0.5 + 0.5) * 255;
     dn.data[i * 4 + 2] = 255;
     dn.data[i * 4 + 3] = 255;
-    // misma cuenta que el fragment shader con el papel plano y de frente
-    let a = nx[i] * S, b = ny[i] * S, c = 1;
-    const l = Math.hypot(a, b, c);
-    const luz = LUZ.ambiente + LUZ.difusa * Math.max(0, (a * lx + b * ly + c * lz) / l);
-    for (let k = 0; k < 3; k++) dh.data[i * 4 + k] = Math.min(255, dBase.data[i * 4 + k] * luz);
-    dh.data[i * 4 + 3] = 255;
   }
   cn.putImageData(dn, 0, 0);
-  ch.putImageData(dh, 0, 0);
-
-  // data: URL en vez de blob: (algunos visores no permiten imágenes blob:)
-  const fondo = horneado.toDataURL('image/jpeg', 0.9);
-  return { albedo, normales, fondoHTML: fondo };
+  return { albedo, normales };
 }

@@ -45,18 +45,11 @@ async function arrancar() {
 
   if (sinMovimiento || !hayWebGL()) {
     seccion.classList.add('papel--estatico');
-    try {
-      const { fondoHTML } = await crearTexturas(lienzo);
-      html.style.backgroundImage = `url(${fondoHTML})`;
-      html.classList.add('horneado');
-    } catch (_) { /* sin textura: se queda el papel liso */ }
     return;
   }
 
   seccion.classList.add('papel--vivo');
   const texturas = await crearTexturas(lienzo);
-  html.style.backgroundImage = `url(${texturas.fondoHTML})`;
-  html.classList.add('horneado');
 
   const movil = innerWidth < 760;
   const { renderer, escena, camara, redimensionar, medida, render } = crearEscena(canvas);

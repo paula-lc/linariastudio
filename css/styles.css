@@ -1799,3 +1799,6 @@ html.lenis, html.lenis body { height: auto; }
 /* el adorno y la raya ya van dentro del fondo horneado del papel */
 .papel-html.horneado .pl-ornamento, .papel-html.horneado .pl-raya { visibility: hidden; }
 .pl-lo { margin-right: 8px; }
+
+/* la hoja ilustrada del cliente es la superficie del papel (WebGL y HTML usan la misma imagen) */
+.papel-html { background: url("../assets/img/papel.webp") center / 100% 100% no-repeat; overflow: visible; }

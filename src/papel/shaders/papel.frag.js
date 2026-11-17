@@ -15,6 +15,8 @@ varying vec3 vTangente;
 varying vec3 vBitangente;
 
 void main() {
+  vec4 hoja = texture2D(uMapa, vUv);
+  if (hoja.a < 0.5) discard;             // bordes irregulares de la hoja
   vec3 n = normalize(vNormal);
   vec3 t = normalize(vTangente);
   vec3 b = normalize(vBitangente);
@@ -22,7 +24,7 @@ void main() {
   vec2 nt = texture2D(uNormales, vUv).xy * 2.0 - 1.0;
   n = normalize(n + (nt.x * t + nt.y * b) * uFuerzaNormales);
   float luz = uAmbiente + uDifusa * max(dot(n, uLuz), 0.0);
-  vec3 color = gl_FrontFacing ? texture2D(uMapa, vUv).rgb : uColorDorso;
+  vec3 color = gl_FrontFacing ? hoja.rgb : uColorDorso;
   gl_FragColor = vec4(color * luz, 1.0);
 }
 `;
