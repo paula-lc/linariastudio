@@ -1841,3 +1841,50 @@ html.lenis, html.lenis body { height: auto; }
 @keyframes baja { 0%, 100% { translate: 0 0; opacity: .5; } 50% { translate: 0 7px; opacity: 1; } }
 .papel--estatico .papel-aura, .papel--estatico .papel-chispas, .papel--estatico .papel-pista { display: none; }
 @media (max-width: 760px) { .papel-pista { top: calc(50% + 110px); font-size: 26px; } }
+
+/* luz que sube desde la bola hasta debajo de la portada, invitando a entrar */
+.papel-portal {
+  position: absolute; z-index: 1; pointer-events: none;
+  left: 50%; bottom: 50%;
+  width: 190%; height: 78vh;
+  translate: -50% 0;
+  transition: opacity .3s;
+}
+.papel-portal__haz {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(60% 45% at 50% 100%, rgba(255, 246, 196, .95), rgba(255, 240, 170, .4) 55%, transparent 80%),
+    radial-gradient(28% 100% at 50% 100%, rgba(255, 250, 220, .7), transparent 75%),
+    radial-gradient(70% 60% at 50% 100%, rgba(248, 202, 228, .35), transparent 75%);
+  -webkit-mask: linear-gradient(to top, #000 35%, transparent);
+          mask: linear-gradient(to top, #000 35%, transparent);
+  animation: haz-late 4s ease-in-out infinite;
+}
+@keyframes haz-late { 0%, 100% { opacity: .8; } 50% { opacity: 1; } }
+.papel-portal__motas i {
+  position: absolute; left: var(--x); bottom: 0;
+  width: calc(7px * var(--t)); aspect-ratio: 1; border-radius: 50%;
+  background: #fff8cf;
+  box-shadow: 0 0 8px 2px rgba(255, 230, 128, .8);
+  opacity: 0;
+  animation: mota-sube var(--v) linear infinite;
+  animation-delay: calc(var(--d) * -1);
+}
+.papel-portal__motas i:nth-child(4n) { background: #fde3f0; box-shadow: 0 0 8px 2px rgba(234, 105, 147, .55); }
+@keyframes mota-sube {
+  0% { opacity: 0; translate: 0 0; }
+  15% { opacity: 1; }
+  60% { opacity: .9; translate: 18px -48vh; }
+  100% { opacity: 0; translate: -10px -76vh; }
+}
+.papel-portal__texto {
+  position: absolute; left: 50%; top: 18%; translate: -50% 0;
+  margin: 0;
+  font-family: var(--script); font-size: 34px; color: var(--magenta);
+  white-space: nowrap;
+  text-shadow: 0 0 14px rgba(255, 246, 200, 1), 0 0 4px rgba(255, 246, 200, 1);
+  animation: llama 2.8s ease-in-out infinite;
+}
+@keyframes llama { 0%, 100% { translate: -50% 0; opacity: .75; } 50% { translate: -50% 6px; opacity: 1; } }
+.papel--estatico .papel-portal { display: none; }
+@media (max-width: 760px) { .papel-portal { width: 120%; } .papel-portal__texto { font-size: 28px; } }

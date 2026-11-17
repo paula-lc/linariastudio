@@ -34,7 +34,7 @@ async function arrancar() {
   const lienzo = seccion.querySelector('.papel-lienzo');
   const hueco = seccion.querySelector('.papel-hueco');
   const mesa = seccion.querySelector('.papel-mesa:not(.papel-mesa--movil)');
-  const magia = seccion.querySelectorAll('.papel-aura, .papel-chispas, .papel-pista');
+  const magia = seccion.querySelectorAll('.papel-aura, .papel-chispas, .papel-pista, .papel-portal');
 
   const sinMovimiento = matchMedia('(prefers-reduced-motion: reduce)').matches;
   iniciarScroll({ suave: !sinMovimiento });
