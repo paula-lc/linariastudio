@@ -2229,3 +2229,29 @@ html.lenis, html.lenis body { height: auto; }
 .lista__lacre { width: 14px; height: 14px; flex: none; border-radius: 50%; border: 1.5px dashed rgba(131, 45, 81, .45); transition: background .3s, border-color .3s, scale .5s var(--muelle); }
 .lista__opciones [aria-selected=true] .lista__lacre { background: radial-gradient(circle at 35% 30%, #9E3868, #832D51 60%, #561835); border: 0; scale: 1.15; }
 .lista__opciones [aria-selected=true] { color: var(--magenta); }
+
+/* botón de enviar: un sello de tinta estampado (plano, ciruela, con textura de goma) */
+.sello-btn {
+  --tinta-s: var(--magenta);
+  position: relative;
+  display: inline-flex; align-items: center; gap: 12px;
+  padding: 12px 22px 10px;
+  color: var(--tinta-s);
+  background: transparent;
+  border: 2.5px solid currentColor;
+  border-radius: 6px;
+  box-shadow: inset 0 0 0 3px #FAF3E3, inset 0 0 0 4.5px currentColor;
+  rotate: -2deg;
+  /* tinta gastada, como un sello de goma */
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.55' numOctaves='2' seed='4'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -3.2 2.9'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+          mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.55' numOctaves='2' seed='4'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -3.2 2.9'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+  transition: rotate .6s var(--muelle), scale .4s var(--muelle), background .3s, color .3s;
+}
+.sello-btn__texto { font-family: var(--sans); font-size: 19px; letter-spacing: .08em; text-transform: uppercase; line-height: 1; white-space: nowrap; }
+.sello-btn__inicial { font-family: var(--script); font-size: 2.1em; text-transform: none; letter-spacing: 0; line-height: 0; vertical-align: -.12em; margin-right: .02em; }
+.sello-btn__estrella { font-size: 13px; line-height: 1; transition: rotate .8s var(--muelle); }
+.sello-btn:hover { rotate: 0deg; background: rgba(131, 45, 81, .07); }
+.sello-btn:hover .sello-btn__estrella { rotate: 90deg; }
+.sello-btn:active { scale: .93; rotate: -1deg; transition-duration: .12s; }
+.sello-btn:focus-visible { outline: 2px dashed var(--magenta); outline-offset: 5px; }
+.sello-btn__texto { font-weight: 500; }
