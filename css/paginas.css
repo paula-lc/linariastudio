@@ -1,0 +1,224 @@
+/* ==========================================================
+   Linaria Studio · páginas secundarias
+   Meses pasados · Sobre nosotras · Eventos · Editorial
+   ========================================================== */
+
+/* ---------- Meses pasados ---------- */
+.archivo__ejemplo {
+  width: fit-content; max-width: 100%;
+  margin: -18px auto 34px; padding: 7px 14px 6px;
+  border: 1px dashed var(--oliva);
+  font-family: var(--maquina); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; text-align: center;
+  color: var(--oliva-hondo);
+}
+
+.pestanas { display: flex; justify-content: center; gap: 14px; margin-bottom: 36px; }
+.pestana {
+  min-width: 170px; min-height: 58px;
+  padding: 12px 24px 10px;
+  border: 1.5px solid var(--tinta); border-radius: 3px;
+  background: var(--papel);
+  box-shadow: 0 3px 0 var(--tinta);
+  font-family: var(--maquina); font-size: 13px; font-weight: 700; letter-spacing: var(--espaciado); text-transform: uppercase;
+  transition: translate .18s var(--sale), box-shadow .18s var(--sale), background .25s, color .25s;
+}
+.pestana small { display: block; margin-top: 2px; font-family: var(--libro); font-size: 16px; font-weight: 500; font-style: italic; letter-spacing: 0; text-transform: none; }
+.pestana:hover { translate: 0 -2px; box-shadow: 0 5px 0 var(--tinta); }
+.pestana[aria-selected="true"] { translate: 0 2px; box-shadow: 0 1px 0 var(--tinta); }
+.pestana[data-maestra="driade"][aria-selected="true"] { background: var(--lima); }
+.pestana[data-maestra="bruja"][aria-selected="true"] { background: var(--granate); border-color: var(--granate-hondo); color: var(--beige); box-shadow: 0 1px 0 var(--granate-hondo); }
+
+.archivo { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: 48px; align-items: start; }
+.archivo__rejilla { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 26px 22px; }
+.mes-carta {
+  display: grid; justify-items: center; gap: 2px; width: 100%;
+  padding: 10px 10px 14px;
+  text-align: center;
+  background: var(--papel);
+  border: 1px solid var(--linea);
+  box-shadow: 0 14px 22px -20px rgba(47, 42, 31, .6);
+  transition: translate .5s var(--muelle), border-color .25s, box-shadow .25s;
+}
+.mes-carta:hover { translate: 0 -5px; border-color: var(--oliva); }
+.mes-carta__img { display: block; width: 100%; aspect-ratio: 1; overflow: hidden; }
+.mes-carta__img img { width: 100%; height: 100%; object-fit: cover; filter: sepia(.15); transition: scale 1s var(--suave); }
+.mes-carta:hover .mes-carta__img img { scale: 1.05; }
+.mes-carta__mes { margin-top: 12px; font-size: 26px; line-height: 1.1; color: var(--granate); }
+.mes-carta__tema { font-style: italic; font-size: 16px; color: var(--tinta-suave); }
+/* la carta elegida queda marcada con un filete del color de la maestra */
+.archivo[data-maestra="driade"] { --marca: var(--lima); }
+.archivo[data-maestra="bruja"] { --marca: var(--rosa); }
+.mes-carta[aria-pressed="true"] { border-color: var(--tinta); box-shadow: inset 0 0 0 4px var(--papel), inset 0 0 0 7px var(--marca), 0 14px 22px -20px rgba(47, 42, 31, .6); }
+
+.detalle {
+  position: sticky; top: 96px;
+  scroll-margin-top: 90px;
+  background: var(--papel);
+  border: 1px solid var(--oliva);
+  box-shadow: inset 0 0 0 7px var(--papel), inset 0 0 0 8px rgba(102, 116, 54, .4), 0 30px 50px -36px rgba(47, 42, 31, .55);
+  padding: 16px 16px 30px;
+}
+.detalle.is-cambia .detalle__img img, .detalle.is-cambia .detalle__texto > :not(.detalle__meses) { animation: entraLinea .6s var(--muelle) both; }
+.detalle__img { margin: 0 0 22px; aspect-ratio: 4 / 3; overflow: hidden; }
+.detalle__img img { width: 100%; height: 100%; object-fit: cover; }
+.detalle__texto { padding-inline: clamp(6px, 3vw, 24px); text-align: center; }
+.detalle__maestra { margin-bottom: 4px; }
+.detalle__mes { margin: 0; font-weight: 400; font-size: clamp(38px, 5vw, 52px); line-height: 1.05; color: var(--granate); }
+.detalle__tema { margin: 4px 0 10px; font-style: italic; font-size: 21px; color: var(--oliva); }
+.detalle__desc { margin: 0 auto 20px; max-width: 440px; font-size: 18px; color: var(--tinta-suave); }
+.detalle__meses { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-bottom: 22px; }
+.chip-mes {
+  padding: 9px 16px 8px;
+  border: 1.5px solid var(--tinta); border-radius: 999px;
+  background: var(--papel);
+  font-family: var(--maquina); font-size: 12px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase;
+  transition: background .2s, color .2s, border-color .2s;
+}
+.chip-mes:hover { border-color: var(--granate); color: var(--granate); }
+.chip-mes[aria-pressed="true"] { background: var(--granate); border-color: var(--granate); color: var(--beige); }
+.detalle__precio { margin: 0 0 16px; padding-top: 16px; border-top: 1px solid var(--linea); font-size: 22px; color: var(--granate); }
+.detalle__cifra { font-size: 48px; font-weight: 500; line-height: 1; }
+.detalle__unidad { display: block; font-family: var(--maquina); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--oliva); }
+
+@media (max-width: 860px) {
+  .archivo { grid-template-columns: 1fr; gap: 36px; }
+  .detalle { position: static; }
+}
+@media (max-width: 480px) {
+  .pestanas { gap: 10px; }
+  .pestana { min-width: 0; flex: 1; padding-inline: 10px; }
+  .archivo__rejilla { gap: 16px 12px; }
+  .mes-carta__mes { font-size: 22px; }
+  .mes-carta__tema { font-size: 14px; }
+}
+
+/* ---------- Sobre nosotras: cartas que se giran ---------- */
+.naipes { display: grid; grid-template-columns: repeat(2, minmax(0, 380px)); justify-content: center; gap: 56px; }
+.naipe { perspective: 1600px; }
+.naipe__in {
+  display: grid;
+  transform-style: preserve-3d;
+  transition: transform 1s var(--suave);
+}
+.naipe.is-girada .naipe__in { transform: rotateY(180deg); }
+.naipe__cara {
+  grid-area: 1 / 1;
+  position: relative;
+  display: flex; flex-direction: column; align-items: center;
+  min-height: 600px;
+  padding: 46px 34px 34px;
+  text-align: center;
+  border-radius: 14px;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  box-shadow: 0 30px 50px -28px rgba(30, 20, 10, .65);
+}
+.naipe__cara--dorso { transform: rotateY(180deg); }
+
+/* frente: un naipe oscuro con filetes y esquinas dibujadas */
+.naipe--bruja { --fondo: var(--granate-hondo); --orla: var(--rosa); }
+.naipe--driade { --fondo: var(--oliva-noche); --orla: var(--lima); }
+.naipe__cara--frente {
+  background:
+    radial-gradient(80% 50% at 50% 30%, rgba(255, 255, 255, .07), transparent 70%),
+    var(--fondo);
+  color: var(--beige);
+  outline: 1px solid var(--orla); outline-offset: -12px;
+  cursor: pointer;
+  transition: translate .5s var(--muelle), box-shadow .4s;
+}
+.naipe:not(.is-girada) .naipe__cara--frente:hover { translate: 0 -6px; box-shadow: 0 40px 60px -30px rgba(30, 20, 10, .7); }
+.naipe__cara--frente::before { content: ""; position: absolute; inset: 18px; border: 1px solid color-mix(in srgb, var(--orla) 45%, transparent); border-radius: 6px; pointer-events: none; }
+.naipe__esquina { position: absolute; width: 46px; height: 46px; color: var(--orla); filter: url(#mano); pointer-events: none; }
+.naipe__esquina--a { top: 22px; left: 22px; }
+.naipe__esquina--b { top: 22px; right: 22px; scale: -1 1; }
+.naipe__esquina--c { bottom: 22px; left: 22px; scale: 1 -1; }
+.naipe__esquina--d { bottom: 22px; right: 22px; scale: -1 -1; }
+.naipe__num { margin: 0 0 16px; font-style: italic; font-size: 22px; color: var(--orla); }
+.naipe__arco {
+  width: 78%; aspect-ratio: 3 / 3.6;
+  display: grid; place-items: end center;
+  overflow: hidden;
+  border-radius: 999px 999px 4px 4px;
+  border: 1px solid var(--orla);
+  box-shadow: inset 0 0 0 6px var(--fondo), inset 0 0 0 7px color-mix(in srgb, var(--orla) 50%, transparent);
+  background: radial-gradient(70% 60% at 50% 35%, color-mix(in srgb, var(--orla) 30%, transparent), transparent 75%);
+}
+.naipe__retrato { width: 86%; height: auto; }
+.naipe--bruja .r-cuerpo { fill: #2a0d1b; } .naipe--bruja .r-pelo { fill: #1c0812; } .naipe--bruja .r-cara { fill: #6b3348; }
+.naipe--driade .r-cuerpo { fill: #1d220e; } .naipe--driade .r-pelo { fill: #151a09; } .naipe--driade .r-cara { fill: #4f5a26; }
+.r-hojas { fill: var(--lima); }
+.r-brillo { fill: var(--orla); }
+.naipe__nombre { margin: 22px 0 0; font-weight: 400; font-size: 36px; line-height: 1.05; }
+.naipe__oficio { margin: 6px 0 0; font-family: var(--maquina); font-size: 12px; font-weight: 700; letter-spacing: .3em; text-transform: uppercase; color: var(--orla); }
+.naipe__lema { margin: 12px 0 0; font-style: italic; font-size: 18px; color: rgba(247, 243, 232, .78); }
+/* todo el frente es pulsable: el botón se estira sobre la carta */
+.naipe__girar {
+  margin-top: auto;
+  padding: 18px 0 2px;
+  font-family: var(--maquina); font-size: 11.5px; font-weight: 700; letter-spacing: var(--espaciado); text-transform: uppercase;
+  color: var(--beige);
+}
+.naipe__girar::before { content: "↻ "; color: var(--orla); }
+.naipe__girar::after { content: ""; position: absolute; inset: 0; border-radius: 14px; }
+.naipe__girar:focus-visible { outline: none; }
+.naipe__girar:focus-visible::after { outline: 2px dashed var(--orla); outline-offset: -6px; }
+
+/* dorso: la ilustradora, en papel */
+.naipe__cara--dorso {
+  background: var(--papel);
+  color: var(--tinta);
+  border: 1px solid var(--oliva);
+  box-shadow: inset 0 0 0 9px var(--papel), inset 0 0 0 10px rgba(102, 116, 54, .45), 0 30px 50px -28px rgba(30, 20, 10, .5);
+}
+.naipe__cara--dorso .naipe__esquina { color: var(--oliva); opacity: .7; }
+.naipe__foto {
+  display: grid; place-items: center;
+  width: 128px; height: 128px; margin: 4px 0 16px;
+  border-radius: 50%;
+  border: 1px solid var(--oliva);
+  box-shadow: inset 0 0 0 5px var(--papel), inset 0 0 0 6px rgba(102, 116, 54, .4);
+  background: var(--beige-hondo);
+  font-style: italic; font-size: 52px; color: var(--oliva);
+}
+.naipe__ilustradora { margin: 0; font-weight: 400; font-size: 30px; line-height: 1.1; color: var(--granate); }
+.naipe__bio { margin: 12px 0 14px; font-size: 18px; color: var(--tinta-suave); }
+.naipe__dato { margin: 0; font-style: italic; font-size: 17px; }
+.naipe__dato span { margin-right: 6px; font-family: var(--maquina); font-style: normal; font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--oliva); }
+.naipe__enlaces { display: flex; justify-content: center; gap: 24px; margin: 14px 0 0; }
+.naipe__volver {
+  margin-top: auto; padding: 16px 0 4px;
+  font-family: var(--maquina); font-size: 11.5px; font-weight: 700; letter-spacing: var(--espaciado); text-transform: uppercase;
+  color: var(--granate);
+}
+.naipe__volver::before { content: "↺ "; }
+.naipe__volver:hover { color: var(--oliva); }
+.nosotras__cta { margin: 56px 0 0; text-align: center; }
+
+@media (max-width: 860px) {
+  .naipes { grid-template-columns: minmax(0, 400px); gap: 40px; }
+  .naipe__cara { min-height: 560px; padding-inline: 28px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  /* sin giro: la cara cambia con un fundido */
+  .naipe__in, .naipe.is-girada .naipe__in { transform: none; }
+  .naipe__cara--dorso { transform: none; opacity: 0; }
+  .naipe.is-girada .naipe__cara--dorso { opacity: 1; }
+  .naipe.is-girada .naipe__cara--frente { opacity: 0; }
+}
+
+/* ---------- Eventos y Editorial ---------- */
+.oficios { list-style: none; margin: 0 auto; padding: 0; max-width: 1040px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+.oficio {
+  display: grid; justify-items: center; align-content: start;
+  padding: 34px 26px 30px;
+  text-align: center;
+  background: var(--papel);
+  border: 1px solid var(--oliva);
+  box-shadow: inset 0 0 0 6px var(--papel), inset 0 0 0 7px rgba(102, 116, 54, .35);
+}
+.oficio__num { font-style: italic; font-size: 20px; color: var(--rosa); }
+.oficio__titulo { margin: 4px 0 10px; font-weight: 400; font-size: 30px; line-height: 1.1; color: var(--granate); }
+.oficio p { margin: 0; font-size: 18px; color: var(--tinta-suave); }
+.oficios__nota { margin: 34px auto 0; max-width: 560px; text-align: center; font-style: italic; font-size: 19px; color: var(--tinta-suave); }
+@media (max-width: 860px) { .oficios { grid-template-columns: 1fr; max-width: 460px; } }
