@@ -294,7 +294,7 @@ body:has(.barra-superior) { padding-top: var(--alto-barra, 0px); }
 .barra-superior.is-mini { box-shadow: 0 10px 24px -18px rgba(20, 25, 5, .7); }
 .barra-superior.is-mini .aviso { max-height: 0; padding-block: 0; opacity: 0; }
 .barra-superior.is-mini .cabecera { padding-block: 6px; }
-.barra-superior.is-mini .logo { width: 112px; }
+.barra-superior.is-mini .logo { width: 132px; }
 
 /* panel del menú móvil */
 .menu-movil {
@@ -325,7 +325,7 @@ body:has(.barra-superior) { padding-top: var(--alto-barra, 0px); }
   .nav--izq, .nav--der > :not(.cesta__btn) { display: none; }
   .nav--der { justify-content: flex-end; }
   .logo { width: 132px; }
-  .barra-superior.is-mini .logo { width: 96px; }
+  .barra-superior.is-mini .logo { width: 112px; }
   .cesta__btn { padding: 7px 10px 6px; }
   .aviso { font-size: 10.5px; letter-spacing: .16em; }
   .aviso p::before, .aviso p::after { margin-inline: 6px; }

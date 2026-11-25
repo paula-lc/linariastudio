@@ -449,90 +449,6 @@
 .ar-estrella { fill: #fdf0aa; stroke: #e0c05a; stroke-width: 1; }
 .arbol { animation: mece-arbol 5s ease-in-out infinite; animation-delay: calc(var(--d) * -1); }
 @keyframes mece-arbol { 0%, 100% { rotate: -1.4deg; } 50% { rotate: 1.4deg; } }
-/* ==========================================================
-   Quién te escribe: documentos de identidad antiguos
-   ========================================================== */
-.identidades {
-  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 40px;
-  max-width: 1020px; margin: 34px auto 0;
-}
-.ident {
-  --papel-v: #e9dcc0; --mancha: rgba(150, 110, 60, .18); --tinta-v: #4a3b2a; --sello-v: #6d4f8e; --num-v: #4a3b2a;
-  position: relative;
-  container-type: inline-size;
-  rotate: -1.6deg;
-  transition: rotate .7s var(--muelle), translate .7s var(--muelle), filter .4s;
-  filter: drop-shadow(0 12px 18px rgba(60, 50, 30, .28));
-}
-.ident--driade { --papel-v: #e7b6b0; --mancha: rgba(150, 60, 70, .2); --sello-v: #6a4c95; --num-v: #b3262e; rotate: 1.4deg; margin-top: 26px; }
-.ident:hover { rotate: 0deg; translate: 0 -6px; filter: drop-shadow(0 20px 26px rgba(60, 50, 30, .32)); }
-.ident__marco {
-  position: relative;
-  padding: 5cqw 5.5cqw 4cqw;
-  border-radius: 1.6cqw;
-  color: var(--tinta-v);
-  background:
-    radial-gradient(40% 30% at 18% 22%, var(--mancha), transparent 70%),
-    radial-gradient(35% 28% at 82% 78%, var(--mancha), transparent 70%),
-    radial-gradient(120% 90% at 50% 50%, transparent 55%, rgba(110, 80, 40, .28)),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .27 0 0 0 0 .18 0 0 0 .22 0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E"),
-    var(--papel-v);
-  box-shadow: inset 0 0 0 1.2cqw var(--papel-v), inset 0 0 0 1.45cqw rgba(74, 59, 42, .55), inset 0 0 0 1.8cqw var(--papel-v), inset 0 0 0 1.95cqw rgba(74, 59, 42, .4);
-  font-family: "Cormorant Garamond", Georgia, serif;
-  overflow: hidden;
-}
-.ident__cabeza { text-align: center; margin-bottom: 1cqw; }
-.ident__reino { margin: 0; font-size: 3.2cqw; letter-spacing: .14em; text-transform: uppercase; font-weight: 600; }
-.ident__ministerio { margin: .3cqw 0 0; font-size: 2.3cqw; letter-spacing: .12em; text-transform: uppercase; }
-.ident__num { position: absolute; top: 5.4cqw; right: 6cqw; margin: 0; font-size: 2.8cqw; font-weight: 600; }
-.ident__num span { color: var(--num-v); font-size: 4cqw; letter-spacing: .06em; }
-.ident__cuerpo { display: grid; grid-template-columns: 30% 1fr; gap: 4cqw; align-items: start; margin-top: 2.4cqw; }
-.ident--driade .ident__cuerpo { grid-template-columns: 1fr 30%; }
-.ident--driade .ident__foto { order: 2; }
-.ident__foto {
-  margin: 0;
-  padding: 1.2cqw;
-  background: #f4ead6;
-  box-shadow: 0 .4cqw 1cqw rgba(60, 40, 20, .3);
-  rotate: -2deg;
-}
-.ident--driade .ident__foto { rotate: 2.5deg; }
-.ident__foto svg { display: block; width: 100%; height: auto; filter: sepia(.35) contrast(1.05); }
-.ident__titulo { margin: 0 0 1.6cqw; font-size: 4.6cqw; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; line-height: 1.05; }
-.ident__titulo small { display: block; font-size: 2.6cqw; letter-spacing: .1em; font-weight: 500; opacity: .8; }
-.ident__datos dl { margin: 0; display: grid; gap: .7cqw; }
-.ident__campo { display: grid; grid-template-columns: 26cqw 1fr; align-items: baseline; gap: 1.4cqw; border-bottom: 1px dotted rgba(74, 59, 42, .5); padding-bottom: .4cqw; }
-.ident__campo dt { font-size: 2.6cqw; letter-spacing: .06em; font-variant: small-caps; }
-.ident__campo dd { margin: 0; font-family: "Homemade Apple", "Great Vibes", cursive; font-size: 2.6cqw; line-height: 1.5; color: #23304a; }
-.ident__firma { margin: 3cqw 0 0; text-align: right; }
-.ident__firma span { display: block; font-family: "Homemade Apple", cursive; font-size: 5cqw; color: #23304a; transform: rotate(-4deg); }
-.ident__firma small { font-size: 2.2cqw; letter-spacing: .08em; text-transform: uppercase; }
-.ident__sello {
-  position: absolute; width: 24cqw; color: var(--sello-v);
-  left: 23cqw; top: 46cqw; rotate: -14deg; opacity: .55;
-  mix-blend-mode: multiply; pointer-events: none;
-  transition: scale .6s var(--muelle), opacity .4s;
-}
-.ident--driade .ident__sello { left: auto; right: 22cqw; top: 44cqw; rotate: 12deg; }
-.ident__sello text { fill: currentColor; font-family: "Cormorant Garamond", serif; font-weight: 600; }
-.ident:hover .ident__sello { scale: 1.06; opacity: .7; }
-@media (max-width: 760px) { .identidades { grid-template-columns: 1fr; gap: 28px; } .ident--driade { margin-top: 0; } }
-
-/* el sello pisa la esquina de la foto, como en los documentos antiguos */
-.ident__sello { left: 6cqw; top: 40cqw; width: 22cqw; }
-.ident--driade .ident__sello { left: auto; right: 6cqw; top: 42cqw; }
-/* documentos de identidad: nunca por debajo de un tamaño legible */
-.ident__campo dt { font-size: max(11px, 2.6cqw); }
-.ident__campo dd { font-size: max(12.5px, 2.6cqw); }
-.ident__titulo { font-size: max(17px, 4.6cqw); }
-.ident__titulo small { font-size: max(11px, 2.6cqw); }
-.ident__reino { font-size: max(12px, 3.2cqw); }
-.ident__ministerio, .ident__firma small { font-size: max(10px, 2.3cqw); }
-@container (max-width: 420px) {
-  .ident__cuerpo, .ident--driade .ident__cuerpo { grid-template-columns: 34% 1fr; }
-  .ident--driade .ident__cuerpo { grid-template-columns: 1fr 34%; }
-  .ident__campo { grid-template-columns: 1fr; gap: 0; }
-}
 /* ramitas que brotan del sobre */
 .capa--ramas { z-index: 3; pointer-events: none; }
 .brote { position: absolute; width: 116px; height: 130px; bottom: 60px; overflow: visible; transform-origin: 15% 100%; scale: 0; transition: scale .5s var(--sale); }
@@ -613,21 +529,180 @@
   .hero__botones { justify-content: center; }
 }
 
-/* ---------- 2 · Las remitentes ---------- */
+/* ---------- 2 · Las remitentes: fichas con el mismo estilo que los naipes de Sobre nosotras ---------- */
 .identidades {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 440px));
   grid-template-rows: auto auto;
   grid-auto-flow: column;
-  gap: 26px 48px;
-  max-width: 1040px; margin: 0 auto;
+  justify-content: center;
+  gap: 26px 56px;
 }
-.ident { --sello-v: var(--granate); --num-v: var(--granate); }
-.ident--driade { --sello-v: var(--oliva-hondo); margin-top: 0; }
+.ident--bruja { --fondo: var(--granate); --orla: var(--rosa); }
+.ident--driade { --fondo: var(--oliva); --orla: var(--lima); }
+/* cada cara gira por su cuenta con su propia perspectiva (sin preserve-3d, que Safari aplana) */
+.ident__in { display: grid; height: 100%; }
+.ident__cara {
+  grid-area: 1 / 1;
+  position: relative;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: perspective(1600px) rotateY(0deg);
+  transition: transform .9s var(--suave), translate .5s var(--muelle), box-shadow .4s;
+}
+.ident__cara--dorso { transform: perspective(1600px) rotateY(180deg); }
+.ident.is-girada .ident__cara--frente { transform: perspective(1600px) rotateY(-180deg); }
+.ident.is-girada .ident__cara--dorso { transform: perspective(1600px) rotateY(0deg); }
+/* la cara que no se ve no recibe clics (por si el navegador no conoce "inert") */
+.ident:not(.is-girada) .ident__cara--dorso, .ident.is-girada .ident__cara--frente { pointer-events: none; }
+@media (prefers-reduced-motion: reduce) {
+  .ident__cara, .ident.is-girada .ident__cara { transform: none; }
+  .ident__cara--dorso { opacity: 0; }
+  .ident.is-girada .ident__cara--dorso { opacity: 1; }
+  .ident.is-girada .ident__cara--frente { opacity: 0; }
+}
+.ident__marco {
+  position: relative;
+  display: flex; flex-direction: column; align-items: center;
+  padding: 44px 40px 40px;
+  text-align: center;
+  border-radius: 14px;
+  background:
+    radial-gradient(80% 40% at 50% 22%, rgba(255, 255, 255, .08), transparent 70%),
+    var(--fondo);
+  color: var(--beige);
+  outline: 1px solid var(--orla); outline-offset: -12px;
+  box-shadow: 0 30px 50px -28px rgba(30, 20, 10, .65);
+  cursor: pointer;
+}
+.ident__marco::before { content: ""; position: absolute; inset: 18px; border: 1px solid color-mix(in srgb, var(--orla) 45%, transparent); border-radius: 6px; pointer-events: none; }
+.ident:not(.is-girada):hover .ident__cara--frente { translate: 0 -6px; box-shadow: 0 40px 60px -30px rgba(30, 20, 10, .7); }
+
+/* todo el frente es pulsable: el botón se estira sobre la ficha */
+.ident__girar {
+  margin-top: 18px; padding: 6px 0 2px;
+  font-family: var(--maquina); font-size: 11.5px; font-weight: 700; letter-spacing: var(--espaciado); text-transform: uppercase;
+  color: var(--beige);
+}
+.ident__girar::before { content: "↻ "; color: var(--orla); }
+.ident__girar::after { content: ""; position: absolute; inset: 0; border-radius: 14px; }
+.ident__girar:focus-visible { outline: none; }
+.ident__girar:focus-visible::after { outline: 2px dashed var(--orla); outline-offset: -6px; }
+
+/* dorso: la ilustradora, en papel con la orla del color de su maestra */
+.ident__cara--dorso {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: 56px 40px 40px;
+  text-align: center;
+  border-radius: 14px;
+  background: var(--papel);
+  color: var(--tinta);
+  border: 1px solid var(--fondo);
+  box-shadow: inset 0 0 0 9px var(--papel), inset 0 0 0 10px color-mix(in srgb, var(--fondo) 50%, transparent), 0 30px 50px -28px rgba(30, 20, 10, .5);
+}
+.ident .ident__cara--dorso .naipe__esquina { color: var(--fondo); opacity: .75; }
+.ident__detras { margin: 0; font-family: var(--maquina); font-size: 12px; font-weight: 700; letter-spacing: .24em; text-transform: uppercase; color: var(--fondo); }
+.ident__foto {
+  display: grid; place-items: center;
+  width: 140px; height: 140px; margin: 18px 0;
+  border-radius: 50%;
+  border: 1px solid var(--fondo);
+  box-shadow: inset 0 0 0 5px var(--papel), inset 0 0 0 6px color-mix(in srgb, var(--fondo) 40%, transparent);
+  background: color-mix(in srgb, var(--orla) 25%, var(--papel));
+  font-style: italic; font-size: 44px; letter-spacing: .02em; color: var(--fondo);
+}
+.ident__ilustradora { margin: 0; font-weight: 400; font-size: 32px; line-height: 1.1; color: var(--granate); }
+.ident__bio { margin: 12px 0 14px; max-width: 340px; font-size: 18px; color: var(--tinta-suave); }
+.ident__tecnica { margin: 0; font-style: italic; font-size: 17px; }
+.ident__tecnica span { margin-right: 6px; font-family: var(--maquina); font-style: normal; font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--oliva); }
+.ident__enlaces { display: flex; justify-content: center; gap: 24px; margin: 16px 0 0; }
+.ident__volver {
+  margin-top: 28px; padding: 8px 0 4px;
+  font-family: var(--maquina); font-size: 11.5px; font-weight: 700; letter-spacing: var(--espaciado); text-transform: uppercase;
+  color: var(--granate);
+}
+.ident__volver::before { content: "↺ "; }
+.ident__volver:hover { color: var(--oliva); }
+
+/* esquinas dibujadas (símbolo #esquina, común a todas las páginas) */
+.ident .naipe__esquina { position: absolute; width: 46px; height: 46px; color: var(--orla); filter: url(#mano); pointer-events: none; }
+.ident .naipe__esquina--a { top: 22px; left: 22px; }
+.ident .naipe__esquina--b { top: 22px; right: 22px; scale: -1 1; }
+.ident .naipe__esquina--c { bottom: 22px; left: 22px; scale: 1 -1; }
+.ident .naipe__esquina--d { bottom: 22px; right: 22px; scale: -1 -1; }
+
+.ident__cabeza { margin-top: 8px; }
+.ident__reino { margin: 0; font-family: var(--maquina); font-size: 12px; font-weight: 700; letter-spacing: .24em; text-transform: uppercase; }
+.ident__ministerio { margin: 2px 0 0; font-style: italic; font-size: 16px; color: var(--orla); }
+.ident__num { margin: 6px 0 0; font-family: var(--maquina); font-size: 11px; letter-spacing: .16em; color: rgba(247, 243, 232, .75); }
+.ident__num span { color: var(--orla); font-weight: 700; }
+
+.ident__arco {
+  width: 50%; aspect-ratio: 3 / 3.4; margin-top: 18px;
+  display: grid; place-items: end center;
+  overflow: hidden;
+  border-radius: 999px 999px 4px 4px;
+  border: 1px solid var(--orla);
+  box-shadow: inset 0 0 0 6px var(--fondo), inset 0 0 0 7px color-mix(in srgb, var(--orla) 50%, transparent);
+  background: radial-gradient(70% 60% at 50% 35%, color-mix(in srgb, var(--orla) 30%, transparent), transparent 75%);
+}
+.ident__retrato { width: 86%; height: auto; }
+.ident--bruja .r-cuerpo { fill: var(--granate-hondo); } .ident--bruja .r-pelo { fill: #2e0b1c; } .ident--bruja .r-cara { fill: var(--rosa); }
+.ident--driade .r-cuerpo { fill: var(--oliva-hondo); } .ident--driade .r-pelo { fill: var(--oliva-noche); } .ident--driade .r-cara { fill: #a2aa5e; }
+.ident .r-hojas { fill: var(--lima); }
+.ident .r-brillo { fill: var(--orla); }
+
+.ident__titulo { margin: 18px 0 14px; font-weight: 400; font-size: 32px; line-height: 1.05; }
+.ident__titulo small { display: block; margin-top: 6px; font-family: var(--maquina); font-size: 11.5px; font-weight: 700; letter-spacing: .3em; text-transform: uppercase; color: var(--orla); }
+
+.ident__datos { width: 100%; margin: 0; display: grid; text-align: left; }
+.ident__campo {
+  display: grid; grid-template-columns: 132px 1fr; align-items: baseline; gap: 10px;
+  padding: 7px 2px 6px;
+  border-bottom: 1px dotted color-mix(in srgb, var(--orla) 55%, transparent);
+}
+.ident__campo dt { font-family: var(--maquina); font-size: 10.5px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--orla); }
+.ident__campo dd { margin: 0; font-family: "Homemade Apple", var(--libro); font-size: 13.5px; line-height: 1.6; color: var(--beige); }
+
+/* casilla de firma: una tirilla de papel, como en un carné, para que la tinta se lea bien */
+.ident__firma {
+  align-self: flex-end;
+  display: grid; justify-items: end; gap: 2px;
+  min-width: 210px;
+  margin: 20px 0 0;
+  padding: 8px 14px 6px;
+  background: var(--papel);
+  border-radius: 2px;
+  box-shadow: inset 0 0 0 3px var(--papel), inset 0 0 0 4px color-mix(in srgb, var(--fondo) 35%, transparent), 0 4px 10px -6px rgba(20, 10, 5, .5);
+  rotate: -1.5deg;
+}
+.ident__firma span { display: block; font-family: "Homemade Apple", cursive; font-size: 20px; line-height: 1.4; color: var(--tinta); rotate: -3deg; }
+.ident__firma-img { display: block; width: 160px; height: auto; rotate: -3deg; }
+.ident__firma small { font-family: var(--maquina); font-size: 9px; letter-spacing: .16em; text-transform: uppercase; color: var(--fondo); border-top: 1px solid color-mix(in srgb, var(--fondo) 40%, transparent); padding-top: 3px; align-self: stretch; text-align: right; }
+
+/* el sello de tinta pisa la esquina del retrato */
+.ident__sello {
+  position: absolute; top: 118px; left: 50px;
+  width: 96px; color: var(--orla);
+  rotate: -14deg; opacity: .5;
+  pointer-events: none;
+  transition: scale .6s var(--muelle), opacity .4s;
+}
+.ident--driade .ident__sello { left: auto; right: 50px; rotate: 12deg; }
+.ident__sello text { fill: currentColor; font-family: var(--libro); font-weight: 600; }
+.ident:not(.is-girada):hover .ident__sello { scale: 1.06; opacity: .7; }
+
 .ident__elegir { margin: 0; text-align: center; }
-@media (max-width: 760px) {
-  .identidades { grid-template-columns: 1fr; grid-template-rows: none; grid-auto-flow: row; gap: 18px; }
-  .ident__elegir { margin-bottom: 22px; }
+
+@media (max-width: 960px) {
+  .identidades { grid-template-columns: minmax(0, 440px); grid-template-rows: none; grid-auto-flow: row; gap: 18px; }
+  .ident__elegir { margin-bottom: 26px; }
+}
+@media (max-width: 420px) {
+  .ident__marco { padding: 40px 30px 36px; }
+  .ident__campo { grid-template-columns: 1fr; gap: 0; }
+  .ident__sello { width: 76px; left: 34px; }
+  .ident--driade .ident__sello { right: 34px; }
 }
 
 /* ---------- 3 · El recetario ---------- */

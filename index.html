@@ -38,11 +38,11 @@
       </nav>
 
       <a class="logo" href="#top" aria-label="Linaria Studio, inicio">
-        <img src="assets/img/logo.png" alt="" width="640" height="307">
+        <img src="assets/img/logo.png" alt="" width="800" height="376">
       </a>
 
       <nav class="nav nav--der" aria-label="Secundaria">
-        <a class="nav__link" href="nosotras.html">Sobre nosotras</a>
+        <a class="nav__link" href="#remitentes">Sobre nosotras</a>
         <div class="desplegable desplegable--idioma">
           <button class="nav__link desplegable__btn" type="button" aria-expanded="false" aria-controls="menu-idioma">Idioma<svg class="desplegable__flecha" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 8c2 2 3 3 5 5 2-2 3-3 5-5"/></svg></button>
           <ul class="desplegable__menu" id="menu-idioma">
@@ -222,73 +222,93 @@
           <p class="intro">Dos maestras, un mismo tema cada mes. Cada una lo observa, lo dibuja y te aporta aprendizajes relacionados con su profesión.</p>
         </header>
         <div class="identidades">
-          <article class="ident ident--bruja revela" aria-label="Carta de identidad de la bruja Morna Valdelumbre">
-            <div class="ident__marco">
-              <header class="ident__cabeza">
-                <p class="ident__reino">Reino de Linaria</p>
-                <p class="ident__ministerio">Ministerio de Correo Lento</p>
-              </header>
-              <p class="ident__num">Nº <span>473829</span></p>
-              <div class="ident__cuerpo">
-                <figure class="ident__foto"><svg viewBox="0 0 100 128" aria-hidden="true">
-                  <rect width="100" height="128" fill="url(#sepiaB)"/>
-                  <defs><linearGradient id="sepiaB" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#cbb79a"/><stop offset="1" stop-color="#8f7a5e"/></linearGradient></defs>
-                  <path d="M14 128c2-24 16-36 36-36s34 12 36 36z" fill="#3b3128"/>
-                  <ellipse cx="50" cy="70" rx="15" ry="18" fill="#5a4a3b"/>
-                  <path d="M33 88c4-18 8-28 17-28s13 10 17 28c-6-4-11-6-17-6s-11 2-17 6z" fill="#2f271f"/>
-                  <path d="M18 56c10-4 54-4 64 0-6 3-58 3-64 0z" fill="#2b231c"/>
-                  <path d="M34 55c4-18 9-34 22-46 2 6 0 10-4 12 6 10 8 22 10 34z" fill="#2b231c"/>
-                  <circle cx="72" cy="22" r="1.4" fill="#f3e6c8"/><circle cx="20" cy="30" r="1" fill="#f3e6c8"/>
-                </svg></figure>
-                <div class="ident__datos">
-                  <h3 class="ident__titulo">Carta de identidad<small>de bruja</small></h3>
-                  <dl><div class="ident__campo"><dt>Nombre</dt><dd>Morna Valdelumbre</dd></div><div class="ident__campo"><dt>Especie</dt><dd>Bruja</dd></div><div class="ident__campo"><dt>Edad</dt><dd>trescientos y pico (dice 29)</dd></div><div class="ident__campo"><dt>Magia</dt><dd>Hechizos de tinta y noches sin luna</dd></div><div class="ident__campo"><dt>Soporte favorito</dt><dd>Tinta china y acuarela</dd></div><div class="ident__campo"><dt>Domicilio</dt><dd>La torre más alta del castillo</dd></div><div class="ident__campo"><dt>Señas</dt><dd>Hollín en los dedos</dd></div></dl>
+          <article class="ident ident--bruja revela" aria-labelledby="ident-bruja">
+            <div class="ident__in">
+              <div class="ident__marco ident__cara ident__cara--frente">
+                <svg class="naipe__esquina naipe__esquina--a" viewBox="0 0 60 60" aria-hidden="true"><use href="#esquina"/></svg><svg class="naipe__esquina naipe__esquina--b" viewBox="0 0 60 60" aria-hidden="true"><use href="#esquina"/></svg><svg class="naipe__esquina naipe__esquina--c" viewBox="0 0 60 60" aria-hidden="true"><use href="#esquina"/></svg><svg class="naipe__esquina naipe__esquina--d" viewBox="0 0 60 60" aria-hidden="true"><use href="#esquina"/></svg>
+                <header class="ident__cabeza">
+                  <p class="ident__reino">Reino de Linaria</p>
+                  <p class="ident__ministerio">Ministerio de Correo Lento</p>
+                </header>
+                <p class="ident__num">Nº <span>473829</span></p>
+                <div class="ident__arco">
+                  <svg class="ident__retrato" viewBox="0 0 100 128" aria-hidden="true">
+                      <path d="M14 128c2-24 16-36 36-36s34 12 36 36z" class="r-cuerpo"/>
+                      <ellipse cx="50" cy="70" rx="15" ry="18" class="r-cara"/>
+                      <path d="M33 88c4-18 8-28 17-28s13 10 17 28c-6-4-11-6-17-6s-11 2-17 6z" class="r-pelo"/>
+                      <path d="M18 56c10-4 54-4 64 0-6 3-58 3-64 0z" class="r-pelo"/>
+                      <path d="M34 55c4-18 9-34 22-46 2 6 0 10-4 12 6 10 8 22 10 34z" class="r-pelo"/>
+                      <path d="M78 14l1.6 4 4 1.6-4 1.6-1.6 4-1.6-4-4-1.6 4-1.6z M20 26l1.2 3 3 1.2-3 1.2-1.2 3-1.2-3-3-1.2 3-1.2z" class="r-brillo"/>
+                    </svg>
                 </div>
+                <h3 class="ident__titulo" id="ident-bruja"><span class="sr">Morna Valdelumbre: </span>Carta de identidad<small>de bruja</small></h3>
+                <dl class="ident__datos"><div class="ident__campo"><dt>Nombre</dt><dd>Morna Valdelumbre</dd></div><div class="ident__campo"><dt>Especie</dt><dd>Bruja</dd></div><div class="ident__campo"><dt>Edad</dt><dd>trescientos y pico (dice 29)</dd></div><div class="ident__campo"><dt>Magia</dt><dd>Hechizos de tinta y noches sin luna</dd></div><div class="ident__campo"><dt>Soporte favorito</dt><dd>Tinta china y acuarela</dd></div><div class="ident__campo"><dt>Domicilio</dt><dd>La torre más alta del castillo</dd></div><div class="ident__campo"><dt>Señas</dt><dd>Hollín en los dedos</dd></div></dl>
+                <p class="ident__firma"><span>Morna Valdelumbre</span><small>Firma de la titular</small></p>
+                <svg class="ident__sello" viewBox="0 0 120 120" aria-hidden="true">
+                  <defs><path id="curvaB" d="M60 60 m-44 0 a44 44 0 1 1 88 0 a44 44 0 1 1 -88 0"/></defs>
+                  <circle cx="60" cy="60" r="56" fill="none" stroke="currentColor" stroke-width="2.6"/>
+                  <circle cx="60" cy="60" r="33" fill="none" stroke="currentColor" stroke-width="1.6"/>
+                  <text font-size="11.5" letter-spacing="2.2"><textPath href="#curvaB">MINISTERIO DE CORREO LENTO · LINARIA ·</textPath></text>
+                  <path fill="currentColor" d="M60 44l4 11 11 1-9 7 3 11-9-6-9 6 3-11-9-7 11-1z"/>
+                </svg>
+                <button class="ident__girar" type="button" aria-expanded="false">Darle la vuelta<span class="sr"> para conocer a Anna Labella, la ilustradora de Morna</span></button>
               </div>
-              <p class="ident__firma"><span>Morna Valdelumbre</span><small>Firma de la titular</small></p>
-              <svg class="ident__sello" viewBox="0 0 120 120" aria-hidden="true">
-                <defs><path id="curvaB" d="M60 60 m-44 0 a44 44 0 1 1 88 0 a44 44 0 1 1 -88 0"/></defs>
-                <circle cx="60" cy="60" r="56" fill="none" stroke="currentColor" stroke-width="2.6"/>
-                <circle cx="60" cy="60" r="33" fill="none" stroke="currentColor" stroke-width="1.6"/>
-                <text font-size="11.5" letter-spacing="2.2"><textPath href="#curvaB">MINISTERIO DE CORREO LENTO · LINARIA ·</textPath></text>
-                <path fill="currentColor" d="M60 44l4 11 11 1-9 7 3 11-9-6-9 6 3-11-9-7 11-1z"/>
-              </svg>
+              <div class="ident__cara ident__cara--dorso" inert>
+                <svg class="naipe__esquina naipe__esquina--a" viewBox="0 0 60 60" aria-hidden="true"><use href="#esquina"/></svg><svg class="naipe__esquina naipe__esquina--b" viewBox="0 0 60 60" aria-hidden="true"><use href="#esquina"/></svg><svg class="naipe__esquina naipe__esquina--c" viewBox="0 0 60 60" aria-hidden="true"><use href="#esquina"/></svg><svg class="naipe__esquina naipe__esquina--d" viewBox="0 0 60 60" aria-hidden="true"><use href="#esquina"/></svg>
+                <p class="ident__detras">Detrás de Morna</p>
+                <div class="ident__foto" aria-hidden="true"><span>AL</span></div>
+                <h4 class="ident__ilustradora">Anna Labella</h4>
+                <p class="ident__bio">Pendiente: la presentación de la ilustradora (quién es, cómo empezó a dibujar, qué la inspira). Unas cuatro o cinco líneas.</p>
+                <p class="ident__tecnica"><span>Técnica</span> tinta china y acuarela</p>
+                <p class="ident__enlaces"><a class="enlace" href="#portfolio">Portfolio</a><a class="enlace" href="#instagram">Instagram</a></p>
+                <button class="ident__volver" type="button">Volver a la carta</button>
+              </div>
             </div>
           </article>
-          <p class="ident__elegir ident__elegir--bruja revela"><a class="enlace" href="#recetario" data-elegir="bruja">Elegir sus cartas</a></p>
-          <article class="ident ident--driade revela" aria-label="Permiso de boticaria de la dríade Melisa">
-            <div class="ident__marco">
-              <header class="ident__cabeza">
-                <p class="ident__reino">Reino de Linaria</p>
-                <p class="ident__ministerio">Ministerio de Correo Lento</p>
-              </header>
-              <p class="ident__num">Nº <span>26731</span></p>
-              <div class="ident__cuerpo">
-                <figure class="ident__foto"><svg viewBox="0 0 100 128" aria-hidden="true">
-                  <defs><linearGradient id="sepiaD" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#d6c2a8"/><stop offset="1" stop-color="#9b8166"/></linearGradient></defs>
-                  <rect width="100" height="128" fill="url(#sepiaD)"/>
-                  <path d="M14 128c2-24 16-36 36-36s34 12 36 36z" fill="#46392c"/>
-                  <path d="M28 100c-6-30 2-62 22-62s28 32 22 62c-4-8-6-24-8-36H36c-2 12-4 28-8 36z" fill="#3a2f24"/>
-                  <ellipse cx="50" cy="62" rx="14" ry="17" fill="#6a5745"/>
-                  <g fill="#5f6e4a"><path d="M34 44c-8-2-10-8-8-12 6 1 9 6 8 12z"/><path d="M44 38c-4-6-2-12 2-14 3 5 2 10-2 14z"/><path d="M56 38c4-6 2-12-2-14-3 5-2 10 2 14z"/><path d="M66 44c8-2 10-8 8-12-6 1-9 6-8 12z"/></g>
-                  <g fill="#e9d6c8"><circle cx="40" cy="41" r="2.2"/><circle cx="60" cy="41" r="2.2"/><circle cx="50" cy="37" r="2.4"/></g>
-                </svg></figure>
-                <div class="ident__datos">
-                  <h3 class="ident__titulo">Permiso de boticaria<small>de dríade</small></h3>
-                  <dl><div class="ident__campo"><dt>Nombre</dt><dd>Melisa</dd></div><div class="ident__campo"><dt>Especie</dt><dd>Dríade</dd></div><div class="ident__campo"><dt>Edad</dt><dd>la de su roble</dd></div><div class="ident__campo"><dt>Magia</dt><dd>Botánica: remedios, infusiones y alguna cosa más</dd></div><div class="ident__campo"><dt>Soporte favorito</dt><dd>Lápices de colores y gouache</dd></div><div class="ident__campo"><dt>Domicilio</dt><dd>El bosque encantado, tercer roble</dd></div><div class="ident__campo"><dt>Señas</dt><dd>Hojas en el pelo, siempre</dd></div></dl>
+          <p class="ident__elegir revela"><a class="enlace" href="#recetario" data-elegir="bruja">Elegir sus cartas</a></p>
+          <article class="ident ident--driade revela" aria-labelledby="ident-driade">
+            <div class="ident__in">
+              <div class="ident__marco ident__cara ident__cara--frente">
+                <svg class="naipe__esquina naipe__esquina--a" viewBox="0 0 60 60" aria-hidden="true"><use href="#esquina"/></svg><svg class="naipe__esquina naipe__esquina--b" viewBox="0 0 60 60" aria-hidden="true"><use href="#esquina"/></svg><svg class="naipe__esquina naipe__esquina--c" viewBox="0 0 60 60" aria-hidden="true"><use href="#esquina"/></svg><svg class="naipe__esquina naipe__esquina--d" viewBox="0 0 60 60" aria-hidden="true"><use href="#esquina"/></svg>
+                <header class="ident__cabeza">
+                  <p class="ident__reino">Reino de Linaria</p>
+                  <p class="ident__ministerio">Ministerio de Correo Lento</p>
+                </header>
+                <p class="ident__num">Nº <span>26731</span></p>
+                <div class="ident__arco">
+                  <svg class="ident__retrato" viewBox="0 0 100 128" aria-hidden="true">
+                      <path d="M14 128c2-24 16-36 36-36s34 12 36 36z" class="r-cuerpo"/>
+                      <path d="M28 100c-6-30 2-62 22-62s28 32 22 62c-4-8-6-24-8-36H36c-2 12-4 28-8 36z" class="r-pelo"/>
+                      <ellipse cx="50" cy="62" rx="14" ry="17" class="r-cara"/>
+                      <g class="r-hojas"><path d="M34 44c-8-2-10-8-8-12 6 1 9 6 8 12z"/><path d="M44 38c-4-6-2-12 2-14 3 5 2 10-2 14z"/><path d="M56 38c4-6 2-12-2-14-3 5-2 10 2 14z"/><path d="M66 44c8-2 10-8 8-12-6 1-9 6-8 12z"/></g>
+                      <g class="r-brillo"><circle cx="40" cy="41" r="2.2"/><circle cx="60" cy="41" r="2.2"/><circle cx="50" cy="37" r="2.4"/></g>
+                    </svg>
                 </div>
+                <h3 class="ident__titulo" id="ident-driade"><span class="sr">Melisa: </span>Permiso de boticaria<small>de dríade</small></h3>
+                <dl class="ident__datos"><div class="ident__campo"><dt>Nombre</dt><dd>Melisa</dd></div><div class="ident__campo"><dt>Especie</dt><dd>Dríade</dd></div><div class="ident__campo"><dt>Edad</dt><dd>la de su roble</dd></div><div class="ident__campo"><dt>Magia</dt><dd>Botánica: remedios, infusiones y alguna cosa más</dd></div><div class="ident__campo"><dt>Soporte favorito</dt><dd>Lápices de colores y gouache</dd></div><div class="ident__campo"><dt>Domicilio</dt><dd>El bosque encantado, tercer roble</dd></div><div class="ident__campo"><dt>Señas</dt><dd>Hojas en el pelo, siempre</dd></div></dl>
+                <p class="ident__firma"><img class="ident__firma-img" src="assets/img/firma-melisa.webp" alt="Melisa" width="600" height="208" loading="lazy"><small>Firma de la titular</small></p>
+                <svg class="ident__sello" viewBox="0 0 120 120" aria-hidden="true">
+                  <defs><path id="curvaD" d="M60 60 m-44 0 a44 44 0 1 1 88 0 a44 44 0 1 1 -88 0"/></defs>
+                  <circle cx="60" cy="60" r="56" fill="none" stroke="currentColor" stroke-width="2.6"/>
+                  <circle cx="60" cy="60" r="33" fill="none" stroke="currentColor" stroke-width="1.6"/>
+                  <text font-size="11.5" letter-spacing="2.2"><textPath href="#curvaD">REGISTRO DE BOTICARIAS · LINARIA ·</textPath></text>
+                  <path fill="currentColor" d="M60 44l4 11 11 1-9 7 3 11-9-6-9 6 3-11-9-7 11-1z"/>
+                </svg>
+                <button class="ident__girar" type="button" aria-expanded="false">Darle la vuelta<span class="sr"> para conocer a Isabel Lara, la ilustradora de Melisa</span></button>
               </div>
-              <p class="ident__firma"><span>Melisa</span><small>Firma de la titular</small></p>
-              <svg class="ident__sello" viewBox="0 0 120 120" aria-hidden="true">
-                <defs><path id="curvaD" d="M60 60 m-44 0 a44 44 0 1 1 88 0 a44 44 0 1 1 -88 0"/></defs>
-                <circle cx="60" cy="60" r="56" fill="none" stroke="currentColor" stroke-width="2.6"/>
-                <circle cx="60" cy="60" r="33" fill="none" stroke="currentColor" stroke-width="1.6"/>
-                <text font-size="11.5" letter-spacing="2.2"><textPath href="#curvaD">REGISTRO DE BOTICARIAS · LINARIA ·</textPath></text>
-                <path fill="currentColor" d="M60 44l4 11 11 1-9 7 3 11-9-6-9 6 3-11-9-7 11-1z"/>
-              </svg>
+              <div class="ident__cara ident__cara--dorso" inert>
+                <svg class="naipe__esquina naipe__esquina--a" viewBox="0 0 60 60" aria-hidden="true"><use href="#esquina"/></svg><svg class="naipe__esquina naipe__esquina--b" viewBox="0 0 60 60" aria-hidden="true"><use href="#esquina"/></svg><svg class="naipe__esquina naipe__esquina--c" viewBox="0 0 60 60" aria-hidden="true"><use href="#esquina"/></svg><svg class="naipe__esquina naipe__esquina--d" viewBox="0 0 60 60" aria-hidden="true"><use href="#esquina"/></svg>
+                <p class="ident__detras">Detrás de Melisa</p>
+                <div class="ident__foto" aria-hidden="true"><span>IL</span></div>
+                <h4 class="ident__ilustradora">Isabel Lara</h4>
+                <p class="ident__bio">Pendiente: la presentación de la ilustradora (quién es, cómo empezó a dibujar, qué la inspira). Unas cuatro o cinco líneas.</p>
+                <p class="ident__tecnica"><span>Técnica</span> lápices de colores y gouache</p>
+                <p class="ident__enlaces"><a class="enlace" href="#portfolio">Portfolio</a><a class="enlace" href="#instagram">Instagram</a></p>
+                <button class="ident__volver" type="button">Volver a la carta</button>
+              </div>
             </div>
           </article>
-          <p class="ident__elegir ident__elegir--driade revela"><a class="enlace" href="#recetario" data-elegir="driade">Elegir sus cartas</a></p>
+          <p class="ident__elegir revela"><a class="enlace" href="#recetario" data-elegir="driade">Elegir sus cartas</a></p>
         </div>
       </div>
     </section>
@@ -708,10 +728,10 @@
 
   <footer class="pie">
     <div class="pie__caja">
-      <a class="pie__logo" href="index.html" aria-label="Linaria Studio, inicio"><img src="assets/img/logo.png" alt="" width="640" height="307" loading="lazy"></a>
+      <a class="pie__logo" href="index.html" aria-label="Linaria Studio, inicio"><img src="assets/img/logo.png" alt="" width="800" height="376" loading="lazy"></a>
       <svg class="ramita" viewBox="0 0 240 40" aria-hidden="true"><use href="#ramita"/></svg>
       <nav class="pie__nav" aria-label="Pie de página">
-        <a href="#recetario">Mail Club</a><a href="eventos.html">Eventos</a><a href="editorial.html">Editorial</a><a href="tienda.html">Tienda</a><a href="meses-pasados.html">Meses pasados</a><a href="nosotras.html">Sobre nosotras</a>
+        <a href="#recetario">Mail Club</a><a href="eventos.html">Eventos</a><a href="editorial.html">Editorial</a><a href="tienda.html">Tienda</a><a href="meses-pasados.html">Meses pasados</a><a href="#remitentes">Sobre nosotras</a>
       </nav>
       <p class="pie__correo"><a href="mailto:hola@linariastudio.com">hola@linariastudio.com</a></p>
       <p class="pie__firma">Escrito a mano (más o menos) en Barcelona · Linaria Studio</p>
