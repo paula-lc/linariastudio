@@ -2,6 +2,9 @@
 import { anadirACesta } from '../src/comun.js';
 import { PLAZAS_LIBRES, REGALO_MESES, MAESTRAS, MESES, precioMensual, precioRegalo, euros } from '../src/config.js';
 import '../src/postal.js';
+import { iniciarNaipes } from '../src/naipes.js';
+
+iniciarNaipes();
 
 (() => {
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;

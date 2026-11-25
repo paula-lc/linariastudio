@@ -540,7 +540,27 @@
 }
 .ident--bruja { --fondo: var(--granate); --orla: var(--rosa); }
 .ident--driade { --fondo: var(--oliva); --orla: var(--lima); }
-.ident { display: grid; }
+/* cada cara gira por su cuenta con su propia perspectiva (sin preserve-3d, que Safari aplana) */
+.ident__in { display: grid; height: 100%; }
+.ident__cara {
+  grid-area: 1 / 1;
+  position: relative;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: perspective(1600px) rotateY(0deg);
+  transition: transform .9s var(--suave), translate .5s var(--muelle), box-shadow .4s;
+}
+.ident__cara--dorso { transform: perspective(1600px) rotateY(180deg); }
+.ident.is-girada .ident__cara--frente { transform: perspective(1600px) rotateY(-180deg); }
+.ident.is-girada .ident__cara--dorso { transform: perspective(1600px) rotateY(0deg); }
+/* la cara que no se ve no recibe clics (por si el navegador no conoce "inert") */
+.ident:not(.is-girada) .ident__cara--dorso, .ident.is-girada .ident__cara--frente { pointer-events: none; }
+@media (prefers-reduced-motion: reduce) {
+  .ident__cara, .ident.is-girada .ident__cara { transform: none; }
+  .ident__cara--dorso { opacity: 0; }
+  .ident.is-girada .ident__cara--dorso { opacity: 1; }
+  .ident.is-girada .ident__cara--frente { opacity: 0; }
+}
 .ident__marco {
   position: relative;
   display: flex; flex-direction: column; align-items: center;
@@ -553,10 +573,56 @@
   color: var(--beige);
   outline: 1px solid var(--orla); outline-offset: -12px;
   box-shadow: 0 30px 50px -28px rgba(30, 20, 10, .65);
-  transition: translate .5s var(--muelle), box-shadow .4s;
+  cursor: pointer;
 }
 .ident__marco::before { content: ""; position: absolute; inset: 18px; border: 1px solid color-mix(in srgb, var(--orla) 45%, transparent); border-radius: 6px; pointer-events: none; }
-.ident:hover .ident__marco { translate: 0 -6px; box-shadow: 0 40px 60px -30px rgba(30, 20, 10, .7); }
+.ident:not(.is-girada):hover .ident__cara--frente { translate: 0 -6px; box-shadow: 0 40px 60px -30px rgba(30, 20, 10, .7); }
+
+/* todo el frente es pulsable: el botón se estira sobre la ficha */
+.ident__girar {
+  margin-top: 18px; padding: 6px 0 2px;
+  font-family: var(--maquina); font-size: 11.5px; font-weight: 700; letter-spacing: var(--espaciado); text-transform: uppercase;
+  color: var(--beige);
+}
+.ident__girar::before { content: "↻ "; color: var(--orla); }
+.ident__girar::after { content: ""; position: absolute; inset: 0; border-radius: 14px; }
+.ident__girar:focus-visible { outline: none; }
+.ident__girar:focus-visible::after { outline: 2px dashed var(--orla); outline-offset: -6px; }
+
+/* dorso: la ilustradora, en papel con la orla del color de su maestra */
+.ident__cara--dorso {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  padding: 56px 40px 40px;
+  text-align: center;
+  border-radius: 14px;
+  background: var(--papel);
+  color: var(--tinta);
+  border: 1px solid var(--fondo);
+  box-shadow: inset 0 0 0 9px var(--papel), inset 0 0 0 10px color-mix(in srgb, var(--fondo) 50%, transparent), 0 30px 50px -28px rgba(30, 20, 10, .5);
+}
+.ident .ident__cara--dorso .naipe__esquina { color: var(--fondo); opacity: .75; }
+.ident__detras { margin: 0; font-family: var(--maquina); font-size: 12px; font-weight: 700; letter-spacing: .24em; text-transform: uppercase; color: var(--fondo); }
+.ident__foto {
+  display: grid; place-items: center;
+  width: 140px; height: 140px; margin: 18px 0;
+  border-radius: 50%;
+  border: 1px solid var(--fondo);
+  box-shadow: inset 0 0 0 5px var(--papel), inset 0 0 0 6px color-mix(in srgb, var(--fondo) 40%, transparent);
+  background: color-mix(in srgb, var(--orla) 25%, var(--papel));
+  font-size: 40px; color: var(--fondo);
+}
+.ident__ilustradora { margin: 0; font-weight: 400; font-size: 32px; line-height: 1.1; color: var(--granate); }
+.ident__bio { margin: 12px 0 14px; max-width: 340px; font-size: 18px; color: var(--tinta-suave); }
+.ident__tecnica { margin: 0; font-style: italic; font-size: 17px; }
+.ident__tecnica span { margin-right: 6px; font-family: var(--maquina); font-style: normal; font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--oliva); }
+.ident__enlaces { display: flex; justify-content: center; gap: 24px; margin: 16px 0 0; }
+.ident__volver {
+  margin-top: 28px; padding: 8px 0 4px;
+  font-family: var(--maquina); font-size: 11.5px; font-weight: 700; letter-spacing: var(--espaciado); text-transform: uppercase;
+  color: var(--granate);
+}
+.ident__volver::before { content: "↺ "; }
+.ident__volver:hover { color: var(--oliva); }
 
 /* esquinas dibujadas (símbolo #esquina, común a todas las páginas) */
 .ident .naipe__esquina { position: absolute; width: 46px; height: 46px; color: var(--orla); filter: url(#mano); pointer-events: none; }
@@ -612,7 +678,7 @@
 }
 .ident--driade .ident__sello { left: auto; right: 50px; rotate: 12deg; }
 .ident__sello text { fill: currentColor; font-family: var(--libro); font-weight: 600; }
-.ident:hover .ident__sello { scale: 1.06; opacity: .7; }
+.ident:not(.is-girada):hover .ident__sello { scale: 1.06; opacity: .7; }
 
 .ident__elegir { margin: 0; text-align: center; }
 
