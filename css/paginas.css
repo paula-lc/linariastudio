@@ -94,13 +94,8 @@
 
 /* ---------- Sobre nosotras: cartas que se giran ---------- */
 .naipes { display: grid; grid-template-columns: repeat(2, minmax(0, 380px)); justify-content: center; gap: 56px; }
-.naipe { perspective: 1600px; }
-.naipe__in {
-  display: grid;
-  transform-style: preserve-3d;
-  transition: transform 1s var(--suave);
-}
-.naipe.is-girada .naipe__in { transform: rotateY(180deg); }
+/* cada cara gira por su cuenta con su propia perspectiva (sin preserve-3d, que Safari aplana) */
+.naipe__in { display: grid; }
 .naipe__cara {
   grid-area: 1 / 1;
   position: relative;
@@ -112,12 +107,18 @@
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
   box-shadow: 0 30px 50px -28px rgba(30, 20, 10, .65);
+  transform: perspective(1600px) rotateY(0deg);
+  transition: transform .9s var(--suave), translate .5s var(--muelle), box-shadow .4s;
 }
-.naipe__cara--dorso { transform: rotateY(180deg); }
+.naipe__cara--dorso { transform: perspective(1600px) rotateY(180deg); }
+.naipe.is-girada .naipe__cara--frente { transform: perspective(1600px) rotateY(-180deg); }
+.naipe.is-girada .naipe__cara--dorso { transform: perspective(1600px) rotateY(0deg); }
+/* la cara que no se ve no recibe clics (por si el navegador no conoce "inert") */
+.naipe:not(.is-girada) .naipe__cara--dorso, .naipe.is-girada .naipe__cara--frente { pointer-events: none; }
 
-/* frente: un naipe oscuro con filetes y esquinas dibujadas */
-.naipe--bruja { --fondo: var(--granate-hondo); --orla: var(--rosa); }
-.naipe--driade { --fondo: var(--oliva-noche); --orla: var(--lima); }
+/* frente: el color de cada maestra, con filetes y esquinas dibujadas */
+.naipe--bruja { --fondo: var(--granate); --orla: var(--rosa); }
+.naipe--driade { --fondo: var(--oliva); --orla: var(--lima); }
 .naipe__cara--frente {
   background:
     radial-gradient(80% 50% at 50% 30%, rgba(255, 255, 255, .07), transparent 70%),
@@ -125,7 +126,6 @@
   color: var(--beige);
   outline: 1px solid var(--orla); outline-offset: -12px;
   cursor: pointer;
-  transition: translate .5s var(--muelle), box-shadow .4s;
 }
 .naipe:not(.is-girada) .naipe__cara--frente:hover { translate: 0 -6px; box-shadow: 0 40px 60px -30px rgba(30, 20, 10, .7); }
 .naipe__cara--frente::before { content: ""; position: absolute; inset: 18px; border: 1px solid color-mix(in srgb, var(--orla) 45%, transparent); border-radius: 6px; pointer-events: none; }
@@ -145,8 +145,8 @@
   background: radial-gradient(70% 60% at 50% 35%, color-mix(in srgb, var(--orla) 30%, transparent), transparent 75%);
 }
 .naipe__retrato { width: 86%; height: auto; }
-.naipe--bruja .r-cuerpo { fill: #2a0d1b; } .naipe--bruja .r-pelo { fill: #1c0812; } .naipe--bruja .r-cara { fill: #6b3348; }
-.naipe--driade .r-cuerpo { fill: #1d220e; } .naipe--driade .r-pelo { fill: #151a09; } .naipe--driade .r-cara { fill: #4f5a26; }
+.naipe--bruja .r-cuerpo { fill: var(--granate-hondo); } .naipe--bruja .r-pelo { fill: #2e0b1c; } .naipe--bruja .r-cara { fill: var(--rosa); }
+.naipe--driade .r-cuerpo { fill: var(--oliva-hondo); } .naipe--driade .r-pelo { fill: var(--oliva-noche); } .naipe--driade .r-cara { fill: #a2aa5e; }
 .r-hojas { fill: var(--lima); }
 .r-brillo { fill: var(--orla); }
 .naipe__nombre { margin: 22px 0 0; font-weight: 400; font-size: 36px; line-height: 1.05; }
@@ -201,8 +201,8 @@
 }
 @media (prefers-reduced-motion: reduce) {
   /* sin giro: la cara cambia con un fundido */
-  .naipe__in, .naipe.is-girada .naipe__in { transform: none; }
-  .naipe__cara--dorso { transform: none; opacity: 0; }
+  .naipe__cara, .naipe.is-girada .naipe__cara { transform: none; }
+  .naipe__cara--dorso { opacity: 0; }
   .naipe.is-girada .naipe__cara--dorso { opacity: 1; }
   .naipe.is-girada .naipe__cara--frente { opacity: 0; }
 }

@@ -674,6 +674,9 @@
 .maestras__pociones, .maestras__opciones { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; max-width: 460px; margin-inline: auto; }
 .maestras__pociones { justify-items: center; align-items: end; margin-bottom: 4px; }
 .pocion { width: min(92px, 100%); height: auto; overflow: visible; }
+.pocion__etq { display: grid; justify-items: center; width: 100%; cursor: pointer; transition: translate .5s var(--muelle); }
+.pocion__etq:hover { translate: 0 -5px; }
+.pocion__etq:hover .pocion { animation: remueve .8s ease-in-out; transform-origin: 50% 90%; }
 .pocion--ambas { width: min(104px, 100%); }
 .pocion__vidrio { fill: rgba(255, 255, 255, .4); stroke: var(--tinta); stroke-width: 1.5; stroke-linejoin: round; filter: url(#mano); }
 .pocion__brillo { fill: none; stroke: #fff; stroke-width: 2.4; stroke-linecap: round; opacity: .85; }
