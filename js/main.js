@@ -1,4 +1,7 @@
-/* Linaria Studio · interacciones */
+/* Linaria Studio · interacciones de la portada */
+import { anadirACesta } from '../src/comun.js';
+import { PLAZAS_LIBRES, REGALO_MESES, MAESTRAS, MESES, precioMensual, precioRegalo, euros } from '../src/config.js';
+
 (() => {
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const $ = (s, c = document) => c.querySelector(s);
@@ -7,8 +10,6 @@
   /* ---------- Entrada ---------- */
   // las piezas de "Lo que cabe en un sobre" reutilizan las del sobre de la portada
   $$('[data-clona]').forEach(d => { const o = $(d.dataset.clona); if (o) d.append(o.cloneNode(true)); });
-  $$('.lema__palabra, .lema__script').forEach((el, i) => el.style.setProperty('--w', i));
-  requestAnimationFrame(() => requestAnimationFrame(() => document.body.classList.add('listo')));
 
   /* ---------- El sobre ---------- */
   const escena = $('.escena');
@@ -37,12 +38,7 @@
       quitarFoco();
     }
   };
-  const abrir = () => estado('abierto');
   sobre.addEventListener('click', () => estado(escena.dataset.estado === 'abierto' ? 'cerrado' : 'abierto'));
-  $('.apertura__dentro').addEventListener('click', () => {
-    abrir();
-    escena.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' });
-  });
 
   // Si nadie lo abre, se entreabre solo (al hacer scroll o tras un rato)
   let asomo = false;
@@ -137,165 +133,83 @@
   ajusta();
   addEventListener('resize', ajusta);
 
-  /* ---------- Lo que cabe en un sobre: cada texto hace responder a su pieza ---------- */
-  // pasar el ratón la destaca; un clic (o Intro) la deja delante hasta pulsar otra vez o fuera
-  const piezas = $$('.sobre-contenido [data-pieza]');
-  let fija = '';
-  const enfoca = k => piezas.forEach(el => el.classList.toggle('is-foco', !!k && el.dataset.pieza === k));
-  const marcaFija = () => piezas.forEach(el => el.classList.toggle('is-fija', !!fija && el.dataset.pieza === fija));
-  const alterna = k => { fija = fija === k ? '' : k; marcaFija(); enfoca(fija); };
-  piezas.forEach(el => {
-    el.addEventListener('pointerenter', e => { if (e.pointerType === 'mouse') enfoca(el.dataset.pieza); });
-    el.addEventListener('pointerleave', e => { if (e.pointerType === 'mouse') enfoca(fija); });
-    el.addEventListener('click', e => {
-      e.stopPropagation();
-      alterna(el.dataset.pieza);
-      // en móvil las piezas están debajo del papel: bajamos hasta ellas
-      const mesaMovil = $('.papel-mesa--movil');
-      if (el.classList.contains('pl-item') && mesaMovil && mesaMovil.offsetParent && matchMedia('(max-width: 760px)').matches) {
-        const destino = mesaMovil.getBoundingClientRect().top + scrollY - (innerHeight - mesaMovil.offsetHeight) / 2;
-        if (window.__lenis) window.__lenis.scrollTo(destino, { duration: reduce ? 0 : 1.1 });
-        else window.scrollTo({ top: destino, behavior: reduce ? 'auto' : 'smooth' });
+  /* ---------- El recetario: configurador de la suscripción ---------- */
+  const form = $('#suscripcion');
+  if (form) {
+    const recetario = $('#recetario');
+    const radios = $$('input[name="maestra"]');
+    const regalo = $('#para-regalar');
+    const cajaMeses = $('.regalo__meses');
+    const cumple = $('#cumple');
+    const cifra = $('.precio__cifra');
+    const unidad = $('.precio__unidad');
+    const resumen = $('.receta__maestra');
+    const errMaestra = $('#error-maestra'), errCumple = $('#error-cumple');
+    const completo = PLAZAS_LIBRES <= 0;
+
+    // plazas: el número vive en src/config.js
+    $$('.plazas__num').forEach(n => { n.textContent = PLAZAS_LIBRES; });
+    recetario.classList.toggle('is-completo', completo);
+    if (completo) $('.receta__anadir').textContent = 'Reservar mi plaza';
+
+    // los meses del regalo salen de la configuración (3, 6, 12)
+    $$('input[name="meses"]').forEach(r => { if (!REGALO_MESES.includes(+r.value)) r.closest('label').remove(); });
+
+    const plan = () => radios.find(r => r.checked)?.value || '';
+    const meses = () => +($('input[name="meses"]:checked')?.value || REGALO_MESES[0]);
+
+    const actualiza = (animar = true) => {
+      const p = plan();
+      recetario.dataset.plan = p;
+      const esRegalo = regalo.checked;
+      cajaMeses.hidden = !esRegalo;
+      recetario.classList.toggle('es-regalo', esRegalo);
+      const mensual = precioMensual(p || 'bruja');
+      const precio = esRegalo ? precioRegalo(mensual, meses()) : mensual;
+      const texto = euros(precio);
+      if (cifra.textContent !== texto) {
+        cifra.textContent = texto;
+        if (animar) { cifra.classList.remove('is-cambia'); void cifra.offsetWidth; cifra.classList.add('is-cambia'); }
       }
+      unidad.textContent = esRegalo ? `pago único · ${meses()} meses` : 'al mes';
+      resumen.textContent = p ? MAESTRAS[p].nombre : 'aún sin elegir';
+      resumen.classList.toggle('is-vacio', !p);
+      if (p) errMaestra.hidden = true;
+    };
+    radios.forEach(r => r.addEventListener('change', () => {
+      actualiza();
+      recetario.classList.remove('is-remueve'); void recetario.offsetWidth; recetario.classList.add('is-remueve');
+    }));
+    regalo.addEventListener('change', () => actualiza());
+    $$('input[name="meses"]').forEach(r => r.addEventListener('change', () => actualiza()));
+    cumple.addEventListener('change', () => { if (cumple.value) { errCumple.hidden = true; cumple.removeAttribute('aria-invalid'); } });
+    actualiza(false);
+
+    // "Elegir sus cartas" en las fichas: marca a la maestra y baja al recetario
+    $$('[data-elegir]').forEach(a => a.addEventListener('click', () => {
+      const r = radios.find(x => x.value === a.dataset.elegir);
+      if (r) { r.checked = true; r.dispatchEvent(new Event('change')); }
+    }));
+
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      const p = plan();
+      errMaestra.hidden = !!p;
+      errCumple.hidden = !!cumple.value;
+      cumple.toggleAttribute('aria-invalid', !cumple.value);
+      if (!p) { radios[0].focus(); radios[0].closest('.maestras').scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' }); return; }
+      if (!cumple.value) { cumple.focus(); return; }
+
+      const mes = MESES[+cumple.value - 1];
+      const mensual = precioMensual(p);
+      const quien = MAESTRAS[p].nombre;
+      const reserva = completo ? ' · reserva para el mes que viene' : '';
+      const item = regalo.checked
+        ? { id: `regalo-${p}-${meses()}-${cumple.value}`, nombre: `Regalo · ${meses()} meses · ${quien}`, precio: precioRegalo(mensual, meses()), unico: true, plan: p, meses: meses(), cumple: mes, detalle: `Cumpleaños de quien lo recibe: ${mes}${reserva}` }
+        : { id: `club-${p}`, nombre: `Mail Club · ${quien}`, precio: mensual, plan: p, cumple: mes, detalle: `Tu cumpleaños: ${mes}${reserva}` };
+      anadirACesta(item, $('.receta__anadir'));
     });
-  });
-  $$('.pl-item').forEach(el => {
-    el.tabIndex = 0;
-    el.setAttribute('role', 'button');
-    el.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); alterna(el.dataset.pieza); } });
-    el.addEventListener('focus', () => enfoca(el.dataset.pieza));
-    el.addEventListener('blur', () => enfoca(fija));
-  });
-  document.addEventListener('click', () => { if (fija) { fija = ''; marcaFija(); enfoca(''); } });
-
-  /* ---------- Idioma ---------- */
-  const aviso = $('.idioma__aviso');
-  $('[data-lang="ca"]').addEventListener('click', () => {
-    aviso.textContent = 'Aviat en català';
-    aviso.classList.add('is-visible');
-    clearTimeout(aviso._t);
-    aviso._t = setTimeout(() => aviso.classList.remove('is-visible'), 2200);
-  });
-
-  /* ---------- Plan del Mail Club ---------- */
-  const PLANES = {
-    bruja: { id: 'club-bruja', nombre: 'Mail Club · la bruja', precio: 13 },
-    driade: { id: 'club-driade', nombre: 'Mail Club · la dríade', precio: 13 },
-    ambas: { id: 'club-ambas', nombre: 'Mail Club · las dos', precio: +(26 * .88).toFixed(2) },
-  };
-  const EXTRAS = {
-    regalo: { id: 'regalo', nombre: 'Regalo · 3 meses', precio: 36, unico: true },
-    encargo: { id: 'encargo', nombre: 'Carta por encargo', precio: 65, unico: true },
-  };
-  let plan = '';
-  const cifra = $('.plan__cifra');
-  const euros = n => n.toLocaleString('es-ES', { minimumFractionDigits: n % 1 ? 2 : 0, maximumFractionDigits: 2 });
-  // se puede elegir una carta o las dos; con las dos se aplica el descuento
-  const elegidas = new Set();
-  $$('.plan__elige [role="checkbox"]').forEach(b => {
-    b.addEventListener('click', () => {
-      const q = b.dataset.quien;
-      elegidas.has(q) ? elegidas.delete(q) : elegidas.add(q);
-      b.setAttribute('aria-checked', elegidas.has(q));
-      plan = elegidas.size === 2 ? 'ambas' : ([...elegidas][0] || '');
-      const pl = $('.plan');
-      pl.dataset.elegido = plan ? 'si' : 'no';
-      pl.dataset.plan = plan;
-      if (!plan) return;
-      pl.classList.remove('is-remueve'); void pl.offsetWidth; pl.classList.add('is-remueve');
-      const nuevo = euros(PLANES[plan].precio);
-      if (cifra.textContent !== nuevo) {
-        cifra.textContent = nuevo;
-        cifra.classList.remove('is-cambia'); void cifra.offsetWidth; cifra.classList.add('is-cambia');
-      }
-    });
-  });
-
-  /* ---------- Cesta (índice) ---------- */
-  const indice = $('#indice');
-  const btnCesta = $('.cesta__btn');
-  const num = $('.cesta__num');
-  const lista = $('.indice__lista');
-  let cesta = [];
-  try { cesta = JSON.parse(localStorage.getItem('linaria-cesta')) || []; } catch (_) {}
-  const guarda = () => { try { localStorage.setItem('linaria-cesta', JSON.stringify(cesta)); } catch (_) {} };
-  const romano = n => ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X'][n] || n + 1;
-
-  const pinta = () => {
-    lista.innerHTML = cesta.map((it, i) => `
-      <li style="--i:${i}" data-id="${it.id}">
-        <p class="indice__cap">Capítulo ${romano(i)}</p>
-        <p class="indice__linea"><span class="nombre">${it.nombre}${it.cant > 1 ? ' ×' + it.cant : ''}</span><span class="indice__puntos"></span><span class="precio">${euros(it.precio * it.cant)} €${it.unico ? '' : '/mes'}</span><button class="indice__quitar" type="button" aria-label="Quitar ${it.nombre}">×</button></p>
-      </li>`).join('');
-    const total = cesta.reduce((s, it) => s + it.precio * it.cant, 0);
-    const alMes = cesta.filter(it => !it.unico).reduce((s, it) => s + it.precio * it.cant, 0);
-    const unaVez = total - alMes;
-    $('.indice__suma').textContent = euros(+total.toFixed(2)) + ' €';
-    $('.indice__desglose').textContent = alMes && unaVez
-      ? `${euros(+alMes.toFixed(2))} € al mes + ${euros(+unaVez.toFixed(2))} € de pago único`
-      : alMes ? 'al mes, envío incluido' : unaVez ? 'pago único, envío incluido' : '';
-    num.textContent = cesta.reduce((s, it) => s + it.cant, 0);
-    indice.classList.toggle('tiene', cesta.length > 0);
-  };
-  pinta();
-
-  const abreIndice = () => {
-    indice.hidden = false;
-    requestAnimationFrame(() => indice.classList.add('is-abierto'));
-    btnCesta.setAttribute('aria-expanded', 'true');
-  };
-  const cierraIndice = (devolver) => {
-    indice.classList.remove('is-abierto');
-    btnCesta.setAttribute('aria-expanded', 'false');
-    setTimeout(() => { if (!indice.classList.contains('is-abierto')) indice.hidden = true; }, 420);
-    if (devolver) btnCesta.focus();
-  };
-  btnCesta.addEventListener('click', () => indice.classList.contains('is-abierto') ? cierraIndice() : (abreIndice(), $('.indice__cerrar').focus({ preventScroll: true })));
-  $('.indice__cerrar').addEventListener('click', () => cierraIndice(true));
-  document.addEventListener('keydown', e => { if (e.key === 'Escape' && indice.classList.contains('is-abierto')) cierraIndice(true); });
-  document.addEventListener('pointerdown', e => {
-    if (indice.classList.contains('is-abierto') && !e.target.closest('.cesta') && !e.target.closest('[data-anadir]')) cierraIndice();
-  });
-  lista.addEventListener('click', e => {
-    const b = e.target.closest('.indice__quitar');
-    if (!b) return;
-    const li = b.closest('li');
-    li.classList.add('is-sale');
-    setTimeout(() => { cesta = cesta.filter(it => it.id !== li.dataset.id); guarda(); pinta(); }, reduce ? 0 : 420);
-  });
-
-  const salta = () => { num.classList.remove('is-salta'); void num.offsetWidth; num.classList.add('is-salta'); };
-  const vuela = (desde, fin) => {
-    if (reduce) return fin();
-    const a = desde.getBoundingClientRect(), b = btnCesta.getBoundingClientRect();
-    const x0 = a.left + a.width / 2, y0 = a.top + a.height / 2;
-    const x1 = b.left + b.width / 2, y1 = b.top + b.height / 2;
-    const el = document.createElement('span');
-    el.className = 'vuela';
-    document.body.append(el);
-    const altura = Math.min(y0, y1) - 120;
-    const anim = el.animate([
-      { transform: `translate(${x0}px, ${y0}px) scale(.4) rotate(0deg)`, opacity: 0 },
-      { transform: `translate(${x0}px, ${y0 - 30}px) scale(1.15) rotate(-10deg)`, opacity: 1, offset: .15 },
-      { transform: `translate(${(x0 + x1) / 2}px, ${altura}px) scale(1) rotate(12deg)`, offset: .55 },
-      { transform: `translate(${x1}px, ${y1}px) scale(.35) rotate(-4deg)`, opacity: .9 },
-    ], { duration: 950, easing: 'cubic-bezier(.45,.05,.4,1)' });
-    anim.onfinish = () => { el.remove(); fin(); };
-  };
-
-  $$('[data-anadir]').forEach(b => b.addEventListener('click', () => {
-    if (b.dataset.anadir === 'plan' && !plan) return;
-    const p = b.dataset.anadir === 'plan' ? PLANES[plan] : EXTRAS[b.dataset.anadir];
-    const ya = cesta.find(it => it.id === p.id);
-    if (ya) { if (p.unico) ya.cant++; }
-    else {
-      // un solo plan de club a la vez
-      if (p.id.startsWith('club-')) cesta = cesta.filter(it => !it.id.startsWith('club-'));
-      cesta.push({ ...p, cant: 1 });
-    }
-    guarda();
-    vuela(b, () => { pinta(); salta(); abreIndice(); });
-  }));
+  }
 
   /* ---------- Revelado al hacer scroll ---------- */
   $$('.titulo').forEach(t => { t.innerHTML = '<span class="titulo__texto">' + t.innerHTML + '</span>'; });
@@ -390,18 +304,9 @@
     avanza();
   }
 
-  /* ---------- Las guirnaldas avanzan un poco con el scroll ---------- */
-  if (!reduce) {
-    const seps = $$('.separador__vid');
-    let pend = false;
-    const deriva = () => { pend = false; seps.forEach((v, i) => v.style.setProperty('--desp', (scrollY * (i % 2 ? -.12 : .12)).toFixed(1) + 'px')); };
-    addEventListener('scroll', () => { if (!pend) { pend = true; requestAnimationFrame(deriva); } }, { passive: true });
-    deriva();
-  }
-
   /* ---------- Preguntas: abrir y cerrar con muelle ---------- */
-  $$('.faq details').forEach(d => {
-    const sum = d.querySelector('summary'), r = d.querySelector('.faq__r');
+  $$('.acordeon details').forEach(d => {
+    const sum = d.querySelector('summary'), r = d.querySelector('.acordeon__r');
     sum.addEventListener('click', e => {
       if (reduce) return;
       e.preventDefault();
@@ -449,7 +354,6 @@
   if (postal) {
     const nota = $('#postal-nota'), nombre = $('#postal-nombre'), email = $('#postal-email');
     const firma = $('.postal__firma'), fecha = $('.postal__fecha'), hecho = $('.postal__hecho'), marco = $('.postal__marco');
-    const MESES = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
     const ponFecha = () => { const d = new Date(); fecha.textContent = `A ${d.getDate()} de ${MESES[d.getMonth()]} de ${d.getFullYear()}`; };
     ponFecha();
     // la firma de la carta se escribe sola con el nombre del remite
@@ -479,38 +383,4 @@
     });
   }
 
-  /* ---------- Franjas: mensajitos que van cambiando ---------- */
-  $$('.franja[data-mensajes]').forEach((f, n) => {
-    let ms; try { ms = JSON.parse(f.dataset.mensajes); } catch (_) { return; }
-    const p = f.querySelector('p');
-    let i = 0, pausa = false;
-    f.addEventListener('pointerenter', () => { pausa = true; });
-    f.addEventListener('pointerleave', () => { pausa = false; });
-    const cambia = () => {
-      if (pausa || document.hidden) return;
-      i = (i + 1) % ms.length;
-      if (reduce) { p.textContent = '• ' + ms[i] + ' •'; return; }
-      p.classList.add('is-sale');
-      setTimeout(() => {
-        p.textContent = '• ' + ms[i] + ' •';
-        p.classList.remove('is-sale'); p.classList.add('is-entra');
-        void p.offsetWidth;
-        p.classList.remove('is-entra');
-      }, 380);
-    };
-    setTimeout(() => setInterval(cambia, 4200), n * 1300);
-  });
-
-  /* ---------- Barra fija en móvil ---------- */
-  const barra = $('.barra-movil');
-  const apertura = $('.apertura'), unete = $('#unete');
-  const vis = { apertura: true, unete: false };
-  new IntersectionObserver(es => {
-    es.forEach(en => { vis[en.target === apertura ? 'apertura' : 'unete'] = en.isIntersecting; });
-    barra.classList.toggle('is-visible', !vis.apertura && !vis.unete);
-  }).observe(apertura);
-  new IntersectionObserver(es => {
-    es.forEach(en => { vis.unete = en.isIntersecting; });
-    barra.classList.toggle('is-visible', !vis.apertura && !vis.unete);
-  }).observe(unete);
 })();

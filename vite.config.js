@@ -12,6 +12,8 @@ export default defineConfig({
         tienda: resolve(import.meta.dirname, 'tienda.html'),
         mesesPasados: resolve(import.meta.dirname, 'meses-pasados.html'),
         nosotras: resolve(import.meta.dirname, 'nosotras.html'),
+        eventos: resolve(import.meta.dirname, 'eventos.html'),
+        editorial: resolve(import.meta.dirname, 'editorial.html'),
       },
     },
   },
