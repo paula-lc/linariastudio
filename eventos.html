@@ -5,12 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="claude:viewport-fit-sides" content="cover">
   <title>Eventos · Linaria Studio</title>
-  <meta name="description" content="Ilustración en directo para bodas y todo tipo de celebraciones. Talleres, actividades y dibujo en vivo. Acércate a conocernos más.">
+  <meta name="description" content="Ilustración en directo para bodas y celebraciones, talleres y dibujo en vivo.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Courier+Prime:wght@400;700&family=Caveat:wght@400;600&family=Great+Vibes&family=Homemade+Apple&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/base.css">
-  <script type="module" src="./src/comun.js"></script>
+  <link rel="stylesheet" href="css/paginas.css">
+  <link rel="stylesheet" href="css/postal.css">
+  <script type="module" src="./src/contacto.js"></script>
 </head>
 <body>
 
@@ -58,16 +60,127 @@
   </div>
 
   <main id="contenido">
-    <section class="seccion pronto">
-      <div class="seccion__caja seccion__caja--estrecha">
+    <section class="seccion" aria-labelledby="servicio-titulo">
+      <div class="seccion__caja">
         <header class="cabeza">
           <p class="antetitulo">Servicios</p>
-          <h1 class="titulo"><em>Eventos</em></h1>
+          <h1 class="titulo" id="servicio-titulo"><em>Eventos</em></h1>
           <svg class="ramita" viewBox="0 0 240 40" aria-hidden="true"><use href="#ramita"/></svg>
           <p class="intro">Ilustración en directo para bodas y todo tipo de celebraciones. Talleres, actividades y dibujo en vivo. Acércate a conocernos más.</p>
         </header>
-        <p class="pronto__nota">Esta página llegará pronto.</p>
-        <p class="centro"><a class="boton" href="index.html">Volver al inicio</a></p>
+        <ul class="oficios">
+          <li class="oficio">
+            <span class="oficio__num">I</span>
+            <h2 class="oficio__titulo">Bodas</h2>
+            <p>Dibujamos en directo a quienes celebran, para que el recuerdo se lleve a casa.</p>
+          </li>
+          <li class="oficio">
+            <span class="oficio__num">II</span>
+            <h2 class="oficio__titulo">Celebraciones</h2>
+            <p>Cumpleaños, ferias, presentaciones o cualquier reunión que merezca un dibujo.</p>
+          </li>
+          <li class="oficio">
+            <span class="oficio__num">III</span>
+            <h2 class="oficio__titulo">Talleres y dibujo en vivo</h2>
+            <p>Actividades para hacer con las manos, en grupo y con un poco de magia.</p>
+          </li>
+        </ul>
+        <p class="oficios__nota">Estamos preparando ejemplos, fotos y tarifas. Mientras tanto, escríbenos y te lo contamos todo.</p>
+      </div>
+    </section>
+
+    <section class="seccion seccion--clara contacto" id="contacto" aria-labelledby="contacto-titulo">
+      <div class="seccion__caja">
+        <header class="cabeza">
+          <p class="antetitulo">Contacto</p>
+          <h2 class="titulo" id="contacto-titulo">Pídenos <em>presupuesto</em></h2>
+          <svg class="ramita" viewBox="0 0 240 40" aria-hidden="true"><use href="#ramita"/></svg>
+          <p class="intro">Cuéntanos la fecha, el lugar y qué te imaginas. Al otro lado estamos las dos ilustradoras de Linaria Studio. Leemos todos los mensajes.</p>
+        </header>
+        <form class="postal" id="postal" novalidate aria-labelledby="contacto-titulo">
+          <div class="postal__marco">
+            <!-- cara izquierda: la carta -->
+            <div class="postal__carta">
+              <label class="postal__etq-mensaje" for="postal-nota">Tu mensaje</label>
+              <p class="postal__saludo" aria-hidden="true">Querida Linaria,</p>
+              <textarea class="postal__lineas" id="postal-nota" name="mensaje" rows="6" required
+                placeholder="Una propuesta, una duda o un simple saludo."
+                aria-describedby="error-nota"></textarea>
+              <p class="postal__error" id="error-nota" hidden>Escribe unas líneas antes de sellarla.</p>
+              <p class="postal__despedida">Con cariño,<span class="postal__firma" aria-hidden="true"></span></p>
+            </div>
+
+            <span class="postal__division" aria-hidden="true"></span>
+
+            <!-- cara derecha: sello, matasellos y remite -->
+            <div class="postal__remite">
+              <div class="postal__sellos" aria-hidden="true">
+                <svg class="postal__matasellos" viewBox="0 0 160 160">
+                  <defs><path id="arcoSup" d="M24 80a56 56 0 1 1 112 0"/><path id="arcoInf" d="M22 82a58 58 0 0 0 116 0"/></defs>
+                  <circle cx="80" cy="80" r="74" fill="none" stroke="currentColor" stroke-width="2"/>
+                  <circle cx="80" cy="80" r="68" fill="none" stroke="currentColor" stroke-width="1" stroke-dasharray="3 2"/>
+                  <text font-size="12" letter-spacing="2" font-weight="600"><textPath href="#arcoSup" startOffset="50%" text-anchor="middle">CORREO LENTO</textPath></text>
+                  <text font-size="11" letter-spacing="2" font-weight="600"><textPath href="#arcoInf" startOffset="50%" text-anchor="middle">LINARIA</textPath></text>
+                  <path fill="currentColor" d="M80 50c-10 0-17 8-17 18v14c0 10 7 18 17 18s17-8 17-18V68c0-10-7-18-17-18zm-17 4l6 7m28-7l-6 7"/>
+                  <circle cx="73" cy="68" r="4" fill="#FBF8EE"/><circle cx="87" cy="68" r="4" fill="#FBF8EE"/>
+                  <circle cx="73" cy="68" r="1.6" fill="currentColor"/><circle cx="87" cy="68" r="1.6" fill="currentColor"/>
+                  <path fill="currentColor" d="M30 70l2 5 5 2-5 2-2 5-2-5-5-2 5-2zM130 70l2 5 5 2-5 2-2 5-2-5-5-2 5-2z"/>
+                </svg>
+                <div class="postal__sello">
+                  <svg viewBox="0 0 60 70">
+                    <rect width="60" height="70" fill="#f2d9d8"/>
+                    <text x="5" y="11" font-size="7" font-weight="700" fill="#667436">CORREOS</text>
+                    <path d="M30 60V20" stroke="#667436" stroke-width="2" stroke-linecap="round"/>
+                    <path d="M30 48c-8-2-12-8-9-12 4 1 7 6 9 12zM30 42c8-2 12-8 9-12-4 1-7 6-9 12z" fill="#667436"/>
+                    <path d="M30 32c-7-2-10-8-7-11 3 1 6 6 7 11zM30 28c7-2 10-8 7-11-3 1-6 6-7 11z" fill="#d9828d"/>
+                    <circle cx="30" cy="18" r="3.4" fill="#621e3e"/>
+                  </svg>
+                </div>
+              </div>
+
+              <p class="postal__para">Para: <span>Linaria Studio</span></p>
+
+              <div class="postal__campo">
+                <label for="postal-nombre">Tu nombre</label>
+                <input id="postal-nombre" name="nombre" autocomplete="name" required aria-describedby="error-nombre">
+              </div>
+              <p class="postal__error" id="error-nombre" hidden>Dinos quién nos escribe.</p>
+
+              <div class="postal__campo">
+                <label for="postal-email">Tu correo</label>
+                <input id="postal-email" name="email" type="email" autocomplete="email" required placeholder="para poder contestarte" aria-describedby="error-email">
+              </div>
+              <p class="postal__error" id="error-email" hidden>Necesitamos un correo válido para responderte.</p>
+
+              <div class="postal__campo">
+                <span class="postal__etq" id="postal-tema-etq">Asunto</span>
+                <div class="lista">
+                  <input type="hidden" name="asunto" value="un evento">
+                  <button class="lista__boton" type="button" id="postal-tema" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="postal-tema-etq postal-tema">
+                    <span class="lista__valor">un evento</span>
+                    <svg class="lista__flecha" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 8c2 2 3 3 5 5 2-2 3-3 5-5"/></svg>
+                  </button>
+                  <ul class="lista__opciones" role="listbox" tabindex="-1" aria-labelledby="postal-tema-etq" hidden><li role="option" id="tema-op0" aria-selected="false" data-valor="el Mail Club"><span class="lista__lacre" aria-hidden="true"></span>el Mail Club</li><li role="option" id="tema-op1" aria-selected="true" data-valor="un evento"><span class="lista__lacre" aria-hidden="true"></span>un evento</li><li role="option" id="tema-op2" aria-selected="false" data-valor="un proyecto editorial"><span class="lista__lacre" aria-hidden="true"></span>un proyecto editorial</li><li role="option" id="tema-op3" aria-selected="false" data-valor="la tienda"><span class="lista__lacre" aria-hidden="true"></span>la tienda</li><li role="option" id="tema-op4" aria-selected="false" data-valor="otra cosa"><span class="lista__lacre" aria-hidden="true"></span>otra cosa</li></ul>
+                </div>
+              </div>
+
+              <p class="postal__fecha" aria-live="off"></p>
+
+              <p class="postal__error" id="error-envio" role="alert" hidden>No hemos podido enviar la postal. Prueba otra vez o escríbenos a hola@linariastudio.com.</p>
+              <div class="postal__enviar">
+                <button class="boton" type="submit">Sellar y enviar</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- confirmación -->
+          <div class="postal__hecho" hidden>
+            <p class="postal__estampa"><span>Correo lento</span>Postal sellada</p>
+            <p class="postal__gracias"></p>
+            <p class="postal__aviso">Versión de prueba: esta postal todavía no se envía de verdad.</p>
+            <button class="boton boton--claro" type="button" data-otra>Escribir otra postal</button>
+          </div>
+        </form>
       </div>
     </section>
   </main>

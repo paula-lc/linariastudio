@@ -1,6 +1,7 @@
 /* Linaria Studio · interacciones de la portada */
 import { anadirACesta } from '../src/comun.js';
 import { PLAZAS_LIBRES, REGALO_MESES, MAESTRAS, MESES, precioMensual, precioRegalo, euros } from '../src/config.js';
+import '../src/postal.js';
 
 (() => {
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -323,64 +324,5 @@ import { PLAZAS_LIBRES, REGALO_MESES, MAESTRAS, MESES, precioMensual, precioRega
       }
     });
   });
-
-  /* ---------- Desplegable de la postal (lista accesible con teclado) ---------- */
-  $$('.lista').forEach(lista => {
-    const boton = $('.lista__boton', lista), caja = $('.lista__opciones', lista), valor = $('.lista__valor', lista);
-    const oculto = $('input[type=hidden]', lista), ops = $$('[role=option]', caja);
-    let activa = 0;
-    const marca = i => { activa = (i + ops.length) % ops.length; ops.forEach((o, k) => o.classList.toggle('is-activa', k === activa)); caja.setAttribute('aria-activedescendant', ops[activa].id); };
-    const abre = () => { caja.hidden = false; requestAnimationFrame(() => lista.classList.add('is-abierta')); boton.setAttribute('aria-expanded', 'true'); marca(ops.findIndex(o => o.getAttribute('aria-selected') === 'true')); caja.focus(); };
-    const cierra = (devolver = true) => { lista.classList.remove('is-abierta'); boton.setAttribute('aria-expanded', 'false'); setTimeout(() => { if (!lista.classList.contains('is-abierta')) caja.hidden = true; }, 260); if (devolver) boton.focus(); };
-    const elige = i => { ops.forEach((o, k) => o.setAttribute('aria-selected', k === i)); valor.textContent = oculto.value = ops[i].dataset.valor; cierra(); };
-    boton.addEventListener('click', () => lista.classList.contains('is-abierta') ? cierra() : abre());
-    boton.addEventListener('keydown', e => { if (['ArrowDown', 'ArrowUp'].includes(e.key)) { e.preventDefault(); abre(); } });
-    ops.forEach((o, i) => { o.addEventListener('click', () => elige(i)); o.addEventListener('pointermove', () => marca(i)); });
-    caja.addEventListener('keydown', e => {
-      if (e.key === 'ArrowDown') { e.preventDefault(); marca(activa + 1); }
-      else if (e.key === 'ArrowUp') { e.preventDefault(); marca(activa - 1); }
-      else if (e.key === 'Home') { e.preventDefault(); marca(0); }
-      else if (e.key === 'End') { e.preventDefault(); marca(ops.length - 1); }
-      else if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); elige(activa); }
-      else if (e.key === 'Escape') { e.preventDefault(); cierra(); }
-      else if (e.key === 'Tab') cierra(false);
-    });
-    document.addEventListener('pointerdown', e => { if (lista.classList.contains('is-abierta') && !lista.contains(e.target)) cierra(false); });
-    lista.closest('form')?.addEventListener('reset', () => setTimeout(() => elige(0), 0));
-  });
-
-  /* ---------- Postal de contacto ---------- */
-  const postal = $('#postal');
-  if (postal) {
-    const nota = $('#postal-nota'), nombre = $('#postal-nombre'), email = $('#postal-email');
-    const firma = $('.postal__firma'), fecha = $('.postal__fecha'), hecho = $('.postal__hecho'), marco = $('.postal__marco');
-    const ponFecha = () => { const d = new Date(); fecha.textContent = `A ${d.getDate()} de ${MESES[d.getMonth()]} de ${d.getFullYear()}`; };
-    ponFecha();
-    // la firma de la carta se escribe sola con el nombre del remite
-    nombre.addEventListener('input', () => { firma.textContent = nombre.value.trim(); });
-    const campos = [[nota, 'error-nota', v => v.trim()], [nombre, 'error-nombre', v => v.trim()], [email, 'error-email', v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim())]];
-    campos.forEach(([el, id]) => el.addEventListener('input', () => { $('#' + id).hidden = true; el.removeAttribute('aria-invalid'); }));
-    postal.addEventListener('submit', e => {
-      e.preventDefault();
-      let primero = null;
-      campos.forEach(([el, id, ok]) => {
-        const bien = !!ok(el.value);
-        $('#' + id).hidden = bien;
-        el.toggleAttribute('aria-invalid', !bien);
-        if (!bien && !primero) primero = el;
-      });
-      if (primero) { primero.focus(); return; }
-      // TODO: conectar con el servicio de formularios (Formspree, Netlify Forms…)
-      $('.postal__gracias').textContent = `Gracias, ${nombre.value.trim()}. Te contestaremos a ${email.value.trim()}.`;
-      marco.hidden = true;
-      hecho.hidden = false;
-      $('.postal__estampa').classList.remove('is-estampa'); void hecho.offsetWidth; $('.postal__estampa').classList.add('is-estampa');
-      $('[data-otra]', postal).focus();
-    });
-    $('[data-otra]', postal).addEventListener('click', () => {
-      postal.reset(); firma.textContent = ''; ponFecha();
-      hecho.hidden = true; marco.hidden = false; nota.focus();
-    });
-  }
 
 })();
