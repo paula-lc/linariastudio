@@ -609,7 +609,7 @@
   border: 1px solid var(--fondo);
   box-shadow: inset 0 0 0 5px var(--papel), inset 0 0 0 6px color-mix(in srgb, var(--fondo) 40%, transparent);
   background: color-mix(in srgb, var(--orla) 25%, var(--papel));
-  font-size: 40px; color: var(--fondo);
+  font-style: italic; font-size: 44px; letter-spacing: .02em; color: var(--fondo);
 }
 .ident__ilustradora { margin: 0; font-weight: 400; font-size: 32px; line-height: 1.1; color: var(--granate); }
 .ident__bio { margin: 12px 0 14px; max-width: 340px; font-size: 18px; color: var(--tinta-suave); }
