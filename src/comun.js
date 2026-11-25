@@ -17,6 +17,7 @@ function filtrosDeTinta() {
         <feTurbulence type="fractalNoise" baseFrequency=".035" numOctaves="2" seed="3" result="r"/>
         <feDisplacementMap in="SourceGraphic" in2="r" scale="2.4"/>
       </filter>
+      <symbol id="esquina" viewBox="0 0 60 60"> <path d="M4 56V22C4 12 12 4 22 4h34" fill="none" stroke="currentColor" stroke-width="1.2"/> <path d="M10 56V24c0-8 6-14 14-14h32" fill="none" stroke="currentColor" stroke-width=".7"/> <path d="M16 22c0-4 3-6 6-6 4 0 5 4 3 6s-5 1-5-1" fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round"/> <circle cx="4" cy="4" r="2.2" fill="currentColor"/></symbol>
       <symbol id="ramita" viewBox="0 0 240 40">
         <path d="M6 21c40-3 78-4 114-1s74 3 114-1" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
         <g fill="none" stroke="currentColor" stroke-width="1.1" stroke-linecap="round">
