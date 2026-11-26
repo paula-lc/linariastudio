@@ -694,49 +694,42 @@
 .ident:not(.is-girada):hover .ident__sello { scale: 1.06; opacity: .7; }
 
 .ident__elegir { margin: 0; text-align: center; }
-/* retrato al lado de los datos cuando la ficha es ancha (ordenador y tableta): menos alta.
-   Morna con el retrato a la izquierda, Melisa a la derecha, en espejo. */
+/* ficha ancha (ordenador y tableta): título y datos a la izquierda; retrato y firma a la derecha.
+   Misma distribución en las dos fichas. En móvil todo va en una columna. */
 .ident { container-type: inline-size; }
 @container (min-width: 470px) {
   .ident__cara--frente {
     display: grid;
-    grid-template-columns: 38% minmax(0, 1fr);
-    grid-template-areas:
-      "cabeza cabeza"
-      "num    num"
-      "arco   titulo"
-      "arco   datos"
-      "firma  firma"
-      "girar  girar";
-    column-gap: 26px;
-    align-items: start;
-    padding: 40px 38px 30px;
-  }
-  .ident--driade .ident__cara--frente {
-    grid-template-columns: minmax(0, 1fr) 38%;
+    grid-template-columns: minmax(0, 1fr) 40%;
     grid-template-areas:
       "cabeza cabeza"
       "num    num"
       "titulo arco"
       "datos  arco"
-      "firma  firma"
+      "datos  firma"
       "girar  girar";
+    grid-template-rows: auto auto auto auto 1fr auto;
+    column-gap: 22px;
+    align-items: start;
+    padding: 40px 36px 30px;
   }
   .ident__cabeza { grid-area: cabeza; }
   .ident__num { grid-area: num; }
-  .ident__arco { grid-area: arco; width: 100%; margin-top: 22px; }
-  .ident__titulo { grid-area: titulo; margin: 20px 0 8px; font-size: 27px; text-align: left; }
+  .ident__arco { grid-area: arco; justify-self: center; width: 86%; margin-top: 30px; }
+  .ident__titulo { grid-area: titulo; margin: 18px 0 8px; font-size: 27px; text-align: left; }
   .ident__titulo small { letter-spacing: .24em; }
   .ident__datos { grid-area: datos; }
-  .ident__campo { grid-template-columns: 82px minmax(0, 1fr); gap: 8px; padding: 5px 0 4px; }
+  .ident__campo { grid-template-columns: 84px minmax(0, 1fr); gap: 8px; padding: 5px 0 4px; }
   .ident__campo dt { font-size: 9.5px; letter-spacing: .1em; line-height: 1.35; }
   .ident__campo dd { font-size: 12.5px; line-height: 1.5; }
-  .ident__firma { grid-area: firma; justify-self: end; margin-top: 16px; }
-  .ident--driade .ident__firma { justify-self: start; }
-  .ident__girar { grid-area: girar; justify-self: center; margin-top: 14px; }
-  /* el sello pisa la esquina exterior del retrato */
-  .ident__sello { top: 96px; left: 24px; width: 84px; }
-  .ident--driade .ident__sello { left: auto; right: 24px; }
+  .ident__firma { grid-area: firma; justify-self: stretch; min-width: 0; margin-top: 18px; }
+  .ident__firma-img { width: 100%; max-width: 160px; }
+  .ident__firma { padding-inline: 10px; }
+  .ident__firma span { font-size: min(15px, 2.6cqw); white-space: nowrap; }
+  .ident__firma small { letter-spacing: .12em; }
+  .ident__girar { grid-area: girar; justify-self: center; margin-top: 18px; }
+  /* el sello pisa la esquina superior derecha del retrato */
+  .ident__sello, .ident--driade .ident__sello { top: 112px; left: auto; right: 22px; width: 84px; rotate: 12deg; }
 }
 
 @media (max-width: 960px) {
