@@ -532,11 +532,11 @@
 /* ---------- 2 · Las remitentes: fichas con el mismo estilo que los naipes de Sobre nosotras ---------- */
 .identidades {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 440px));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   grid-template-rows: auto auto;
   grid-auto-flow: column;
-  justify-content: center;
-  gap: 26px 56px;
+  max-width: 1100px; margin-inline: auto;
+  gap: 26px 48px;
 }
 .ident--bruja { --fondo: var(--granate); --orla: var(--rosa); }
 .ident--driade { --fondo: var(--oliva); --orla: var(--lima); }
@@ -591,6 +591,7 @@
 
 /* dorso: la ilustradora, en papel con la orla del color de su maestra */
 .ident__cara--dorso {
+  cursor: pointer;
   display: flex; flex-direction: column; align-items: center; justify-content: center;
   padding: 56px 40px 40px;
   text-align: center;
@@ -612,7 +613,7 @@
   font-style: italic; font-size: 44px; letter-spacing: .02em; color: var(--fondo);
 }
 .ident__ilustradora { margin: 0; font-weight: 400; font-size: 32px; line-height: 1.1; color: var(--granate); }
-.ident__bio { margin: 12px 0 14px; max-width: 340px; font-size: 18px; color: var(--tinta-suave); }
+.ident__bio { margin: 12px 0 14px; max-width: 400px; font-size: 18px; color: var(--tinta-suave); }
 .ident__tecnica { margin: 0; font-style: italic; font-size: 17px; }
 .ident__tecnica span { margin-right: 6px; font-family: var(--maquina); font-style: normal; font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: var(--oliva); }
 .ident__enlaces { display: flex; justify-content: center; gap: 24px; margin: 16px 0 0; }
@@ -638,7 +639,7 @@
 .ident__num span { color: var(--orla); font-weight: 700; }
 
 .ident__arco {
-  width: 50%; aspect-ratio: 3 / 3.4; margin-top: 18px;
+  width: min(50%, 240px); aspect-ratio: 3 / 3.4; margin-top: 18px;
   display: grid; place-items: end center;
   overflow: hidden;
   border-radius: 999px 999px 4px 4px;
@@ -695,7 +696,7 @@
 .ident__elegir { margin: 0; text-align: center; }
 
 @media (max-width: 960px) {
-  .identidades { grid-template-columns: minmax(0, 440px); grid-template-rows: none; grid-auto-flow: row; gap: 18px; }
+  .identidades { grid-template-columns: minmax(0, 600px); justify-content: center; grid-template-rows: none; grid-auto-flow: row; gap: 18px; }
   .ident__elegir { margin-bottom: 26px; }
 }
 @media (max-width: 420px) {
